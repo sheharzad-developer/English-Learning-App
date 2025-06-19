@@ -1,0 +1,67 @@
+.dashboard-page {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  background: #f8f9fa;
+  min-height: 100vh;
+}
+
+.dashboard-page h2 {
+  color: #2B2D42;
+  font-weight: 700;
+}
+
+.dashboard-illustration {
+  max-width: 100%;
+  border-radius: 1rem;
+  box-shadow: 0 4px 16px rgba(44, 62, 80, 0.08);
+}
+
+.dashboard-card {
+  border-radius: 1rem;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.dashboard-card:hover {
+  box-shadow: 0 8px 32px rgba(44, 62, 80, 0.12);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.icon-circle {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 2px 8px rgba(44, 62, 80, 0.08);
+}
+
+.card-title {
+  font-weight: 600;
+  color: #2B2D42;
+}
+
+.card-text {
+  color: #555;
+}
+
+.progress {
+  background: #e0e7ff;
+  border-radius: 1rem;
+}
+
+.progress-bar {
+  background: linear-gradient(90deg, #1976d2 0%, #00b894 100%);
+  font-weight: 600;
+}
+
+@media (max-width: 767px) {
+  .dashboard-page {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  .dashboard-illustration {
+    margin-top: 2rem;
+  }
+} 

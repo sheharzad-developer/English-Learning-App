@@ -1,112 +1,82 @@
 import React from 'react';
-import { Container, Row, Col, Card, Table } from 'react-bootstrap';
-import { Line } from 'react-chartjs-2';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
+import { Container, Row, Col, Card, ProgressBar, Button } from 'react-bootstrap';
+import './Dashboard.css';
 
 const Dashboard = () => {
-  // Static XP chart data – Replace with backend later
-  const xpChartData = {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [
-      {
-        label: 'XP Earned',
-        data: [100, 200, 150, 300, 250, 400, 350],
-        fill: false,
-        backgroundColor: '#0d6efd',
-        borderColor: '#0d6efd',
-        tension: 0.3,
-      },
-    ],
-  };
+  // Example user data (replace with real data from backend or context)
+  const userName = localStorage.getItem('userName') || 'Learner';
+  const progress = 65; // percent
+  const lessonsCompleted = 12;
+  const quizzesTaken = 8;
+  const streak = 5;
 
   return (
-    <Container className="mt-5">
-      <h2 className="mb-4">🎓 Welcome to Your Dashboard</h2>
-
-      <Row className="mb-4">
-        <Col md={4}>
-          <Card className="text-center shadow border-0">
-            <Card.Body>
-              <Card.Title>Total XP</Card.Title>
-              <h3>1350</h3>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center shadow border-0">
-            <Card.Body>
-              <Card.Title>Badges Earned</Card.Title>
-              <h3>🏅 4</h3>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={4}>
-          <Card className="text-center shadow border-0">
-            <Card.Body>
-              <Card.Title>Level</Card.Title>
-              <h3>🔰 Beginner</h3>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row className="mb-4">
-        <Col>
-          <Card className="shadow-sm border-0">
-            <Card.Body>
-              <Card.Title>📈 Weekly XP Progress</Card.Title>
-              <Line data={xpChartData} />
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      <Row>
-        <Col>
-          <Card className="shadow-sm border-0">
-            <Card.Body>
-              <Card.Title>🏆 Leaderboard</Card.Title>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>User</th>
-                    <th>XP</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Ayesha</td>
-                    <td>1500</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Sheharzad</td>
-                    <td>1350</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td>Ali</td>
-                    <td>1100</td>
-                  </tr>
-                </tbody>
-              </Table>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+    <div className="dashboard-page py-4">
+      <Container>
+        <h2 className="fw-bold mb-4" style={{ color: '#2B2D42' }}>
+          Welcome back, {userName}!
+        </h2>
+        <Row className="mb-5 align-items-center">
+          <Col md={8}>
+            <div className="mb-2 fw-semibold">Your Progress</div>
+            <ProgressBar now={progress} label={`${progress}%`} style={{ height: '1.5rem', fontSize: '1rem' }} />
+            <div className="mt-2 text-muted">Keep going! You're making great progress.</div>
+          </Col>
+          <Col md={4} className="text-center mt-4 mt-md-0">
+            <img
+              src="https://undraw.co/api/illustrations/achievement.svg"
+              alt="Achievement"
+              className="img-fluid dashboard-illustration"
+              style={{ maxHeight: '120px' }}
+              onError={e => { e.target.src = 'https://undraw.co/static/images/undraw_winners.svg'; }}
+            />
+          </Col>
+        </Row>
+        <Row className="g-4 mb-5">
+          <Col md={4}>
+            <Card className="h-100 shadow-sm border-0 text-center dashboard-card">
+              <Card.Body>
+                <div className="icon-circle bg-primary text-white mx-auto mb-3">
+                  <i className="bi bi-journal-check fs-2"></i>
+                </div>
+                <Card.Title className="mb-1">Lessons Completed</Card.Title>
+                <Card.Text className="fs-3 fw-bold">{lessonsCompleted}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card className="h-100 shadow-sm border-0 text-center dashboard-card">
+              <Card.Body>
+                <div className="icon-circle bg-success text-white mx-auto mb-3">
+                  <i className="bi bi-patch-question fs-2"></i>
+                </div>
+                <Card.Title className="mb-1">Quizzes Taken</Card.Title>
+                <Card.Text className="fs-3 fw-bold">{quizzesTaken}</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+          <Col md={4}>
+            <Card className="h-100 shadow-sm border-0 text-center dashboard-card">
+              <Card.Body>
+                <div className="icon-circle bg-warning text-white mx-auto mb-3">
+                  <i className="bi bi-fire fs-2"></i>
+                </div>
+                <Card.Title className="mb-1">Streak</Card.Title>
+                <Card.Text className="fs-3 fw-bold">{streak} days</Card.Text>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <div className="text-center mt-4">
+          <h4 className="fw-bold mb-3" style={{ color: '#1976d2' }}>
+            "Every day you practice, you get closer to fluency!"
+          </h4>
+          <Button variant="primary" size="lg" href="/learning">
+            Start a New Lesson
+          </Button>
+        </div>
+      </Container>
+    </div>
   );
 };
 

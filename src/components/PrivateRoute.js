@@ -1,19 +1,15 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 
-const PrivateRoute = ({ children, adminOnly = false }) => {
-  const token = localStorage.getItem('token');
-  const role = localStorage.getItem('role'); // e.g., 'admin' or 'student'
+const PrivateRoute = ({ children }) => {
+  const { isAuthenticated, loading } = useAuth();
 
-  if (!token) {
-    return <Navigate to="/login" replace />;
+  if (loading) {
+    return <div>Loading...</div>;
   }
 
-  if (adminOnly && role !== 'admin') {
-    return <Navigate to="/dashboard" replace />; // Redirect non-admin users
-  }
-
-  return children;
+  return isAuthenticated ? children : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

@@ -1,0 +1,154 @@
+.learning-page {
+  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+  background-color: #f8f9fa;
+  min-height: 100vh;
+}
+
+.learning-page h2 {
+  color: #1976d2;
+  font-weight: 700;
+}
+
+.learning-card {
+  transition: all 0.3s ease;
+  border-radius: 15px;
+  overflow: hidden;
+  background: white;
+}
+
+.learning-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.learning-card.hovered {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1) !important;
+}
+
+.learning-card.clicked {
+  animation: clickEffect 0.3s ease;
+}
+
+@keyframes clickEffect {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.icon-circle {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.learning-card:hover .icon-circle {
+  transform: scale(1.1);
+}
+
+.progress-section {
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+}
+
+.progress-sm {
+  height: 8px;
+  border-radius: 4px;
+}
+
+.lesson-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+.topics-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
+}
+
+.badge {
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.btn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+/* Animation for progress bar */
+.progress-bar {
+  transition: width 1s ease-in-out;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .learning-card {
+    margin-bottom: 20px;
+  }
+  
+  .icon-circle {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* Loading animation */
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.loading {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #2B2D42;
+}
+
+.card-text {
+  color: #555;
+}
+
+.btn-primary, .btn-success, .btn-warning, .btn-info {
+  font-weight: 600;
+  border: none;
+  transition: background 0.2s;
+}
+
+@media (max-width: 767px) {
+  .learning-page {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+} 

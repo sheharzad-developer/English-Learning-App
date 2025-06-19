@@ -1,65 +1,98 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
+import './LoginForm.css';
 
 const LoginForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+    username: '',
+    password: ''
+  });
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/token/', {
-        username: email, // or email depending on your backend auth
-        password: password,
-      });
+    setError('');
+    setIsLoading(true);
 
-      localStorage.setItem('token', response.data.access);
-      localStorage.setItem('refresh', response.data.refresh);
-      localStorage.setItem('role', response.data.role);
-      setError('');
-      navigate('/dashboard'); // Make sure this route exists in App.js
+    try {
+      await login(formData.username, formData.password);
+      navigate('/');
     } catch (err) {
-      console.error(err);
-      setError('Invalid email or password');
+      console.error('Login error:', err);
+      if (err.response?.data) {
+        const errorData = err.response.data;
+        if (typeof errorData === 'object') {
+          const errorMessages = Object.values(errorData).flat().join(', ');
+          setError(errorMessages);
+        } else {
+          setError(errorData);
+        }
+      } else {
+        setError('Invalid username or password');
+      }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <Container className="mt-5" style={{ maxWidth: '400px' }}>
-      <h2>Login</h2>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form onSubmit={handleLogin}>
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Username or Email</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Enter username or email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </Form.Group>
+    <div className="login-container">
+      <div className="login-card">
+        <h2>Welcome Back</h2>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleLogin}>
+          <Form.Group className="form-group">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              name="username"
+              placeholder="Enter your username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Form.Group controlId="formBasicPassword" className="mt-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </Form.Group>
+          <Form.Group className="form-group">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              name="password"
+              placeholder="Enter your password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </Form.Group>
 
-        <Button variant="primary" type="submit" className="mt-4" block="true">
-          Login
-        </Button>
-      </Form>
-    </Container>
+          <Button 
+            variant="primary" 
+            type="submit" 
+            className="login-btn"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Logging in...' : 'Login'}
+          </Button>
+        </Form>
+
+        <div className="register-link">
+          Don't have an account? <Link to="/register">Register here</Link>
+        </div>
+      </div>
+    </div>
   );
 };
 
