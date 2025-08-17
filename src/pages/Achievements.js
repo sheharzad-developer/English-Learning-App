@@ -25,13 +25,31 @@ const Achievements = () => {
   }, []);
 
   if (loading) return <div className="loading">Loading achievements...</div>;
-  if (error) return <div className="error">{error}</div>;
+
+  // Always show a sample achievement if error or empty
+  let displayAchievements = achievements;
+  if (error || !achievements || achievements.length === 0) {
+    displayAchievements = [{
+      id: 1,
+      name: 'First Lesson Completed',
+      description: 'Complete your first lesson!',
+      badge_image: '',
+      progress: 1,
+      requirement: 1,
+      earned: true
+    }];
+  }
 
   return (
     <div className="achievements">
       <h1>Achievements</h1>
+      {error && (
+        <div className="error" style={{ color: 'orange', marginBottom: 16 }}>
+          (Demo Mode) Failed to fetch achievements, showing a sample achievement.
+        </div>
+      )}
       <div className="achievements-grid">
-        {achievements.map((achievement) => (
+        {displayAchievements.map((achievement) => (
           <div key={achievement.id} className={`achievement-card ${achievement.earned ? 'earned' : ''}`}>
             <div className="achievement-icon">
               {achievement.badge_image ? (

@@ -1,271 +1,166 @@
 // src/pages/Profile.js
-import React, { useEffect, useState } from 'react';
-import { Container, Form, Button, Card, Alert, Row, Col } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Card, Button, Modal, Form } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
-import axios from 'axios';
-import './Profile.css';
 
-const Profile = () => {
-  const { user, isAuthenticated, updateUser } = useAuth();
-  const [formData, setFormData] = useState({
-    username: '',
-    email: '',
-    full_name: '',
-    password: '',
-    confirmPassword: '',
-  });
-  const [message, setMessage] = useState({ type: '', text: '' });
-  const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState({});
+function Profile() {
+  const { user } = useAuth();
 
-  useEffect(() => {
-    if (user) {
-      setFormData({
-        username: user.username || '',
-        email: user.email || '',
-        full_name: user.full_name || '',
-        password: '',
-        confirmPassword: '',
-      });
-    }
-  }, [user]);
-
-  const validateForm = () => {
-    const newErrors = {};
-    
-    if (formData.password && formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters long';
-    }
-    
-    if (formData.password && formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
-    }
-    
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
-    }
-    
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Email is invalid';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  // Load profile from localStorage or fallback to user from context
+  const getInitialProfile = () => {
+    const stored = localStorage.getItem('profile');
+    if (stored) return JSON.parse(stored);
+    return {
+      full_name: user?.full_name || '',
+      username: user?.username || '',
+      email: user?.email || '',
+      location: user?.location || '',
+      phone: user?.phone || '',
+      bio: user?.bio || '',
+      date_joined: user?.date_joined || '',
+    };
   };
+
+  const [profile, setProfile] = useState(getInitialProfile);
+  const [showModal, setShowModal] = useState(false);
+
+  // Keep profile in sync with localStorage
+  useEffect(() => {
+    localStorage.setItem('profile', JSON.stringify(profile));
+  }, [profile]);
+
+  // Example: fallback/placeholder values
+  const location = profile.location || 'Not specified';
+  const phone = profile.phone || 'Not specified';
+  const bio = profile.bio || 'No bio provided.';
+  const memberSince = profile.date_joined
+    ? new Date(profile.date_joined).toLocaleDateString()
+    : 'Unknown';
+
+  const handleEdit = () => setShowModal(true);
+  const handleClose = () => setShowModal(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-    
-    // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors({ ...errors, [name]: '' });
-    }
+    setProfile((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSave = (e) => {
     e.preventDefault();
-    
-    if (!validateForm()) {
-      return;
-    }
-
-    setLoading(true);
-    setMessage({ type: '', text: '' });
-
-    try {
-      const token = localStorage.getItem('token');
-      const updateData = {
-        username: formData.username,
-        email: formData.email,
-        full_name: formData.full_name,
-      };
-
-      // Only include password if it's being changed
-      if (formData.password) {
-        updateData.password = formData.password;
-      }
-
-      const response = await axios.put('http://localhost:8000/api/users/profile/', updateData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-
-      // Update the user in context
-      if (response.data.user) {
-        updateUser(response.data.user);
-      }
-
-      setMessage({ type: 'success', text: 'Profile updated successfully!' });
-      
-      // Clear password fields
-      setFormData(prev => ({
-        ...prev,
-        password: '',
-        confirmPassword: ''
-      }));
-
-    } catch (error) {
-      console.error('Error updating profile:', error);
-      if (error.response?.data) {
-        const errorData = error.response.data;
-        if (typeof errorData === 'object') {
-          const errorMessages = Object.values(errorData).flat().join(', ');
-          setMessage({ type: 'danger', text: errorMessages });
-        } else {
-          setMessage({ type: 'danger', text: errorData });
-        }
-      } else {
-        setMessage({ type: 'danger', text: 'Failed to update profile. Please try again.' });
-      }
-    } finally {
-      setLoading(false);
-    }
+    // Save to localStorage is handled by useEffect
+    setShowModal(false);
   };
-
-  if (!isAuthenticated) {
-    return (
-      <Container className="mt-5">
-        <Alert variant="warning">Please log in to view your profile.</Alert>
-      </Container>
-    );
-  }
 
   return (
-    <div className="profile-page py-5">
-      <Container>
-        <Row className="justify-content-center">
-          <Col md={8} lg={6}>
-            <Card className="shadow-sm border-0">
-              <Card.Header className="bg-primary text-white text-center py-3">
-                <h3 className="mb-0">
-                  <i className="bi bi-person-circle me-2"></i>
-                  My Profile
-                </h3>
-              </Card.Header>
-              <Card.Body className="p-4">
-                {message.text && (
-                  <Alert variant={message.type} dismissible onClose={() => setMessage({ type: '', text: '' })}>
-                    {message.text}
-                  </Alert>
-                )}
+    <div style={{ maxWidth: 500, margin: '2rem auto' }}>
+      <Card className="text-center shadow" style={{ borderRadius: 20 }}>
+        <Card.Body>
+          <div style={{ marginBottom: 24 }}>
+            <div
+              style={{
+                width: 100,
+                height: 100,
+                borderRadius: '50%',
+                background: 'linear-gradient(135deg, #4a00e0 0%, #8e2de2 100%)',
+                color: '#fff',
+                fontSize: 40,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                margin: '0 auto 1rem auto',
+                boxShadow: '0 2px 12px rgba(74,0,224,0.15)'
+              }}
+            >
+              {profile.full_name
+                ? profile.full_name.split(' ').map(n => n[0]).join('').toUpperCase()
+                : <i className="bi bi-person-circle"></i>}
+            </div>
+            <h2 style={{ marginBottom: 0 }}>{profile.full_name || 'User'}</h2>
+            <div style={{ color: '#888', marginBottom: 8 }}>@{profile.username}</div>
+            <div style={{ color: '#555', marginBottom: 16 }}>{profile.email}</div>
+          </div>
+          <div style={{ textAlign: 'left', margin: '0 auto 1.5rem auto', maxWidth: 350 }}>
+            <div style={{ marginBottom: 8 }}>
+              <i className="bi bi-geo-alt-fill" style={{ color: '#4a00e0', marginRight: 8 }}></i>
+              <strong>Location:</strong> {location}
+            </div>
+            <div style={{ marginBottom: 8 }}>
+              <i className="bi bi-telephone-fill" style={{ color: '#4a00e0', marginRight: 8 }}></i>
+              <strong>Phone:</strong> {phone}
+            </div>
+            <div style={{ marginBottom: 8 }}>
+              <i className="bi bi-calendar-check" style={{ color: '#4a00e0', marginRight: 8 }}></i>
+              <strong>Member since:</strong> {memberSince}
+            </div>
+            <div style={{ marginBottom: 8 }}>
+              <i className="bi bi-person-lines-fill" style={{ color: '#4a00e0', marginRight: 8 }}></i>
+              <strong>Bio:</strong> <span style={{ color: '#666' }}>{bio}</span>
+            </div>
+          </div>
+          <Button variant="primary" onClick={handleEdit}>
+            Edit Profile
+          </Button>
+        </Card.Body>
+      </Card>
 
-                <Form onSubmit={handleSubmit}>
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Full Name</Form.Label>
-                        <Form.Control
-                          type="text"
-                          name="full_name"
-                          value={formData.full_name}
-                          onChange={handleChange}
-                          isInvalid={!!errors.full_name}
-                        />
-                        <Form.Control.Feedback type="invalid">
-                          {errors.full_name}
-                        </Form.Control.Feedback>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-
-                  <Form.Group className="mb-3">
-                    <Form.Label>Username *</Form.Label>
-                    <Form.Control
-                      type="text"
-                      name="username"
-                      value={formData.username}
-                      onChange={handleChange}
-                      isInvalid={!!errors.username}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.username}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <Form.Group className="mb-3">
-                    <Form.Label>Email *</Form.Label>
-                    <Form.Control
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      isInvalid={!!errors.email}
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.email}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <hr className="my-4" />
-
-                  <h5 className="mb-3">Change Password (Optional)</h5>
-                  
-                  <Form.Group className="mb-3">
-                    <Form.Label>New Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      isInvalid={!!errors.password}
-                      placeholder="Leave blank to keep current password"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.password}
-                    </Form.Control.Feedback>
-                    <Form.Text className="text-muted">
-                      Password must be at least 6 characters long
-                    </Form.Text>
-                  </Form.Group>
-
-                  <Form.Group className="mb-4">
-                    <Form.Label>Confirm New Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      name="confirmPassword"
-                      value={formData.confirmPassword}
-                      onChange={handleChange}
-                      isInvalid={!!errors.confirmPassword}
-                      placeholder="Confirm your new password"
-                    />
-                    <Form.Control.Feedback type="invalid">
-                      {errors.confirmPassword}
-                    </Form.Control.Feedback>
-                  </Form.Group>
-
-                  <div className="d-grid">
-                    <Button 
-                      variant="primary" 
-                      type="submit" 
-                      disabled={loading}
-                      className="py-2"
-                    >
-                      {loading ? (
-                        <>
-                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
-                          Updating...
-                        </>
-                      ) : (
-                        <>
-                          <i className="bi bi-check-circle me-2"></i>
-                          Save Changes
-                        </>
-                      )}
-                    </Button>
-                  </div>
-                </Form>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      {/* Edit Profile Modal */}
+      <Modal show={showModal} onHide={handleClose} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Profile</Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleSave}>
+          <Modal.Body>
+            <Form.Group className="mb-3">
+              <Form.Label>Full Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="full_name"
+                value={profile.full_name}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                name="location"
+                value={profile.location}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Phone</Form.Label>
+              <Form.Control
+                type="text"
+                name="phone"
+                value={profile.phone}
+                onChange={handleChange}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Bio</Form.Label>
+              <Form.Control
+                as="textarea"
+                name="bio"
+                value={profile.bio}
+                onChange={handleChange}
+                rows={2}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit">
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
     </div>
   );
-};
+}
 
 export default Profile;

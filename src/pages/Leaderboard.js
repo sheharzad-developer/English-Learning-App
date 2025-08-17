@@ -25,11 +25,27 @@ const Leaderboard = () => {
   }, []);
 
   if (loading) return <div className="loading">Loading leaderboard...</div>;
-  if (error) return <div className="error">{error}</div>;
+
+  // Always show a sample leaderboard entry if error or empty
+  let displayLeaderboard = leaderboard;
+  if (error || !leaderboard || leaderboard.length === 0) {
+    displayLeaderboard = [{
+      id: 1,
+      user: 'DemoUser',
+      total_score: 1200,
+      total_lessons: 15,
+      average_accuracy: 92
+    }];
+  }
 
   return (
     <div className="leaderboard">
       <h1>Leaderboard</h1>
+      {error && (
+        <div className="error" style={{ color: 'orange', marginBottom: 16 }}>
+          (Demo Mode) Failed to fetch leaderboard data, showing a sample entry.
+        </div>
+      )}
       <div className="leaderboard-table">
         <table>
           <thead>
@@ -42,7 +58,7 @@ const Leaderboard = () => {
             </tr>
           </thead>
           <tbody>
-            {leaderboard.map((entry, index) => (
+            {displayLeaderboard.map((entry, index) => (
               <tr key={entry.id} className={entry.user === user?.id ? 'current-user' : ''}>
                 <td>{index + 1}</td>
                 <td>{entry.user}</td>

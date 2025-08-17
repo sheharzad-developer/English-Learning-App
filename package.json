@@ -26,15 +26,25 @@
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^19.1.0",
     "react-icons": "^5.5.0",
+    "react-redux": "^7.2.9",
     "react-router-bootstrap": "^0.26.2",
     "react-router-dom": "^6.30.1",
     "react-scripts": "5.0.1",
+    "recharts": "^3.0.2",
+    "redux": "^5.0.1",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:watch": "react-scripts test --watch",
+    "test:coverage": "react-scripts test --coverage --watchAll=false",
+    "test:theme": "react-scripts test --testPathPattern=theme",
+    "test:navigation": "react-scripts test --testPathPattern=navigation",
+    "test:accessibility": "react-scripts test --testPathPattern=accessibility",
+    "test:responsiveness": "react-scripts test --testPathPattern=responsiveness",
+    "test:comprehensive": "react-scripts test --testPathPattern=testRunner",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

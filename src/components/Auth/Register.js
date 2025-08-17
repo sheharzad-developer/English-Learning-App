@@ -7,6 +7,7 @@ import './Register.css';
 const Register = () => {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
+  const [fullName, setFullName] = useState('');
   const [password, setPassword] = useState('');
   const [password2, setPassword2] = useState('');
   const [role, setRole] = useState('student');
@@ -26,10 +27,11 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post('http://127.0.0.1:8000/api/register/', {
+      await axios.post('http://127.0.0.1:8000/api/users/register/', {
         email,
         username,
-        password,
+        full_name: fullName,
+        password1: password,
         password2,
         role,
       });
@@ -39,7 +41,20 @@ const Register = () => {
       setTimeout(() => navigate('/login'), 1500);
     } catch (err) {
       setLoading(false);
-      setError(err.response?.data?.email || err.response?.data?.username || err.response?.data?.password || 'Registration failed. Please check your details.');
+      // Log backend error details for easier debugging
+      if (err.response?.data) {
+        console.error('Registration error details:', err.response.data);
+        const errorData = err.response.data;
+        if (typeof errorData === 'object') {
+          // Collect all error messages
+          const errorMessages = Object.values(errorData).flat().join(', ');
+          setError(errorMessages);
+        } else {
+          setError(errorData);
+        }
+      } else {
+        setError('Registration failed. Please try again.');
+      }
     }
   };
 
@@ -74,6 +89,19 @@ const Register = () => {
                   placeholder="Enter email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </InputGroup>
+            </Form.Group>
+            <Form.Group controlId="formBasicFullName" className="mb-3">
+              <Form.Label className="fw-semibold">Full Name</Form.Label>
+              <InputGroup>
+                <InputGroup.Text><i className="bi bi-person-badge"></i></InputGroup.Text>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter full name"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
                   required
                 />
               </InputGroup>
