@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Button, Table, Badge } from 'react-bootstrap';
 import { FaUsers, FaBook, FaClipboardCheck, FaArrowRight } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AdminDashboard = () => {
+  const navigate = useNavigate();
   const [stats, setStats] = useState({
     users: 0,
     lessons: 0,
@@ -73,7 +75,7 @@ const AdminDashboard = () => {
             <Card.Body>
               <Card.Title>👥 Manage Users</Card.Title>
               <p>View, promote/demote or remove platform users.</p>
-              <Button variant="outline-primary" href="/admin/users">
+              <Button variant="outline-primary" onClick={() => navigate('/admin/users')}>
                 Go to User Management <FaArrowRight className="ms-2" />
               </Button>
             </Card.Body>

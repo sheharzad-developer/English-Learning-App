@@ -22,7 +22,8 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
-    if (token) {
+    const userData = localStorage.getItem('user');
+    if (token && userData) {
       try {
         const response = await axios.get('http://localhost:8000/api/users/profile/', {
           headers: {
@@ -34,6 +35,7 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error('Auth check failed:', error);
         localStorage.removeItem('token');
+        localStorage.removeItem('user');
         setUser(null);
         setIsAuthenticated(false);
       }
@@ -49,6 +51,7 @@ export const AuthProvider = ({ children }) => {
       });
       const { access, user } = response.data;
       localStorage.setItem('token', access);
+      localStorage.setItem('user', JSON.stringify(user));
       setUser(user);
       setIsAuthenticated(true);
       return { success: true };

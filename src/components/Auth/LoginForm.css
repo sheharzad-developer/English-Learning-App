@@ -86,6 +86,24 @@
   text-decoration: underline;
 }
 
+.admin-link {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.admin-link a {
+  color: #1e3c72;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.admin-link a:hover {
+  color: #2a5298;
+  text-decoration: underline;
+}
+
 .alert {
   padding: 0.75rem;
   margin-bottom: 1rem;

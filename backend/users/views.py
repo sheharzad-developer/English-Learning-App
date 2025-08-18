@@ -30,13 +30,19 @@ class MyTokenObtainPairView(TokenObtainPairView):
         
         return Response(data, status=status.HTTP_200_OK)
 
-# Register API
+# Register API - Public registration (students only)
 class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = RegisterSerializer
 
     def create(self, request, *args, **kwargs):
+        # Only allow student registration through public endpoint
+        if request.data.get('role') in ['admin', 'teacher']:
+            return Response({
+                'error': 'Admin and teacher accounts can only be created by administrators'
+            }, status=status.HTTP_403_FORBIDDEN)
+        
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
@@ -50,6 +56,28 @@ class RegisterView(generics.CreateAPIView):
             'token': str(refresh.access_token),
             'refresh': str(refresh),
             'message': 'User registered successfully'
+        }, status=status.HTTP_201_CREATED)
+
+# Admin User Creation API (Admin only)
+class AdminUserCreationView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    permission_classes = [permissions.IsAdminUser]
+    serializer_class = RegisterSerializer
+
+    def create(self, request, *args, **kwargs):
+        # Only allow admin and teacher creation through admin endpoint
+        if request.data.get('role') not in ['admin', 'teacher']:
+            return Response({
+                'error': 'This endpoint is for creating admin and teacher accounts only'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        
+        return Response({
+            'user': UserSerializer(user).data,
+            'message': f'{user.role.title()} account created successfully'
         }, status=status.HTTP_201_CREATED)
 
 # Profile API - Get and Update

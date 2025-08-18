@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Form, Button, Container, Alert } from 'react-bootstrap';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import './LoginForm.css';
+import './AdminLoginForm.css';
 
-const LoginForm = () => {
+const AdminLoginForm = () => {
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -29,9 +29,19 @@ const LoginForm = () => {
 
     try {
       await login(formData.username, formData.password);
-      navigate('/');
+      
+      // Check if the logged-in user is an admin
+      const user = JSON.parse(localStorage.getItem('user'));
+      if (user && user.role === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        setError('Access denied. Admin privileges required.');
+        // Logout the user if they're not an admin
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+      }
     } catch (err) {
-      console.error('Login error:', err);
+      console.error('Admin login error:', err);
       if (err.response?.data) {
         const errorData = err.response.data;
         if (typeof errorData === 'object') {
@@ -41,7 +51,7 @@ const LoginForm = () => {
           setError(errorData);
         }
       } else {
-        setError('Invalid username or password');
+        setError('Invalid admin credentials');
       }
     } finally {
       setIsLoading(false);
@@ -49,17 +59,22 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className="login-card">
-        <h2>Welcome Back</h2>
+    <div className="admin-login-container">
+      <div className="admin-login-card">
+        <div className="admin-login-header">
+          <h2>🔐 Admin Login</h2>
+          <p>Access the administrative panel</p>
+        </div>
+        
         {error && <Alert variant="danger">{error}</Alert>}
+        
         <Form onSubmit={handleLogin}>
           <Form.Group className="form-group">
-            <Form.Label>Username</Form.Label>
+            <Form.Label>Admin Username</Form.Label>
             <Form.Control
               type="text"
               name="username"
-              placeholder="Enter your username"
+              placeholder="Enter admin username"
               value={formData.username}
               onChange={handleChange}
               required
@@ -67,11 +82,11 @@ const LoginForm = () => {
           </Form.Group>
 
           <Form.Group className="form-group">
-            <Form.Label>Password</Form.Label>
+            <Form.Label>Admin Password</Form.Label>
             <Form.Control
               type="password"
               name="password"
-              placeholder="Enter your password"
+              placeholder="Enter admin password"
               value={formData.password}
               onChange={handleChange}
               required
@@ -79,24 +94,24 @@ const LoginForm = () => {
           </Form.Group>
 
           <Button 
-            variant="primary" 
+            variant="dark" 
             type="submit" 
-            className="login-btn"
+            className="admin-login-btn"
             disabled={isLoading}
           >
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? 'Authenticating...' : 'Login as Admin'}
           </Button>
         </Form>
 
-        <div className="register-link">
-          Don't have an account? <Link to="/register">Register here</Link>
-        </div>
-        <div className="admin-link">
-          <Link to="/admin/login">🔐 Admin Login</Link>
+        <div className="admin-login-footer">
+          <p>Need help? Contact system administrator</p>
+          <Link to="/login" className="regular-login-link">
+            ← Back to Regular Login
+          </Link>
         </div>
       </div>
     </div>
   );
 };
 
-export default LoginForm;
+export default AdminLoginForm;

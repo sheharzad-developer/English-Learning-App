@@ -10,11 +10,13 @@ import Profile from './pages/Profile';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AdminLogin from './pages/AdminLogin';
 import PrivateRoute from './components/PrivateRoute';
 import AppNavbar from './components/Navbar';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
 import StudentDashboard from './components/Dashboard/StudentDashboard';
 import TeacherDashboard from './components/Dashboard/TeacherDashboard';
+import UserManagement from './components/admin/UserManagement';
 import About from './pages/About';
 import Learning from './pages/Learning';
 import './styles/theme.css';
@@ -26,6 +28,7 @@ function App() {
         <AppNavbar />
         <Routes>
           <Route path="/login" element={<Login />} />
+          <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
           <Route
@@ -81,6 +84,14 @@ function App() {
             element={
               <PrivateRoute requiredRole={['admin']}>
                 <AdminDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/users"
+            element={
+              <PrivateRoute requiredRole={['admin']}>
+                <UserManagement />
               </PrivateRoute>
             }
           />

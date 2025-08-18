@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import (
     RegisterView, 
+    AdminUserCreationView,
     ProfileView, 
     MyTokenObtainPairView,
     UserListView,
@@ -11,12 +12,14 @@ from .views import (
 urlpatterns = [
     # Authentication endpoints
     path('register/', RegisterView.as_view(), name='register'),
+    path('admin/create-user/', AdminUserCreationView.as_view(), name='admin-create-user'),
     path('login/', MyTokenObtainPairView.as_view(), name='login'),
     
     # Profile endpoints
     path('profile/', ProfileView.as_view(), name='profile'),
     
     # Admin user management endpoints
+    path('', UserListView.as_view(), name='user-list'),
     path('list/', UserListView.as_view(), name='user-list'),
     path('detail/<int:pk>/', UserDetailView.as_view(), name='user-detail'),
     path('manage/', UserManagementView.as_view(), name='user-manage'),
