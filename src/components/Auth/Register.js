@@ -16,6 +16,12 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  const handleSocialRegister = (provider) => {
+    // Placeholder for social registration implementation
+    console.log(`Social registration with ${provider}`);
+    // TODO: Implement social authentication
+  };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -27,7 +33,7 @@ const Register = () => {
       return;
     }
     try {
-      await axios.post('http://127.0.0.1:8000/api/users/register/', {
+      await axios.post('http://127.0.0.1:8000/api/accounts/register/', {
         email,
         username,
         full_name: fullName,
@@ -149,6 +155,30 @@ const Register = () => {
               {loading ? 'Registering...' : 'Register'}
             </Button>
           </Form>
+
+          <div className="divider mt-4">
+            <span>or</span>
+          </div>
+
+          <div className="social-login mt-3">
+            <Button 
+              variant="outline-danger" 
+              className="social-btn google-btn w-100 mb-2"
+              onClick={() => handleSocialRegister('google')}
+              disabled={loading}
+            >
+              <i className="fab fa-google"></i> Sign up with Google
+            </Button>
+            <Button 
+              variant="outline-primary" 
+              className="social-btn facebook-btn w-100"
+              onClick={() => handleSocialRegister('facebook')}
+              disabled={loading}
+            >
+              <i className="fab fa-facebook-f"></i> Sign up with Facebook
+            </Button>
+          </div>
+
           <div className="text-center mt-3">
             <span className="text-muted">Already have an account? </span>
             <a href="/login" className="text-primary fw-semibold">Login</a>

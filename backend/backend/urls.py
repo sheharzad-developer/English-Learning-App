@@ -11,5 +11,7 @@ urlpatterns = [
     path('api/accounts/', include('accounts.urls')),
     path('api/users/', include('users.urls')),
     path('api/learning/', include('learning.urls')),
-    path('api/lessons/', include('lessons.urls')),
+    path('accounts/', include('allauth.urls')),
+    path('dj-rest-auth/', include('dj_rest_auth.urls')),
+    path('dj-rest-auth/registration/', include('dj_rest_auth.registration.urls')),
 ]

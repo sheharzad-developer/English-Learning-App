@@ -15,26 +15,28 @@ const StudentDashboard = () => {
   });
 
   useEffect(() => {
-    const fetchProgress = async () => {
+    const fetchDashboardData = async () => {
       try {
-        const res = await axios.get('http://127.0.0.1:8000/api/student/progress/', {
+        const res = await axios.get('http://127.0.0.1:8000/api/accounts/student/dashboard/', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
         });
-        // Handle progress data if needed
-        console.log('Progress data:', res.data);
+        // Handle dashboard data if needed
+        console.log('Dashboard data:', res.data);
+        // You can update stats here if the API returns relevant data
+        // setStats(res.data.statistics || stats);
       } catch (error) {
-        console.error('Failed to fetch progress data', error);
+        console.error('Failed to fetch dashboard data', error);
       }
     };
 
-    fetchProgress();
+    fetchDashboardData();
   }, []);
 
   return (
     <div className="dashboard-page py-4">
-      <Container>
+      <Container fluid>
         <h2 className="fw-bold mb-4" style={{ color: '#2B2D42' }}>
           Welcome back, {user?.username || 'Learner'}! 🎓
         </h2>
@@ -43,7 +45,7 @@ const StudentDashboard = () => {
         <Row className="mb-5 align-items-center">
           <Col md={8}>
             <div className="mb-2 fw-semibold">Your Progress</div>
-            <ProgressBar now={stats.progress} label={`${stats.progress}%`} style={{ height: '1.5rem', fontSize: '1rem' }} />
+            <ProgressBar now={stats.progress} label={`${stats.progress}%`} style={{ height: '25px !important', fontSize: '1rem' }} />
             <div className="mt-2 text-muted">Keep going! You're making great progress.</div>
           </Col>
           <Col md={4} className="text-center mt-4 mt-md-0">

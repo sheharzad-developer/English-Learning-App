@@ -34,7 +34,7 @@ const AdminDashboard = () => {
   }, []); // Empty dependency array means this effect runs once after the initial render
 
   return (
-    <Container className="mt-5">
+    <Container fluid className="mt-5">
       <h2 className="mb-4 fw-bold">👨‍💼 Admin Dashboard</h2>
 
       {/* Stats Cards */}
@@ -60,9 +60,9 @@ const AdminDashboard = () => {
         <Col md={4}>
           <Card className="text-center shadow-sm border-0 bg-warning text-dark">
             <Card.Body>
-              <FaClipboardCheck size={36} className="mb-2" />
+              <FaClipboardCheck size={36} className="mb-2" style={{ color: 'white' }} />
               <Card.Title>Submissions</Card.Title>
-              <h2>{stats.submissions}</h2>
+              <h2 style={{ color: 'white' }}>{stats.submissions}</h2>
             </Card.Body>
           </Card>
         </Col>

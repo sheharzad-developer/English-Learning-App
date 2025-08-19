@@ -2,20 +2,21 @@ import React from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import UserProgress from '../components/UserProgress';
 import './Home.css';
 
 const Home = () => {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
 
   return (
     <div className="home-landing">
       {/* Hero Section */}
       <section className="hero-section py-5 text-center">
-        <Container>
+        <Container fluid>
           <Row className="align-items-center">
             <Col md={6} className="text-md-start text-center mb-4 mb-md-0">
-              <h1 className="display-4 fw-bold mb-3" style={{ color: '#2B2D42' }}>
+              <h1 className="display-4 fw-bold mb-3" style={{ color: '#ffff' }}>
                 Unlock Your English Potential
               </h1>
               <p className="lead mb-4" style={{ color: '#555' }}>
@@ -44,15 +45,24 @@ const Home = () => {
         </Container>
       </section>
 
+      {/* User Progress Section - Only show for authenticated users */}
+      {isAuthenticated && user && (
+        <section className="user-progress-section py-5">
+          <Container fluid>
+            <UserProgress userId={user.id} />
+          </Container>
+        </section>
+      )}
+
       {/* How It Works Section */}
       <section className="how-it-works py-5 bg-light">
-        <Container>
+        <Container fluid>
           <h2 className="text-center mb-5 fw-bold" style={{ color: '#2B2D42' }}>How It Works</h2>
           <Row className="g-4">
             <Col md={4}>
               <Card className="h-100 shadow-sm border-0 text-center">
                 <Card.Body>
-                  <div className="icon-circle mb-3 bg-primary text-white mx-auto">
+                  <div className="icon-circle mb-3 bg-primary text-inverse mx-auto">
                     <i className="bi bi-person-plus fs-2"></i>
                   </div>
                   <Card.Title>Sign Up</Card.Title>
@@ -65,7 +75,7 @@ const Home = () => {
             <Col md={4}>
               <Card className="h-100 shadow-sm border-0 text-center">
                 <Card.Body>
-                  <div className="icon-circle mb-3 bg-success text-white mx-auto">
+                  <div className="icon-circle mb-3 bg-success text-inverse mx-auto">
                     <i className="bi bi-journal-text fs-2"></i>
                   </div>
                   <Card.Title>Learn & Practice</Card.Title>
@@ -78,7 +88,7 @@ const Home = () => {
             <Col md={4}>
               <Card className="h-100 shadow-sm border-0 text-center">
                 <Card.Body>
-                  <div className="icon-circle mb-3 bg-warning text-white mx-auto">
+                  <div className="icon-circle mb-3 bg-warning text-inverse mx-auto">
                     <i className="bi bi-bar-chart-line fs-2"></i>
                   </div>
                   <Card.Title>Track Progress</Card.Title>
@@ -94,12 +104,12 @@ const Home = () => {
 
       {/* Features Section */}
       <section className="features-section py-5">
-        <Container>
+        <Container fluid>
           <h2 className="text-center mb-5 fw-bold" style={{ color: '#2B2D42' }}>Why Choose Our Platform?</h2>
           <Row className="g-4">
             <Col md={6} lg={3}>
               <div className="text-center">
-                <div className="icon-circle mb-3 bg-info text-white mx-auto">
+                <div className="icon-circle mb-3 bg-info text-inverse mx-auto">
                   <i className="bi bi-lightning-charge fs-2"></i>
                 </div>
                 <h5>Interactive Learning</h5>
@@ -108,7 +118,7 @@ const Home = () => {
             </Col>
             <Col md={6} lg={3}>
               <div className="text-center">
-                <div className="icon-circle mb-3 bg-success text-white mx-auto">
+                <div className="icon-circle mb-3 bg-success text-inverse mx-auto">
                   <i className="bi bi-graph-up fs-2"></i>
                 </div>
                 <h5>Progress Tracking</h5>
@@ -117,7 +127,7 @@ const Home = () => {
             </Col>
             <Col md={6} lg={3}>
               <div className="text-center">
-                <div className="icon-circle mb-3 bg-warning text-white mx-auto">
+                <div className="icon-circle mb-3 bg-warning text-inverse mx-auto">
                   <i className="bi bi-trophy fs-2"></i>
                 </div>
                 <h5>Achievements</h5>
@@ -126,7 +136,7 @@ const Home = () => {
             </Col>
             <Col md={6} lg={3}>
               <div className="text-center">
-                <div className="icon-circle mb-3 bg-danger text-white mx-auto">
+                <div className="icon-circle mb-3 bg-danger text-inverse mx-auto">
                   <i className="bi bi-people fs-2"></i>
                 </div>
                 <h5>Community</h5>
@@ -138,8 +148,8 @@ const Home = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="cta-section py-5 bg-primary text-white text-center">
-        <Container>
+      <section className="cta-section py-5 bg-primary text-inverse text-center">
+        <Container fluid>
           <h2 className="mb-3">Ready to Start Your English Learning Journey?</h2>
           <p className="lead mb-4">Join thousands of learners who have already improved their English skills with us.</p>
           {isAuthenticated ? (

@@ -9,7 +9,7 @@ const TeacherDashboard = () => {
   };
 
   return (
-    <Container className="mt-5">
+    <Container fluid className="mt-5">
       <h2 className="mb-4">👩‍🏫 Teacher Dashboard</h2>
 
       <Row className="mb-4">

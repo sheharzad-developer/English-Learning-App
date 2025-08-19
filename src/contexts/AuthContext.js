@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
     const userData = localStorage.getItem('user');
     if (token && userData) {
       try {
-        const response = await axios.get('http://localhost:8000/api/users/profile/', {
+        const response = await axios.get('http://localhost:8000/api/accounts/profile/', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -43,10 +43,11 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const login = async (username, password) => {
+  const login = async (usernameOrEmail, password) => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users/login/', {
-        username,
+      const response = await axios.post('http://localhost:8000/api/accounts/login/', {
+        username: usernameOrEmail, // Send as username field
+        email: usernameOrEmail,    // Also send as email field for backend compatibility
         password
       });
       const { access, user } = response.data;
@@ -62,7 +63,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (username, email, password, full_name = '') => {
     try {
-      const response = await axios.post('http://localhost:8000/api/users/register/', {
+      const response = await axios.post('http://localhost:8000/api/accounts/register/', {
         username,
         email,
         password,
@@ -80,6 +81,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     setUser(null);
     setIsAuthenticated(false);
   };
@@ -101,4 +103,4 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
-export default AuthContext; 
+export default AuthContext;

@@ -1,0 +1,471 @@
+/* Interactive Exercise Demo Styles */
+.interactive-exercise-demo {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 20px 0;
+}
+
+/* Demo Header */
+.demo-header {
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.demo-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 15px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.demo-description {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+/* Navigation Styles */
+.demo-nav {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 50px;
+  padding: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  display: inline-flex;
+  margin: 0 auto;
+}
+
+.nav-pill {
+  border-radius: 25px !important;
+  padding: 12px 20px !important;
+  margin: 0 5px !important;
+  color: #fff !important;
+  background: transparent !important;
+  border: 2px solid transparent !important;
+  transition: all 0.3s ease !important;
+  font-weight: 500 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-pill:hover {
+  background: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.nav-pill.active {
+  background: #fff !important;
+  color: #667eea !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.nav-pill .badge {
+  font-size: 10px;
+  padding: 2px 6px;
+}
+
+/* Demo Content */
+.demo-content {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  min-height: 600px;
+}
+
+/* Overview Section */
+.overview-section {
+  padding: 40px;
+}
+
+.stats-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.stats-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: #fff;
+  font-size: 24px;
+}
+
+.stats-card h4 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.stats-card .progress {
+  height: 10px;
+  border-radius: 5px;
+  background: #f8f9fa;
+}
+
+.stats-card .progress-bar {
+  border-radius: 5px;
+  background: linear-gradient(90deg, #667eea, #764ba2);
+}
+
+.score-badge {
+  font-size: 28px;
+  padding: 15px 25px;
+  border-radius: 50px;
+  font-weight: 700;
+}
+
+/* Exercise List Card */
+.exercise-list-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.exercise-list-card .card-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: #fff;
+  border-radius: 15px 15px 0 0 !important;
+  border: none;
+  padding: 20px;
+}
+
+.exercise-list-card .card-header h5 {
+  margin: 0;
+  font-weight: 600;
+}
+
+.exercise-items {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.exercise-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.exercise-item:hover {
+  border-color: #667eea;
+  background: #fff;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+  transform: translateX(5px);
+}
+
+.exercise-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.exercise-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 20px;
+}
+
+.exercise-info h6 {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.exercise-info p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.exercise-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.exercise-status .btn {
+  border-radius: 20px;
+  padding: 8px 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.exercise-status .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+.exercise-status .fas.fa-check-circle {
+  font-size: 24px;
+}
+
+/* Completion Alert */
+.completion-alert {
+  border: none;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: #fff;
+  box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+  animation: celebrationPulse 2s infinite;
+}
+
+.completion-alert h5 {
+  font-weight: 700;
+}
+
+.completion-alert .fas.fa-trophy {
+  color: #ffd700;
+  animation: bounce 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .interactive-exercise-demo {
+    padding: 10px 0;
+  }
+  
+  .demo-title {
+    font-size: 2rem;
+  }
+  
+  .demo-description {
+    font-size: 1rem;
+  }
+  
+  .demo-nav {
+    flex-direction: column;
+    border-radius: 15px;
+    padding: 15px;
+    width: 100%;
+  }
+  
+  .nav-pill {
+    margin: 5px 0 !important;
+    text-align: center;
+  }
+  
+  .overview-section {
+    padding: 20px;
+  }
+  
+  .stats-card {
+    margin-bottom: 20px;
+  }
+  
+  .exercise-item {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .exercise-info {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .exercise-status .btn {
+    width: 100%;
+  }
+  
+  .completion-alert {
+    text-align: center;
+  }
+  
+  .completion-alert .d-flex {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .demo-title {
+    font-size: 1.8rem;
+  }
+  
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+  }
+  
+  .exercise-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+  
+  .score-badge {
+    font-size: 24px;
+    padding: 12px 20px;
+  }
+  
+  .exercise-item {
+    padding: 15px;
+  }
+}
+
+/* Animations */
+@keyframes celebrationPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(40, 167, 69, 0.4);
+  }
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .interactive-exercise-demo {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+  
+  .demo-content {
+    background: #2c3e50;
+    color: #ecf0f1;
+  }
+  
+  .stats-card {
+    background: #34495e;
+    color: #ecf0f1;
+  }
+  
+  .stats-card h4 {
+    color: #ecf0f1;
+  }
+  
+  .exercise-list-card {
+    background: #34495e;
+  }
+  
+  .exercise-item {
+    background: #2c3e50;
+    color: #ecf0f1;
+  }
+  
+  .exercise-item:hover {
+    background: #34495e;
+  }
+  
+  .exercise-info h6 {
+    color: #ecf0f1;
+  }
+  
+  .stats-card .progress {
+    background: #2c3e50;
+  }
+}
+
+/* Accessibility */
+.nav-pill:focus,
+.exercise-status .btn:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .stats-card,
+  .exercise-list-card,
+  .exercise-item {
+    border: 2px solid #000;
+  }
+  
+  .nav-pill {
+    border: 2px solid #fff !important;
+  }
+  
+  .nav-pill.active {
+    border: 2px solid #000 !important;
+  }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .stats-card,
+  .exercise-item,
+  .nav-pill,
+  .exercise-status .btn {
+    transition: none;
+  }
+  
+  .stats-card:hover,
+  .exercise-item:hover,
+  .nav-pill:hover,
+  .exercise-status .btn:hover {
+    transform: none;
+  }
+  
+  .completion-alert,
+  .completion-alert .fas.fa-trophy {
+    animation: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .interactive-exercise-demo {
+    background: #fff;
+    color: #000;
+  }
+  
+  .demo-nav,
+  .exercise-status .btn {
+    display: none;
+  }
+  
+  .demo-content {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .stats-card,
+  .exercise-list-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+}

@@ -16,8 +16,8 @@ const AppNavbar = () => {
   };
 
   return (
-    <Navbar bg="white" expand="lg" sticky="top" className="shadow-sm py-2 main-navbar">
-      <Container>
+    <Navbar expand="lg" sticky="top" className="shadow-sm py-2 main-navbar">
+      <Container fluid>
         <Navbar.Brand as={Link} to="/" className="fw-bold text-primary fs-3">
           <i className="bi bi-book-half me-2"></i> English Learning
         </Navbar.Brand>

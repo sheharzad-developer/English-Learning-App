@@ -1,0 +1,353 @@
+/* Leaderboard Styles */
+.leaderboard {
+  padding: 1rem;
+}
+
+.leaderboard-card {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  overflow: hidden;
+}
+
+.leaderboard-card .card-header {
+  border-bottom: none;
+  padding: 1.25rem;
+}
+
+/* Timeframe Navigation */
+.timeframe-nav {
+  border-bottom: 1px solid #dee2e6;
+  background: #f8f9fa;
+}
+
+.timeframe-nav .nav-link {
+  border: none;
+  border-bottom: 3px solid transparent;
+  color: #6c757d;
+  font-weight: 500;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.timeframe-nav .nav-link:hover {
+  color: #007bff;
+  background: rgba(0, 123, 255, 0.1);
+}
+
+.timeframe-nav .nav-link.active {
+  color: #007bff;
+  background: white;
+  border-bottom-color: #007bff;
+  font-weight: 600;
+}
+
+/* Current User Rank */
+.current-user-rank {
+  background: linear-gradient(135deg, #e3f2fd 0%, #f3e5f5 100%);
+  border-left: 4px solid #007bff;
+}
+
+/* Leaderboard Table */
+.leaderboard-table {
+  font-size: 0.9rem;
+}
+
+.leaderboard-table thead th {
+  border-top: none;
+  border-bottom: 2px solid #dee2e6;
+  font-weight: 600;
+  color: #495057;
+  padding: 1rem 0.75rem;
+}
+
+.leaderboard-table tbody td {
+  border-top: 1px solid #f1f3f4;
+  padding: 1rem 0.75rem;
+  vertical-align: middle;
+}
+
+/* Leaderboard Row */
+.leaderboard-row {
+  transition: all 0.2s ease;
+}
+
+.leaderboard-row:hover {
+  background: rgba(0, 123, 255, 0.05);
+}
+
+.leaderboard-row.current-user {
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.1) 0%, rgba(156, 39, 176, 0.1) 100%);
+  border-left: 4px solid #007bff;
+}
+
+.leaderboard-row.current-user:hover {
+  background: linear-gradient(135deg, rgba(0, 123, 255, 0.15) 0%, rgba(156, 39, 176, 0.15) 100%);
+}
+
+/* Rank Cell */
+.rank-cell {
+  text-align: center;
+}
+
+.rank-badge {
+  font-size: 0.9rem;
+  font-weight: 600;
+  min-width: 2.5rem;
+  padding: 0.5rem 0.75rem;
+}
+
+/* User Cell */
+.user-cell {
+  min-width: 200px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f8f9fa;
+  border: 2px solid #dee2e6;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatar-placeholder {
+  background: linear-gradient(135deg, #007bff 0%, #6f42c1 100%);
+  color: white;
+  font-weight: 600;
+  font-size: 0.8rem;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-transform: uppercase;
+}
+
+.user-name {
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.user-level {
+  font-size: 0.8rem;
+}
+
+/* Points Cell */
+.points-cell {
+  font-size: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .leaderboard {
+    padding: 0.5rem;
+  }
+  
+  .leaderboard-card .card-header {
+    padding: 1rem;
+  }
+  
+  .timeframe-nav .nav-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .leaderboard-table {
+    font-size: 0.8rem;
+  }
+  
+  .leaderboard-table thead th,
+  .leaderboard-table tbody td {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .user-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .avatar-placeholder {
+    font-size: 0.7rem;
+  }
+  
+  .user-name {
+    font-size: 0.85rem;
+  }
+  
+  .rank-badge {
+    font-size: 0.8rem;
+    min-width: 2rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .timeframe-nav .nav-link {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+  
+  .current-user-rank {
+    padding: 0.75rem !important;
+  }
+  
+  .leaderboard-table thead th,
+  .leaderboard-table tbody td {
+    padding: 0.5rem 0.25rem;
+  }
+  
+  .user-cell {
+    min-width: 150px;
+  }
+  
+  .user-avatar {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Animation Effects */
+@keyframes rankUp {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.leaderboard-row.rank-up {
+  animation: rankUp 0.5s ease-out;
+}
+
+/* Trophy Icons for Top 3 */
+.rank-badge:contains('🥇') {
+  background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%) !important;
+  color: #8b4513;
+  border: 2px solid #ffd700;
+}
+
+.rank-badge:contains('🥈') {
+  background: linear-gradient(135deg, #c0c0c0 0%, #e8e8e8 100%) !important;
+  color: #4a4a4a;
+  border: 2px solid #c0c0c0;
+}
+
+.rank-badge:contains('🥉') {
+  background: linear-gradient(135deg, #cd7f32 0%, #daa520 100%) !important;
+  color: white;
+  border: 2px solid #cd7f32;
+}
+
+/* Loading States */
+.leaderboard .spinner-border {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Empty State */
+.leaderboard .fa-trophy.fa-3x {
+  opacity: 0.3;
+}
+
+/* Streak Badges */
+.badge.bg-danger {
+  background: linear-gradient(135deg, #dc3545 0%, #c82333 100%) !important;
+}
+
+.badge.bg-warning {
+  background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%) !important;
+  color: #212529 !important;
+}
+
+.badge.bg-success {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%) !important;
+}
+
+.badge.bg-info {
+  background: linear-gradient(135deg, #17a2b8 0%, #138496 100%) !important;
+}
+
+/* Accessibility */
+.leaderboard-table tbody tr:focus {
+  outline: 2px solid #007bff;
+  outline-offset: -2px;
+}
+
+.timeframe-nav .nav-link:focus {
+  outline: 2px solid #007bff;
+  outline-offset: -2px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .leaderboard-card {
+    background: #2d3748;
+    color: #e2e8f0;
+  }
+  
+  .timeframe-nav {
+    background: #1a202c;
+    border-bottom-color: #4a5568;
+  }
+  
+  .timeframe-nav .nav-link {
+    color: #a0aec0;
+  }
+  
+  .timeframe-nav .nav-link:hover {
+    color: #63b3ed;
+    background: rgba(99, 179, 237, 0.1);
+  }
+  
+  .timeframe-nav .nav-link.active {
+    color: #63b3ed;
+    background: #2d3748;
+    border-bottom-color: #63b3ed;
+  }
+  
+  .current-user-rank {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.2) 0%, rgba(159, 122, 234, 0.2) 100%);
+    border-left-color: #63b3ed;
+  }
+  
+  .leaderboard-table thead th {
+    color: #e2e8f0;
+    border-bottom-color: #4a5568;
+  }
+  
+  .leaderboard-table tbody td {
+    border-top-color: #4a5568;
+  }
+  
+  .leaderboard-row:hover {
+    background: rgba(99, 179, 237, 0.1);
+  }
+  
+  .leaderboard-row.current-user {
+    background: linear-gradient(135deg, rgba(99, 179, 237, 0.2) 0%, rgba(159, 122, 234, 0.2) 100%);
+    border-left-color: #63b3ed;
+  }
+  
+  .user-avatar {
+    background: #4a5568;
+    border-color: #718096;
+  }
+  
+  .user-name {
+    color: #e2e8f0;
+  }
+}

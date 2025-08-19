@@ -1,0 +1,421 @@
+/* Points Display Styles */
+.points-display {
+  padding: 1rem;
+}
+
+.points-card {
+  border: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  overflow: hidden;
+}
+
+/* Points Header */
+.points-header {
+  position: relative;
+}
+
+.points-total {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #212529;
+  margin: 0;
+}
+
+.points-total .fas {
+  font-size: 2rem;
+}
+
+.points-total small {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.level-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.level-badge {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+}
+
+.next-level-info {
+  font-size: 0.85rem;
+}
+
+/* Level Progress */
+.level-progress {
+  margin-bottom: 1rem;
+}
+
+.level-progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  background-color: #e9ecef;
+}
+
+.level-progress-bar .progress-bar {
+  border-radius: 4px;
+  background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+  transition: width 0.6s ease;
+}
+
+/* Points Breakdown */
+.points-breakdown {
+  margin-top: 1rem;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 1rem;
+  background: rgba(0, 123, 255, 0.1);
+  border-radius: 0.75rem;
+  border: 1px solid rgba(0, 123, 255, 0.2);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #007bff;
+  margin-bottom: 0.25rem;
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  color: #6c757d;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+/* Level Visual */
+.level-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.level-circle {
+  position: absolute;
+  z-index: 2;
+  text-align: center;
+  color: #007bff;
+}
+
+.level-number {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.level-text {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-top: 0.25rem;
+}
+
+.level-progress-ring {
+  position: relative;
+}
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+  transition: stroke-dashoffset 0.6s ease;
+  stroke-linecap: round;
+}
+
+/* Points History Modal */
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(0, 123, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+}
+
+.activity-title {
+  font-weight: 600;
+  color: #212529;
+  margin-bottom: 0.25rem;
+}
+
+.points-earned {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .points-display {
+    padding: 0.5rem;
+  }
+  
+  .points-total {
+    font-size: 2rem;
+  }
+  
+  .points-total .fas {
+    font-size: 1.5rem;
+  }
+  
+  .points-total small {
+    font-size: 0.9rem;
+  }
+  
+  .level-badge {
+    font-size: 0.8rem;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .stat-item {
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .stat-label {
+    font-size: 0.75rem;
+  }
+  
+  .level-visual {
+    margin-top: 1rem;
+  }
+  
+  .level-number {
+    font-size: 1.5rem;
+  }
+  
+  .level-text {
+    font-size: 0.6rem;
+  }
+  
+  .progress-ring {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .activity-icon {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .points-total {
+    font-size: 1.75rem;
+  }
+  
+  .level-info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .next-level-info {
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+  
+  .points-breakdown {
+    margin-top: 0.75rem;
+  }
+  
+  .stat-item {
+    padding: 0.5rem;
+  }
+  
+  .stat-value {
+    font-size: 1.1rem;
+  }
+  
+  .progress-ring {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .level-number {
+    font-size: 1.25rem;
+  }
+}
+
+/* Animation Effects */
+@keyframes pointsIncrease {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.points-total.animate {
+  animation: pointsIncrease 0.6s ease-in-out;
+}
+
+@keyframes levelUp {
+  0% {
+    transform: scale(1) rotate(0deg);
+    color: #007bff;
+  }
+  50% {
+    transform: scale(1.2) rotate(180deg);
+    color: #ffc107;
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+    color: #28a745;
+  }
+}
+
+.level-circle.level-up {
+  animation: levelUp 1s ease-in-out;
+}
+
+/* Hover Effects */
+.points-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  background: rgba(0, 123, 255, 0.15);
+  border-color: rgba(0, 123, 255, 0.3);
+  transform: translateY(-1px);
+  transition: all 0.3s ease;
+}
+
+/* Activity Color Variants */
+.activity-icon .text-primary {
+  color: #007bff !important;
+}
+
+.activity-icon .text-success {
+  color: #28a745 !important;
+}
+
+.activity-icon .text-info {
+  color: #17a2b8 !important;
+}
+
+.activity-icon .text-danger {
+  color: #dc3545 !important;
+}
+
+.activity-icon .text-warning {
+  color: #ffc107 !important;
+}
+
+.activity-icon .text-secondary {
+  color: #6c757d !important;
+}
+
+/* Loading States */
+.points-display .spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Empty State */
+.points-display .fa-history.fa-3x {
+  opacity: 0.3;
+}
+
+/* Accessibility */
+.points-card:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+.level-progress-bar:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .points-card {
+    background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+    color: #e2e8f0;
+  }
+  
+  .points-total {
+    color: #e2e8f0;
+  }
+  
+  .level-progress-bar {
+    background-color: #4a5568;
+  }
+  
+  .level-progress-bar .progress-bar {
+    background: linear-gradient(90deg, #63b3ed 0%, #3182ce 100%);
+  }
+  
+  .stat-item {
+    background: rgba(99, 179, 237, 0.2);
+    border-color: rgba(99, 179, 237, 0.3);
+  }
+  
+  .stat-value {
+    color: #63b3ed;
+  }
+  
+  .stat-label {
+    color: #a0aec0;
+  }
+  
+  .level-circle {
+    color: #63b3ed;
+  }
+  
+  .activity-icon {
+    background: rgba(99, 179, 237, 0.2);
+  }
+  
+  .activity-title {
+    color: #e2e8f0;
+  }
+  
+  .stat-item:hover {
+    background: rgba(99, 179, 237, 0.25);
+    border-color: rgba(99, 179, 237, 0.4);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .points-display {
+    break-inside: avoid;
+  }
+  
+  .points-card {
+    box-shadow: none;
+    border: 1px solid #dee2e6;
+  }
+  
+  .level-visual {
+    display: none;
+  }
+}

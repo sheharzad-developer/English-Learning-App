@@ -4,16 +4,18 @@
   align-items: center;
   min-height: calc(100vh - 200px);
   padding: 2rem;
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
 .login-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
 }
 
 .login-card h2 {
@@ -35,39 +37,46 @@
 
 .form-control {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 0.875rem;
+  border: 2px solid #e1e8ed;
+  border-radius: 8px;
   font-size: 1rem;
-  transition: border-color 0.2s ease;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .login-btn {
   width: 100%;
-  padding: 0.75rem;
-  background-color: #3498db;
+  padding: 0.875rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
 }
 
 .login-btn:hover {
-  background-color: #2980b9;
+  background: linear-gradient(135deg, #5a67d8 0%, #667eea 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
 }
 
 .login-btn:disabled {
-  background-color: #bdc3c7;
+  background: #bdc3c7;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .register-link {
@@ -84,6 +93,30 @@
 
 .register-link a:hover {
   text-decoration: underline;
+}
+
+.test-credentials {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 15px;
+  margin: 20px 0;
+  text-align: center;
+}
+
+.test-credentials h6 {
+  color: #fff;
+  margin-bottom: 10px;
+  font-weight: 600;
+}
+
+.credentials-list {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+.credentials-list strong {
+  color: #fff;
 }
 
 .admin-link {
@@ -117,6 +150,100 @@
   border: 1px solid #fad2d2;
 }
 
+/* Social Login Styles */
+.divider {
+  text-align: center;
+  margin: 1.5rem 0;
+  position: relative;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.divider span {
+  background: var(--bg-card);
+  padding: 0 1rem;
+  color: #7f8c8d;
+  font-size: 0.875rem;
+}
+
+.social-login {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.social-btn {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.google-btn {
+  border: 2px solid #db4437;
+  color: #db4437;
+}
+
+.google-btn:hover {
+  background-color: #db4437;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(219, 68, 55, 0.3);
+}
+
+.facebook-btn {
+  border: 2px solid #4267B2;
+  color: #4267B2;
+}
+
+.facebook-btn:hover {
+  background-color: #4267B2;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(66, 103, 178, 0.3);
+}
+
+.social-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.social-btn i {
+  font-size: 1rem;
+}
+
+/* Animation */
+.login-card {
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @media (max-width: 768px) {
   .login-container {
     padding: 1rem;
@@ -125,4 +252,13 @@
   .login-card {
     padding: 1.5rem;
   }
-} 
+
+  .social-login {
+    gap: 0.5rem;
+  }
+
+  .social-btn {
+    padding: 0.65rem;
+    font-size: 0.85rem;
+  }
+}

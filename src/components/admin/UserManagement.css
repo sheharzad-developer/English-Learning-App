@@ -118,15 +118,23 @@
 }
 
 .form-control, .form-select {
-  border: 2px solid #e1e5e9;
+  border: 2px solid #ced4da;
   border-radius: 8px;
   padding: 10px 12px;
   transition: all 0.3s ease;
+  background-color: #ffffff;
+  color: #495057;
 }
 
 .form-control:focus, .form-select:focus {
   border-color: #1e3c72;
   box-shadow: 0 0 0 0.2rem rgba(30, 60, 114, 0.25);
+  background-color: #ffffff;
+}
+
+.form-control::placeholder {
+  color: #6c757d;
+  opacity: 0.8;
 }
 
 /* Alert styling */

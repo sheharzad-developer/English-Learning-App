@@ -146,7 +146,7 @@ const UserManagement = () => {
     if (window.confirm(`Are you sure you want to delete user "${username}"?`)) {
       try {
         const token = localStorage.getItem('token');
-        await axios.delete(`http://localhost:8000/api/users/${userId}/`, {
+        await axios.delete(`http://localhost:8000/api/users/manage/${userId}/`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }

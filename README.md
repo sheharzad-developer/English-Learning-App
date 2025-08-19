@@ -71,20 +71,29 @@ This is a comprehensive English Language Learning Application built with Django 
 
 ## 👥 Test Users
 
+**Note:** The application uses email addresses for login. Use the following test accounts:
+
 ### Admin Account
-- **Username:** `admin`
+- **Email:** `admin@example.com`
 - **Password:** `admin123`
 - **Access:** Full system administration
 
 ### Teacher Account
-- **Username:** `teacher1`
+- **Email:** `teacher@example.com`
 - **Password:** `teacher123`
 - **Access:** Student management, content creation
 
 ### Student Account
-- **Username:** `student1`
+- **Email:** `student@example.com`
 - **Password:** `student123`
 - **Access:** Learning content, exercises, progress tracking
+
+### Creating Test Users
+If the test users don't exist, run the following command from the backend directory:
+```bash
+cd backend
+python create_test_users.py
+```
 
 ---
 

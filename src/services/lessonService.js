@@ -9,28 +9,93 @@ const getAuthHeaders = () => {
 };
 
 const lessonService = {
-    // Lesson endpoints
-    getLessons: async () => {
-        const response = await axios.get(`${API_URL}/lessons/`, {
+    // Categories
+    getCategories: async () => {
+        const response = await axios.get(`${API_URL}/learning/categories/`, {
             headers: getAuthHeaders()
+        });
+        return response.data;
+    },
+
+    // Skill Levels
+    getSkillLevels: async () => {
+        const response = await axios.get(`${API_URL}/learning/skill-levels/`, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    },
+
+    // Lesson endpoints
+    getLessons: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/lessons/`, {
+            headers: getAuthHeaders(),
+            params
         });
         return response.data;
     },
 
     getLesson: async (id) => {
-        const response = await axios.get(`${API_URL}/lessons/${id}/`, {
+        const response = await axios.get(`${API_URL}/learning/lessons/${id}/`, {
             headers: getAuthHeaders()
         });
         return response.data;
     },
 
-    submitAnswer: async (lessonId, exerciseId, answer, timeTaken, hintsUsed) => {
-        const response = await axios.post(`${API_URL}/lessons/${lessonId}/submit_answer/`, {
-            exercise_id: exerciseId,
+    startLesson: async (lessonId) => {
+        const response = await axios.post(`${API_URL}/learning/lessons/${lessonId}/start_lesson/`, {}, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    },
+
+    completeLesson: async (lessonId, score = null) => {
+        const response = await axios.post(`${API_URL}/learning/lessons/${lessonId}/complete_lesson/`, {
+            score
+        }, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    },
+
+    // Exercise endpoints
+    getExercises: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/exercises/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response.data;
+    },
+
+    getExercise: async (id) => {
+        const response = await axios.get(`${API_URL}/learning/exercises/${id}/`, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    },
+
+    // Submission endpoints
+    getSubmissions: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/submissions/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response.data;
+    },
+
+    submitAnswer: async (exerciseId, answer, timeTaken = null, hintsUsed = 0) => {
+        const response = await axios.post(`${API_URL}/learning/submissions/`, {
+            exercise: exerciseId,
             answer,
             time_taken: timeTaken,
             hints_used: hintsUsed
         }, {
+            headers: getAuthHeaders()
+        });
+        return response.data;
+    },
+
+    getSubmission: async (id) => {
+        const response = await axios.get(`${API_URL}/learning/submissions/${id}/`, {
             headers: getAuthHeaders()
         });
         return response.data;
@@ -63,161 +128,169 @@ const lessonService = {
         return response.data;
     },
 
-    // Progress endpoints
-    getUserProgress: async () => {
-        const response = await axios.get(`${API_URL}/progress/`, {
+    // User Progress endpoints
+    getUserProgress: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/user-progress/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response.data;
+    },
+
+    getUserProgressById: async (id) => {
+        const response = await axios.get(`${API_URL}/learning/user-progress/${id}/`, {
             headers: getAuthHeaders()
         });
         return response.data;
     },
 
-    getLessonProgress: async (lessonId) => {
-        const response = await axios.get(`${API_URL}/progress/?lesson=${lessonId}`, {
-            headers: getAuthHeaders()
-        });
-        return response.data[0];
-    },
-
-    // Achievement endpoints
-    getAchievements: async () => {
-        const response = await axios.get(`${API_URL}/achievements/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    // Challenge endpoints
-    getDailyChallenges: async () => {
-        const response = await axios.get(`${API_URL}/challenges/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    getUserChallenges: async () => {
-        const response = await axios.get(`${API_URL}/user-challenges/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    // Category and Tag endpoints
-    getCategories: async () => {
-        const response = await axios.get(`${API_URL}/categories/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    getTags: async () => {
-        const response = await axios.get(`${API_URL}/tags/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    // Note endpoints
-    getNotes: async () => {
-        const response = await axios.get(`${API_URL}/notes/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    getLessonNotes: async (lessonId) => {
-        const response = await axios.get(`${API_URL}/notes/?lesson=${lessonId}`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    updateNote: async (noteId, content, isPublic) => {
-        const response = await axios.patch(`${API_URL}/notes/${noteId}/`, {
-            content,
-            is_public: isPublic
+    updateProgress: async (lessonId, data) => {
+        const response = await axios.post(`${API_URL}/learning/user-progress/`, {
+            lesson: lessonId,
+            ...data
         }, {
             headers: getAuthHeaders()
         });
         return response.data;
     },
 
-    deleteNote: async (noteId) => {
-        await axios.delete(`${API_URL}/notes/${noteId}/`, {
-            headers: getAuthHeaders()
-        });
-    },
+    // Gamification endpoints (badge methods moved to avoid duplication)
 
-    // Feedback endpoints
-    getFeedback: async () => {
-        const response = await axios.get(`${API_URL}/feedback/`, {
+    getUserStats: async () => {
+        const response = await axios.get(`${API_URL}/learning/stats/`, {
             headers: getAuthHeaders()
         });
         return response.data;
     },
 
-    getLessonFeedback: async (lessonId) => {
-        const response = await axios.get(`${API_URL}/feedback/?lesson=${lessonId}`, {
+    getDashboard: async () => {
+        const response = await axios.get(`${API_URL}/learning/dashboard/`, {
             headers: getAuthHeaders()
         });
         return response.data;
     },
 
-    // Leaderboard endpoints
-    getLeaderboard: async () => {
-        const response = await axios.get(`${API_URL}/leaderboard/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    // Badge endpoints
-    getBadges: async () => {
-        const response = await axios.get(`${API_URL}/badges/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    getUserBadges: async () => {
-        const response = await axios.get(`${API_URL}/user-badges/`, {
-            headers: getAuthHeaders()
-        });
-        return response.data;
-    },
-
-    // Speech recognition
+    // Speech Recognition
     recognizeSpeech: async (audioBlob) => {
-        // This is a placeholder - implement actual speech recognition
-        return new Promise((resolve) => {
-            setTimeout(() => {
-                resolve('This is a placeholder for speech recognition');
-            }, 1000);
+        const formData = new FormData();
+        formData.append('audio', audioBlob, 'speech.wav');
+        
+        const response = await axios.post(`${API_URL}/learning/speech-recognition/`, formData, {
+            headers: {
+                ...getAuthHeaders(),
+                'Content-Type': 'multipart/form-data'
+            }
         });
+        return response.data;
     },
 
-    // Helper functions
-    calculatePoints: (basePoints, timeTaken, timeLimit, hintsUsed, difficultyMultiplier) => {
-        let points = basePoints;
-        if (timeTaken && timeLimit) {
-            const timeBonus = Math.max(0, 1 - (timeTaken / timeLimit));
-            points *= (1 + timeBonus);
-        }
-        const hintPenalty = hintsUsed * 0.1;
-        return Math.floor(points * (1 - hintPenalty) * difficultyMultiplier);
+    // Gamification - Points
+    getUserPoints: async (userId) => {
+        const response = await axios.get(`${API_URL}/learning/user-points/${userId}/`, {
+            headers: getAuthHeaders()
+        });
+        return response;
     },
 
-    getMasteryLevel: (accuracy) => {
-        if (accuracy >= 0.95) return 'master';
-        if (accuracy >= 0.85) return 'advanced';
-        if (accuracy >= 0.75) return 'intermediate';
-        return 'beginner';
+    getPointsHistory: async (userId, params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/user-points/${userId}/history/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response;
     },
 
-    formatTime: (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+    // Gamification - Badges
+    getBadges: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/badges/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response;
+    },
+
+    getUserBadges: async (userId, params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/user-badges/`, {
+            headers: getAuthHeaders(),
+            params: { user: userId, ...params }
+        });
+        return response;
+    },
+
+    // Gamification - Leaderboard
+    getLeaderboard: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/leaderboard/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response;
+    },
+
+    getUserRank: async (userId, timeframe = 'all_time') => {
+        const response = await axios.get(`${API_URL}/learning/leaderboard/user-rank/`, {
+            headers: getAuthHeaders(),
+            params: { user_id: userId, timeframe }
+        });
+        return response;
+    },
+
+    // Gamification - Streaks
+    getUserStreak: async (userId) => {
+        const response = await axios.get(`${API_URL}/learning/user-streaks/${userId}/`, {
+            headers: getAuthHeaders()
+        });
+        return response;
+    },
+
+    getStreakHistory: async (userId, params = {}) => {
+        const response = await axios.get(`${API_URL}/learning/user-streaks/${userId}/history/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response;
+    },
+
+    updateStreak: async (userId) => {
+        const response = await axios.post(`${API_URL}/learning/user-streaks/${userId}/update/`, {}, {
+            headers: getAuthHeaders()
+        });
+        return response;
+    },
+
+    // Gamification - Achievements
+    getAchievements: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/achievements/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response;
+    },
+
+    getUserAchievements: async (userId, params = {}) => {
+        const response = await axios.get(`${API_URL}/achievements/user/`, {
+            headers: getAuthHeaders(),
+            params: { user: userId, ...params }
+        });
+        return response;
+    },
+
+    // Analytics and Progress
+    getStudentProgress: async (params = {}) => {
+        const response = await axios.get(`${API_URL}/student/progress/`, {
+            headers: getAuthHeaders(),
+            params
+        });
+        return response;
+    },
+
+    getStudentStats: async (userId) => {
+        const response = await axios.get(`${API_URL}/student/stats/${userId}/`, {
+            headers: getAuthHeaders()
+        });
+        return response;
     }
+
 };
 
-export default lessonService; 
+export { lessonService };
+export default lessonService;

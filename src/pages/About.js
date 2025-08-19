@@ -32,7 +32,7 @@ const progressData = {
 const About = () => {
   return (
     <div className="about-page py-5">
-      <Container>
+      <Container fluid>
         <h2 className="fw-bold mb-4 text-center text-primary">About English Learning App</h2>
         <Row className="mb-5 align-items-center">
           <Col md={6} className="mb-4 mb-md-0 d-flex justify-content-center align-items-center">

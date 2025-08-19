@@ -67,14 +67,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         style={'input_type': 'password'},
         validators=[validate_password]
     )
-    password2 = serializers.CharField(
-        write_only=True,
-        required=True,
-        style={'input_type': 'password'}
-    )
     email = serializers.EmailField(required=True)
     username = serializers.CharField(required=True, max_length=150)
-    full_name = serializers.CharField(required=True, max_length=100)
+    full_name = serializers.CharField(required=False, max_length=100, default='')
     role = serializers.ChoiceField(
         choices=[('admin', 'Admin'), ('student', 'Student'), ('teacher', 'Teacher')],
         default='student'
@@ -82,7 +77,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'full_name', 'password', 'password2', 'role')
+        fields = ('username', 'email', 'full_name', 'password', 'role')
         extra_kwargs = {
             'email': {'required': True},
             'username': {'required': True},
@@ -106,14 +101,8 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(list(e.messages))
         return value
 
-    def validate(self, attrs):
-        if attrs['password'] != attrs['password2']:
-            raise serializers.ValidationError({"password": "Password fields didn't match."})
-        return attrs
-
     def create(self, validated_data):
         try:
-            validated_data.pop('password2')
             user = User.objects.create_user(**validated_data)
             return user
         except Exception as e:
@@ -121,6 +110,8 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 # --- Custom JWT Token Serializer ---
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    username_field = 'username'  # Accept username field from frontend
+    
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
@@ -131,15 +122,38 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         return token
 
     def validate(self, attrs):
-        data = super().validate(attrs)
+        # Use our custom authentication backend
+        from django.contrib.auth import authenticate
         
-        # Add user data to the response
-        data['user'] = {
-            'id': self.user.id,
-            'username': self.user.username,
-            'email': self.user.email,
-            'full_name': self.user.full_name,
-            'role': self.user.role
-        }
+        username = attrs.get('username')
+        password = attrs.get('password')
         
-        return data
+        if username and password:
+            user = authenticate(request=self.context.get('request'),
+                              username=username, password=password)
+            if not user:
+                raise serializers.ValidationError('Invalid credentials')
+            
+            if not user.is_active:
+                raise serializers.ValidationError('User account is disabled')
+            
+            # Set the user for token generation
+            self.user = user
+            
+            # Generate tokens
+            refresh = self.get_token(user)
+            data = {
+                'refresh': str(refresh),
+                'access': str(refresh.access_token),
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                    'full_name': user.full_name,
+                    'role': user.role
+                }
+            }
+            
+            return data
+        else:
+            raise serializers.ValidationError('Must include username and password')

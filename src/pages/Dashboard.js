@@ -12,14 +12,14 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-page py-4">
-      <Container>
+      <Container fluid>
         <h2 className="fw-bold mb-4" style={{ color: '#2B2D42' }}>
           Welcome back, {userName}!
         </h2>
         <Row className="mb-5 align-items-center">
           <Col md={8}>
             <div className="mb-2 fw-semibold">Your Progress</div>
-            <ProgressBar now={progress} label={`${progress}%`} style={{ height: '1.5rem', fontSize: '1rem' }} />
+            <ProgressBar now={progress} label={`${progress}%`} style={{ height: '1.5rem !important', fontSize: '1rem' }} />
             <div className="mt-2 text-muted">Keep going! You're making great progress.</div>
           </Col>
           <Col md={4} className="text-center mt-4 mt-md-0">
@@ -36,7 +36,7 @@ const Dashboard = () => {
           <Col md={4}>
             <Card className="h-100 shadow-sm border-0 text-center dashboard-card">
               <Card.Body>
-                <div className="icon-circle bg-primary text-white mx-auto mb-3">
+                <div className="icon-circle bg-primary text-inverse mx-auto mb-3">
                   <i className="bi bi-journal-check fs-2"></i>
                 </div>
                 <Card.Title className="mb-1">Lessons Completed</Card.Title>
@@ -47,7 +47,7 @@ const Dashboard = () => {
           <Col md={4}>
             <Card className="h-100 shadow-sm border-0 text-center dashboard-card">
               <Card.Body>
-                <div className="icon-circle bg-success text-white mx-auto mb-3">
+                <div className="icon-circle bg-success text-inverse mx-auto mb-3">
                   <i className="bi bi-patch-question fs-2"></i>
                 </div>
                 <Card.Title className="mb-1">Quizzes Taken</Card.Title>
@@ -58,7 +58,7 @@ const Dashboard = () => {
           <Col md={4}>
             <Card className="h-100 shadow-sm border-0 text-center dashboard-card">
               <Card.Body>
-                <div className="icon-circle bg-warning text-white mx-auto mb-3">
+                <div className="icon-circle bg-warning text-inverse mx-auto mb-3">
                   <i className="bi bi-fire fs-2"></i>
                 </div>
                 <Card.Title className="mb-1">Streak</Card.Title>

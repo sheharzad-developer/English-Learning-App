@@ -2,6 +2,7 @@
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
   background: #f8f9fa;
   min-height: 100vh;
+  padding: 2rem;
 }
 
 .about-page h2 {
@@ -11,7 +12,7 @@
 
 .about-card {
   border-radius: 1.25rem;
-  background: #fff;
+  background: var(--bg-card);
 }
 
 .about-list {
@@ -48,12 +49,17 @@
   color: #555;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 768px) {
   .about-page {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
+    padding: 1rem;
   }
+
   .about-card {
     margin-bottom: 1.5rem;
   }
-} 
+
+  .team-avatar {
+    width: 80px;
+    height: 80px;
+  }
+}

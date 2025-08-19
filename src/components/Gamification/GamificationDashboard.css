@@ -1,0 +1,300 @@
+/* Gamification Dashboard Styles */
+.gamification-dashboard {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 2rem 0;
+}
+
+/* Header Styles */
+.dashboard-header {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dashboard-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.dashboard-subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 0;
+}
+
+.refresh-btn {
+  border-radius: 25px;
+  padding: 0.5rem 1.5rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: 2px solid #667eea;
+}
+
+.refresh-btn:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Navigation Styles */
+.gamification-nav {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 50px;
+  padding: 0.5rem;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.nav-pill {
+  border-radius: 25px !important;
+  padding: 0.75rem 1.5rem !important;
+  margin: 0 0.25rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: #6c757d;
+  border: none;
+  background: transparent;
+}
+
+.nav-pill:hover {
+  background: rgba(102, 126, 234, 0.1) !important;
+  color: #667eea !important;
+  transform: translateY(-2px);
+}
+
+.nav-pill.active {
+  background: linear-gradient(45deg, #667eea, #764ba2) !important;
+  color: white !important;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Tab Content */
+.tab-content {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Overview Styles */
+.gamification-overview .card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+.gamification-overview .card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.gamification-overview .card-header {
+  border: none;
+  border-radius: 15px 15px 0 0 !important;
+  font-weight: 600;
+  padding: 1rem 1.5rem;
+}
+
+.gamification-overview .card-body {
+  padding: 1.5rem;
+}
+
+/* Quick Stats */
+.quick-stats {
+  margin-top: 3rem;
+}
+
+.stats-card {
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.stat-item {
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-3px);
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Loading States */
+.gamification-dashboard .spinner-border {
+  width: 3rem;
+  height: 3rem;
+  border-width: 0.3em;
+}
+
+/* Error States */
+.gamification-dashboard .alert {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .dashboard-title {
+    font-size: 2rem;
+  }
+  
+  .dashboard-header {
+    padding: 1.5rem;
+  }
+  
+  .gamification-nav {
+    padding: 0.25rem;
+  }
+  
+  .nav-pill {
+    padding: 0.5rem 1rem !important;
+    margin: 0 0.1rem;
+    font-size: 0.9rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .gamification-dashboard {
+    padding: 1rem 0;
+  }
+  
+  .dashboard-title {
+    font-size: 1.8rem;
+  }
+  
+  .dashboard-header {
+    padding: 1rem;
+  }
+  
+  .nav-pill {
+    padding: 0.4rem 0.8rem !important;
+    font-size: 0.8rem;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .gamification-dashboard {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+  
+  .dashboard-header,
+  .gamification-nav,
+  .stats-card,
+  .gamification-overview .card {
+    background: rgba(52, 73, 94, 0.95);
+    color: #ecf0f1;
+  }
+  
+  .dashboard-subtitle,
+  .stat-label {
+    color: #bdc3c7;
+  }
+  
+  .nav-pill {
+    color: #bdc3c7;
+  }
+  
+  .nav-pill:hover {
+    background: rgba(102, 126, 234, 0.2) !important;
+    color: #667eea !important;
+  }
+}
+
+/* Animation Enhancements */
+.gamification-dashboard * {
+  transition: all 0.3s ease;
+}
+
+.card {
+  animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accessibility */
+.nav-pill:focus,
+.refresh-btn:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* Print Styles */
+@media print {
+  .gamification-dashboard {
+    background: white;
+    color: black;
+  }
+  
+  .nav-pill,
+  .refresh-btn {
+    display: none;
+  }
+}
