@@ -254,6 +254,14 @@
   color: var(--text-secondary);
 }
 
+/* .table>:not(caption)>*>* {
+  background: transparent !important;
+} */
+
+td {
+    background: transparent !important;
+}
+
 /* Modals */
 .modal {
   position: fixed;
