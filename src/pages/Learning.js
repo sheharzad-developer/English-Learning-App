@@ -6,6 +6,7 @@ import UserProgress from '../components/UserProgress';
 import LessonDetail from '../components/LessonDetail';
 import GamificationDashboard from '../components/Gamification/GamificationDashboard';
 import InteractiveExerciseDemo from '../components/Exercises/InteractiveExerciseDemo';
+import MultimediaLearning from '../components/Learning/MultimediaLearning';
 import './Learning.css';
 
 // Mock user ID - in a real app, this would come from authentication
@@ -186,6 +187,12 @@ const Learning = () => {
               </Nav.Link>
             </Nav.Item>
             <Nav.Item>
+              <Nav.Link eventKey="multimedia">
+                <i className="fas fa-play-circle me-2"></i>
+                Multimedia Learning
+              </Nav.Link>
+            </Nav.Item>
+            <Nav.Item>
               <Nav.Link eventKey="exercises">
                 <i className="fas fa-puzzle-piece me-2"></i>
                 Interactive Exercises
@@ -208,6 +215,10 @@ const Learning = () => {
 
       {activeTab === 'progress' && (
         <UserProgress userId={CURRENT_USER_ID} />
+      )}
+
+      {activeTab === 'multimedia' && (
+        <MultimediaLearning />
       )}
 
       {activeTab === 'exercises' && (

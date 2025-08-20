@@ -81,7 +81,7 @@ const EnhancedLoginForm = () => {
     <div className="enhanced-login-container">
       <div className="enhanced-login-card">
         <div className="login-header">
-          <h2>Welcome Back</h2>
+          <h2 style={{color: '#fff'}}>Welcome Back</h2>
           <p>Sign in to your account to continue</p>
         </div>
 

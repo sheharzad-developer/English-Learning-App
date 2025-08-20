@@ -124,9 +124,98 @@ class StudentDashboardView(APIView):
     permission_classes = [IsStudentUser]
     
     def get(self, request):
+        from learning.models import UserProgress, Submission, UserBadge, UserPoints, UserStreak
+        from django.db.models import Count, Avg, Sum, Q
+        from datetime import datetime, timedelta
+        
+        user = request.user
+        
+        # Get learning statistics
+        total_submissions = Submission.objects.filter(user=user).count()
+        correct_submissions = Submission.objects.filter(user=user, is_correct=True).count()
+        average_score = Submission.objects.filter(user=user).aggregate(
+            avg_score=Avg('score')
+        )['avg_score'] or 0
+        
+        # Get progress data
+        progress_data = UserProgress.objects.filter(user=user).aggregate(
+            total_lessons=Count('lesson', distinct=True),
+            completed_lessons=Count('lesson', filter=Q(is_completed=True), distinct=True)
+        )
+        
+        # Get points and streak
+        try:
+            user_points = UserPoints.objects.get(user=user)
+            total_points = user_points.total_points
+        except UserPoints.DoesNotExist:
+            total_points = 0
+            
+        try:
+            user_streak = UserStreak.objects.get(user=user)
+            current_streak = user_streak.current_streak
+        except UserStreak.DoesNotExist:
+            current_streak = 0
+            
+        # Get badges
+        badges_count = UserBadge.objects.filter(user=user).count()
+        
+        # Calculate overall progress percentage
+        total_lessons = progress_data['total_lessons'] or 1
+        completed_lessons = progress_data['completed_lessons'] or 0
+        overall_progress = min(int((completed_lessons / total_lessons) * 100), 100)
+        
+        # Get recent activity (last 7 days)
+        week_ago = datetime.now() - timedelta(days=7)
+        recent_submissions = Submission.objects.filter(
+            user=user,
+            created_at__gte=week_ago
+        ).select_related('exercise', 'exercise__lesson').order_by('-created_at')[:10]
+        
+        # Calculate study time (estimate based on submissions)
+        study_time = total_submissions * 3  # Assume 3 minutes per submission
+        
+        # Determine current level
+        if overall_progress < 25:
+            current_level = 'Beginner'
+        elif overall_progress < 50:
+            current_level = 'Elementary'
+        elif overall_progress < 75:
+            current_level = 'Intermediate'
+        else:
+            current_level = 'Advanced'
+            
+        statistics = {
+            'lessons_completed': completed_lessons,
+            'total_lessons': total_lessons,
+            'quizzes_taken': total_submissions,
+            'correct_answers': correct_submissions,
+            'average_score': round(average_score, 1) if average_score else 0,
+            'total_points': total_points,
+            'current_streak': current_streak,
+            'badges_earned': badges_count,
+            'overall_progress': overall_progress,
+            'study_time': study_time,
+            'current_level': current_level
+        }
+        
+        # Serialize recent activity
+        recent_activity = []
+        for submission in recent_submissions:
+            recent_activity.append({
+                'id': submission.id,
+                'exercise_title': submission.exercise.title if submission.exercise else 'Quiz',
+                'lesson_title': submission.exercise.lesson.title if submission.exercise and submission.exercise.lesson else 'Practice',
+                'score': submission.score,
+                'is_correct': submission.is_correct,
+                'created_at': submission.created_at,
+                'time_taken': submission.time_taken
+            })
+        
         return Response({
-            'student': UserSerializer(request.user).data,
-            'message': 'Student dashboard data'
+            'student': UserSerializer(user).data,
+            'statistics': statistics,
+            'recent_activity': recent_activity,
+            'message': 'Student dashboard data loaded successfully'
         })
 
 class AdminDashboardView(APIView):

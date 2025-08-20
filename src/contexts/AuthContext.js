@@ -25,13 +25,22 @@ export const AuthProvider = ({ children }) => {
     const userData = localStorage.getItem('user');
     if (token && userData) {
       try {
-        const response = await axios.get('http://localhost:8000/api/accounts/profile/', {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        setUser(response.data);
-        setIsAuthenticated(true);
+        // Check if it's a demo token (teacher or admin demo)
+        if (token.includes('demo_token')) {
+          // For demo tokens, use stored user data directly
+          const user = JSON.parse(userData);
+          setUser(user);
+          setIsAuthenticated(true);
+        } else {
+          // For real tokens, verify with backend
+          const response = await axios.get('http://localhost:8000/api/accounts/profile/', {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setUser(response.data);
+          setIsAuthenticated(true);
+        }
       } catch (error) {
         console.error('Auth check failed:', error);
         localStorage.removeItem('token');
@@ -59,6 +68,15 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       throw error; // Let the component handle the error
     }
+  };
+
+  // Direct login for demo purposes (bypasses API)
+  const loginDirect = (userData, token) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('user', JSON.stringify(userData));
+    setUser(userData);
+    setIsAuthenticated(true);
+    return { success: true };
   };
 
   const register = async (username, email, password, full_name = '') => {
@@ -95,6 +113,7 @@ export const AuthProvider = ({ children }) => {
     isAuthenticated,
     loading,
     login,
+    loginDirect,
     register,
     logout,
     updateUser

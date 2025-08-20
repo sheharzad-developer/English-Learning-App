@@ -11,12 +11,15 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import AdminLogin from './pages/AdminLogin';
+import TeacherLogin from './pages/TeacherLogin';
 import PrivateRoute from './components/PrivateRoute';
 import AppNavbar from './components/Navbar';
 import AdminDashboard from './components/Dashboard/AdminDashboard';
 import StudentDashboard from './components/Dashboard/StudentDashboard';
 import TeacherDashboard from './components/Dashboard/TeacherDashboard';
+import TeacherDashboardPage from './pages/TeacherDashboard';
 import UserManagement from './components/admin/UserManagement';
+import ContentManager from './components/admin/ContentManager';
 import About from './pages/About';
 import Learning from './pages/Learning';
 import './styles/theme.css';
@@ -29,6 +32,7 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/admin/login" element={<AdminLogin />} />
+          <Route path="/teacher/login" element={<TeacherLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
           <Route
@@ -92,6 +96,22 @@ function App() {
             element={
               <PrivateRoute requiredRole={['admin']}>
                 <UserManagement />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/teacher/dashboard"
+            element={
+              <PrivateRoute requiredRole={['teacher']}>
+                <TeacherDashboardPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/admin/lessons"
+            element={
+              <PrivateRoute requiredRole={['admin']}>
+                <ContentManager />
               </PrivateRoute>
             }
           />

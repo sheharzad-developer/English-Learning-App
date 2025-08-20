@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Form, Alert, ProgressBar, Badge, Modal, Row, Col } from 'react-bootstrap';
 import { lessonService } from '../../services/lessonService';
+import progressService from '../../services/progressService';
 import './QuizComponent.css';
 
 const QuizComponent = ({ 
@@ -10,7 +11,9 @@ const QuizComponent = ({
   showProgress = true,
   allowReview = true,
   shuffleQuestions = false,
-  shuffleOptions = false
+  shuffleOptions = false,
+  quizTitle = 'Quiz',
+  quizId = null
 }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
@@ -131,7 +134,7 @@ const QuizComponent = ({
           questionId: question.id,
           question: question.question,
           userAnswer,
-          correctAnswer: question.correct_answer,
+          correctAnswer: question.correct_answer || question.correctAnswer,
           isCorrect,
           explanation: question.explanation
         };
@@ -151,6 +154,20 @@ const QuizComponent = ({
       setIsCompleted(true);
       setShowResults(true);
 
+      // Save progress locally
+      const submission = {
+        quizId: quizId || 'demo',
+        quizTitle: quizTitle,
+        score: quizResults.score,
+        correctAnswers: quizResults.correctAnswers,
+        totalQuestions: quizResults.totalQuestions,
+        timeSpent: quizResults.timeSpent,
+        answers: answers
+      };
+      
+      const savedSubmission = progressService.saveSubmission(submission);
+      console.log('Quiz submission saved:', savedSubmission);
+
       // Submit to backend if onComplete callback provided
       if (onComplete) {
         await onComplete(quizResults);
@@ -161,24 +178,55 @@ const QuizComponent = ({
   };
 
   const checkAnswer = (question, userAnswer) => {
-    if (!userAnswer && userAnswer !== 0) return false;
+    if (userAnswer === undefined || userAnswer === null) return false;
+    
+    // Handle different property naming conventions
+    const getCorrectAnswer = (question) => {
+      return question.correct_answer || question.correctAnswer;
+    };
+    
+    const getCorrectAnswers = (question) => {
+      return question.correct_answers || question.correctAnswers || question.correct_answer || question.correctAnswer;
+    };
     
     switch (question.type) {
       case 'multiple_choice':
-        return userAnswer === question.correct_answer;
+      case 'mcq':
+        const correctAnswer = getCorrectAnswer(question);
+        console.log('Multiple choice check:', { userAnswer, correctAnswer, questionId: question.id });
+        return userAnswer === correctAnswer;
+        
       case 'multiple_select':
-        const correctAnswers = question.correct_answer || [];
+        const correctAnswers = getCorrectAnswers(question);
+        const correctArray = Array.isArray(correctAnswers) ? correctAnswers : [];
         const userAnswers = Array.isArray(userAnswer) ? userAnswer : [];
-        return correctAnswers.length === userAnswers.length &&
-               correctAnswers.every(answer => userAnswers.includes(answer));
+        console.log('Multiple select check:', { userAnswers, correctArray, questionId: question.id });
+        return correctArray.length === userAnswers.length &&
+               correctArray.every(answer => userAnswers.includes(answer));
+               
       case 'true_false':
-        return userAnswer === question.correct_answer;
+      case 'boolean':
+        const correctBool = getCorrectAnswer(question);
+        console.log('True/false check:', { userAnswer, correctBool, questionId: question.id });
+        return userAnswer === correctBool;
+        
       case 'fill_blank':
       case 'short_answer':
-        const correctText = (question.correct_answer || '').toLowerCase().trim();
-        const userText = (userAnswer || '').toLowerCase().trim();
+      case 'text':
+        const correctText = String(getCorrectAnswer(question) || '').toLowerCase().trim();
+        const userText = String(userAnswer || '').toLowerCase().trim();
+        console.log('Text answer check:', { userText, correctText, questionId: question.id });
+        
+        // Check for exact match or multiple acceptable answers
+        if (Array.isArray(getCorrectAnswers(question))) {
+          return getCorrectAnswers(question).some(answer => 
+            String(answer || '').toLowerCase().trim() === userText
+          );
+        }
         return correctText === userText;
+        
       default:
+        console.warn('Unknown question type:', question.type);
         return false;
     }
   };
@@ -291,6 +339,39 @@ const QuizComponent = ({
         
       default:
         return <div>Unsupported question type</div>;
+    }
+  };
+
+  const getAnswerText = (result, answerValue) => {
+    // Find the original question to get options
+    const originalQuestion = processedQuestions.find(q => q.id === result.questionId);
+    if (!originalQuestion) return String(answerValue || 'No answer');
+    
+    switch (originalQuestion.type) {
+      case 'multiple_choice':
+      case 'mcq':
+        if (originalQuestion.options && typeof answerValue === 'number') {
+          return originalQuestion.options[answerValue] || 'Invalid option';
+        }
+        return String(answerValue || 'No answer');
+        
+      case 'multiple_select':
+        if (originalQuestion.options && Array.isArray(answerValue)) {
+          return answerValue.map(index => originalQuestion.options[index]).join(', ') || 'No answer';
+        }
+        return String(answerValue || 'No answer');
+        
+      case 'true_false':
+      case 'boolean':
+        return answerValue === true ? 'True' : answerValue === false ? 'False' : 'No answer';
+        
+      case 'fill_blank':
+      case 'short_answer':
+      case 'text':
+        return String(answerValue || 'No answer');
+        
+      default:
+        return String(answerValue || 'No answer');
     }
   };
 
@@ -517,10 +598,8 @@ const QuizComponent = ({
               </div>
               <p className="question-text">{result.question}</p>
               <div className="answer-review">
-                <p><strong>Your Answer:</strong> {result.userAnswer}</p>
-                {!result.isCorrect && (
-                  <p><strong>Correct Answer:</strong> {result.correctAnswer}</p>
-                )}
+                <p><strong>Your Answer:</strong> {getAnswerText(result, result.userAnswer)}</p>
+                <p><strong>Correct Answer:</strong> {getAnswerText(result, result.correctAnswer)}</p>
                 {result.explanation && (
                   <div className="explanation">
                     <strong>Explanation:</strong> {result.explanation}

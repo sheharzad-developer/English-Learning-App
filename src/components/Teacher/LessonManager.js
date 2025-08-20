@@ -1,928 +1,961 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  Row,
-  Col,
-  Card,
-  Button,
-  Modal,
-  Form,
-  Table,
-  Badge,
-  Alert,
-  Spinner,
-  Dropdown,
-  InputGroup,
-  Tabs,
-  Tab,
-  ProgressBar
+import { 
+  Container, Row, Col, Card, Button, Form, Modal, Alert, Badge, 
+  Table, Tabs, Tab, InputGroup, Dropdown, ProgressBar, Accordion 
 } from 'react-bootstrap';
-import {
-  FaPlus,
-  FaEdit,
-  FaTrash,
-  FaEye,
-  FaSearch,
-  FaFilter,
-  FaDownload,
-  FaUpload,
-  FaBook,
-  FaVideo,
-  FaHeadphones,
-  FaFileText,
-  FaQuestionCircle,
-  FaClock,
-  FaUsers,
-  FaStar,
-  FaChartLine
-} from 'react-icons/fa';
-import axios from 'axios';
 import './LessonManager.css';
 
 const LessonManager = () => {
+  const [activeTab, setActiveTab] = useState('lessons');
   const [lessons, setLessons] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [quizzes, setQuizzes] = useState([]);
+  const [showLessonModal, setShowLessonModal] = useState(false);
+  const [showQuizModal, setShowQuizModal] = useState(false);
+  const [editingLesson, setEditingLesson] = useState(null);
+  const [editingQuiz, setEditingQuiz] = useState(null);
   const [success, setSuccess] = useState('');
-  const [showModal, setShowModal] = useState(false);
-  const [modalType, setModalType] = useState('create'); // 'create', 'edit', 'view'
-  const [selectedLesson, setSelectedLesson] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [filterLevel, setFilterLevel] = useState('');
-  const [filterType, setFilterType] = useState('');
-  const [filterStatus, setFilterStatus] = useState('');
-  const [activeTab, setActiveTab] = useState('overview');
+  const [error, setError] = useState('');
 
-  // Form state
-  const [formData, setFormData] = useState({
+  // Lesson form state
+  const [lessonForm, setLessonForm] = useState({
     title: '',
     description: '',
-    content: '',
+    category: '',
     level: 'beginner',
-    type: 'reading',
     duration: 30,
+    content: '',
     objectives: [''],
-    materials: [{ type: 'text', content: '', title: '' }],
-    exercises: [{ type: 'multiple_choice', question: '', options: ['', '', '', ''], correct_answer: 0, points: 10 }],
-    vocabulary: [{ word: '', definition: '', example: '' }],
-    grammar_points: [''],
-    difficulty_rating: 1,
-    prerequisites: [],
-    tags: [],
-    is_published: false
+    vocabulary: [''],
+    status: 'draft'
   });
 
-  // Demo data for development
-  const demoLessons = [
-    {
+  // Quiz form state
+  const [quizForm, setQuizForm] = useState({
+    title: '',
+    description: '',
+    lesson_id: '',
+    time_limit: 10,
+    questions: [{
       id: 1,
-      title: 'Introduction to Present Tense',
-      description: 'Learn the basics of present tense in English',
-      level: 'beginner',
-      type: 'grammar',
-      duration: 45,
-      status: 'published',
-      students_enrolled: 25,
-      completion_rate: 85,
-      average_score: 78,
-      created_at: '2024-01-15',
-      updated_at: '2024-01-20',
-      objectives: ['Understand present tense structure', 'Use present tense in sentences'],
-      difficulty_rating: 2,
-      tags: ['grammar', 'tense', 'beginner']
-    },
-    {
-      id: 2,
-      title: 'Business English Vocabulary',
-      description: 'Essential vocabulary for business communication',
-      level: 'intermediate',
-      type: 'vocabulary',
-      duration: 60,
-      status: 'draft',
-      students_enrolled: 18,
-      completion_rate: 72,
-      average_score: 82,
-      created_at: '2024-01-10',
-      updated_at: '2024-01-18',
-      objectives: ['Learn business terms', 'Practice professional communication'],
-      difficulty_rating: 3,
-      tags: ['business', 'vocabulary', 'professional']
-    },
-    {
-      id: 3,
-      title: 'Listening Comprehension: News',
-      description: 'Improve listening skills with news broadcasts',
-      level: 'advanced',
-      type: 'listening',
-      duration: 40,
-      status: 'published',
-      students_enrolled: 12,
-      completion_rate: 68,
-      average_score: 75,
-      created_at: '2024-01-05',
-      updated_at: '2024-01-15',
-      objectives: ['Understand news broadcasts', 'Identify key information'],
-      difficulty_rating: 4,
-      tags: ['listening', 'news', 'current events']
-    }
-  ];
+      type: 'multiple_choice',
+      question: '',
+      options: ['', '', '', ''],
+      correctAnswer: 0,
+      explanation: '',
+      points: 1
+    }]
+  });
 
+  // Demo data
   useEffect(() => {
-    fetchLessons();
+    setLessons([
+      {
+        id: 1,
+        title: 'Present Perfect Tense',
+        description: 'Learn how to use present perfect tense in English',
+        category: 'Grammar',
+        level: 'intermediate',
+        duration: 45,
+        status: 'published',
+        students_enrolled: 25,
+        completion_rate: 85,
+        created_at: '2024-01-15',
+        updated_at: '2024-01-20'
+      },
+      {
+        id: 2,
+        title: 'Business Vocabulary',
+        description: 'Essential vocabulary for professional settings',
+        category: 'Vocabulary',
+        level: 'advanced',
+        duration: 60,
+        status: 'published',
+        students_enrolled: 18,
+        completion_rate: 92,
+        created_at: '2024-01-10',
+        updated_at: '2024-01-18'
+      },
+      {
+        id: 3,
+        title: 'Conditional Sentences',
+        description: 'Understanding first, second, and third conditionals',
+        category: 'Grammar',
+        level: 'intermediate',
+        duration: 40,
+        status: 'draft',
+        students_enrolled: 0,
+        completion_rate: 0,
+        created_at: '2024-01-22',
+        updated_at: '2024-01-22'
+      }
+    ]);
+
+    setQuizzes([
+      {
+        id: 1,
+        title: 'Present Perfect Quiz',
+        lesson_id: 1,
+        lesson_title: 'Present Perfect Tense',
+        questions_count: 10,
+        time_limit: 15,
+        attempts: 45,
+        average_score: 78,
+        status: 'published',
+        created_at: '2024-01-16'
+      },
+      {
+        id: 2,
+        title: 'Business Terms Assessment',
+        lesson_id: 2,
+        lesson_title: 'Business Vocabulary',
+        questions_count: 15,
+        time_limit: 20,
+        attempts: 32,
+        average_score: 85,
+        status: 'published',
+        created_at: '2024-01-12'
+      }
+    ]);
   }, []);
 
-  const fetchLessons = async () => {
-    try {
-      setLoading(true);
-      // Replace with actual API call
-      // const response = await axios.get('/api/teacher/lessons/');
-      // setLessons(response.data);
-      
-      // Using demo data for now
-      setTimeout(() => {
-        setLessons(demoLessons);
-        setLoading(false);
-      }, 1000);
-    } catch (err) {
-      console.error('Error fetching lessons:', err);
-      setError('Failed to load lessons');
-      setLessons(demoLessons); // Fallback to demo data
-      setLoading(false);
-    }
-  };
-
-  const handleSubmit = async (e) => {
+  const handleLessonSubmit = (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      
-      if (modalType === 'create') {
-        // const response = await axios.post('/api/teacher/lessons/', formData);
+      if (editingLesson) {
+        // Update existing lesson
+        setLessons(prev => prev.map(lesson => 
+          lesson.id === editingLesson.id 
+            ? { 
+                ...lesson, 
+                ...lessonForm, 
+                updated_at: new Date().toISOString().split('T')[0] 
+              }
+            : lesson
+        ));
+        setSuccess('Lesson updated successfully!');
+      } else {
+        // Create new lesson
         const newLesson = {
-          ...formData,
           id: Date.now(),
+          ...lessonForm,
           students_enrolled: 0,
           completion_rate: 0,
-          average_score: 0,
-          status: formData.is_published ? 'published' : 'draft',
           created_at: new Date().toISOString().split('T')[0],
           updated_at: new Date().toISOString().split('T')[0]
         };
-        setLessons([...lessons, newLesson]);
+        setLessons(prev => [...prev, newLesson]);
         setSuccess('Lesson created successfully!');
-      } else if (modalType === 'edit') {
-        // const response = await axios.put(`/api/teacher/lessons/${selectedLesson.id}/`, formData);
-        const updatedLessons = lessons.map(lesson => 
-          lesson.id === selectedLesson.id 
-            ? { ...lesson, ...formData, updated_at: new Date().toISOString().split('T')[0] }
-            : lesson
-        );
-        setLessons(updatedLessons);
-        setSuccess('Lesson updated successfully!');
       }
       
-      setShowModal(false);
-      resetForm();
+      setShowLessonModal(false);
+      resetLessonForm();
+      setTimeout(() => setSuccess(''), 3000);
     } catch (err) {
-      console.error('Error saving lesson:', err);
-      setError('Failed to save lesson');
-    } finally {
-      setLoading(false);
+      setError('Failed to save lesson. Please try again.');
+      setTimeout(() => setError(''), 3000);
     }
   };
 
-  const handleDelete = async (lessonId) => {
-    if (window.confirm('Are you sure you want to delete this lesson?')) {
-      try {
-        // await axios.delete(`/api/teacher/lessons/${lessonId}/`);
-        setLessons(lessons.filter(lesson => lesson.id !== lessonId));
-        setSuccess('Lesson deleted successfully!');
-      } catch (err) {
-        console.error('Error deleting lesson:', err);
-        setError('Failed to delete lesson');
+  const handleQuizSubmit = (e) => {
+    e.preventDefault();
+    try {
+      const selectedLesson = lessons.find(l => l.id === parseInt(quizForm.lesson_id));
+      
+      if (editingQuiz) {
+        // Update existing quiz
+        setQuizzes(prev => prev.map(quiz => 
+          quiz.id === editingQuiz.id 
+            ? { 
+                ...quiz, 
+                ...quizForm,
+                lesson_title: selectedLesson?.title || '',
+                questions_count: quizForm.questions.length,
+                updated_at: new Date().toISOString().split('T')[0] 
+              }
+            : quiz
+        ));
+        setSuccess('Quiz updated successfully!');
+      } else {
+        // Create new quiz
+        const newQuiz = {
+          id: Date.now(),
+          ...quizForm,
+          lesson_title: selectedLesson?.title || '',
+          questions_count: quizForm.questions.length,
+          attempts: 0,
+          average_score: 0,
+          status: 'draft',
+          created_at: new Date().toISOString().split('T')[0]
+        };
+        setQuizzes(prev => [...prev, newQuiz]);
+        setSuccess('Quiz created successfully!');
       }
+      
+      setShowQuizModal(false);
+      resetQuizForm();
+      setTimeout(() => setSuccess(''), 3000);
+    } catch (err) {
+      setError('Failed to save quiz. Please try again.');
+      setTimeout(() => setError(''), 3000);
     }
   };
 
-  const resetForm = () => {
-    setFormData({
+  const resetLessonForm = () => {
+    setLessonForm({
       title: '',
       description: '',
-      content: '',
+      category: '',
       level: 'beginner',
-      type: 'reading',
       duration: 30,
+      content: '',
       objectives: [''],
-      materials: [{ type: 'text', content: '', title: '' }],
-      exercises: [{ type: 'multiple_choice', question: '', options: ['', '', '', ''], correct_answer: 0, points: 10 }],
-      vocabulary: [{ word: '', definition: '', example: '' }],
-      grammar_points: [''],
-      difficulty_rating: 1,
-      prerequisites: [],
-      tags: [],
-      is_published: false
+      vocabulary: [''],
+      status: 'draft'
     });
+    setEditingLesson(null);
   };
 
-  const openModal = (type, lesson = null) => {
-    setModalType(type);
-    setSelectedLesson(lesson);
-    if (lesson && type === 'edit') {
-      setFormData({ ...lesson });
-    } else if (type === 'create') {
-      resetForm();
-    }
-    setShowModal(true);
-  };
-
-  const getTypeIcon = (type) => {
-    switch (type) {
-      case 'reading': return <FaBook />;
-      case 'listening': return <FaHeadphones />;
-      case 'speaking': return <FaVideo />;
-      case 'writing': return <FaFileText />;
-      case 'grammar': return <FaQuestionCircle />;
-      case 'vocabulary': return <FaStar />;
-      default: return <FaBook />;
-    }
-  };
-
-  const getLevelBadgeVariant = (level) => {
-    switch (level) {
-      case 'beginner': return 'success';
-      case 'intermediate': return 'warning';
-      case 'advanced': return 'danger';
-      default: return 'secondary';
-    }
-  };
-
-  const getStatusBadgeVariant = (status) => {
-    switch (status) {
-      case 'published': return 'success';
-      case 'draft': return 'secondary';
-      case 'archived': return 'dark';
-      default: return 'secondary';
-    }
-  };
-
-  const filteredLessons = lessons.filter(lesson => {
-    const matchesSearch = lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         lesson.description.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesLevel = !filterLevel || lesson.level === filterLevel;
-    const matchesType = !filterType || lesson.type === filterType;
-    const matchesStatus = !filterStatus || lesson.status === filterStatus;
-    
-    return matchesSearch && matchesLevel && matchesType && matchesStatus;
-  });
-
-  const addArrayItem = (field, defaultValue) => {
-    setFormData({
-      ...formData,
-      [field]: [...formData[field], defaultValue]
+  const resetQuizForm = () => {
+    setQuizForm({
+      title: '',
+      description: '',
+      lesson_id: '',
+      time_limit: 10,
+      questions: [{
+        id: 1,
+        type: 'multiple_choice',
+        question: '',
+        options: ['', '', '', ''],
+        correctAnswer: 0,
+        explanation: '',
+        points: 1
+      }]
     });
+    setEditingQuiz(null);
   };
 
-  const removeArrayItem = (field, index) => {
-    setFormData({
-      ...formData,
-      [field]: formData[field].filter((_, i) => i !== index)
+  const editLesson = (lesson) => {
+    setLessonForm({
+      title: lesson.title,
+      description: lesson.description,
+      category: lesson.category,
+      level: lesson.level,
+      duration: lesson.duration,
+      content: lesson.content || '',
+      objectives: lesson.objectives || [''],
+      vocabulary: lesson.vocabulary || [''],
+      status: lesson.status
     });
+    setEditingLesson(lesson);
+    setShowLessonModal(true);
   };
 
-  const updateArrayItem = (field, index, value) => {
-    const updatedArray = [...formData[field]];
-    updatedArray[index] = value;
-    setFormData({
-      ...formData,
-      [field]: updatedArray
+  const editQuiz = (quiz) => {
+    setQuizForm({
+      title: quiz.title,
+      description: quiz.description || '',
+      lesson_id: quiz.lesson_id.toString(),
+      time_limit: quiz.time_limit,
+      questions: quiz.questions || [{
+        id: 1,
+        type: 'multiple_choice',
+        question: '',
+        options: ['', '', '', ''],
+        correctAnswer: 0,
+        explanation: '',
+        points: 1
+      }]
     });
+    setEditingQuiz(quiz);
+    setShowQuizModal(true);
   };
 
-  if (loading && lessons.length === 0) {
-    return (
-      <Container className="lesson-manager-container d-flex justify-content-center align-items-center" style={{ minHeight: '50vh' }}>
-        <div className="text-center">
-          <Spinner animation="border" variant="primary" size="lg" />
-          <p className="mt-3">Loading lessons...</p>
-        </div>
-      </Container>
-    );
-  }
+  const deleteLesson = (lessonId) => {
+    if (window.confirm('Are you sure you want to delete this lesson?')) {
+      setLessons(prev => prev.filter(lesson => lesson.id !== lessonId));
+      setSuccess('Lesson deleted successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    }
+  };
+
+  const deleteQuiz = (quizId) => {
+    if (window.confirm('Are you sure you want to delete this quiz?')) {
+      setQuizzes(prev => prev.filter(quiz => quiz.id !== quizId));
+      setSuccess('Quiz deleted successfully!');
+      setTimeout(() => setSuccess(''), 3000);
+    }
+  };
+
+  const publishLesson = (lessonId) => {
+    setLessons(prev => prev.map(lesson => 
+      lesson.id === lessonId 
+        ? { ...lesson, status: 'published' }
+        : lesson
+    ));
+    setSuccess('Lesson published successfully!');
+    setTimeout(() => setSuccess(''), 3000);
+  };
+
+  const addObjective = () => {
+    setLessonForm(prev => ({
+      ...prev,
+      objectives: [...prev.objectives, '']
+    }));
+  };
+
+  const removeObjective = (index) => {
+    setLessonForm(prev => ({
+      ...prev,
+      objectives: prev.objectives.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateObjective = (index, value) => {
+    setLessonForm(prev => ({
+      ...prev,
+      objectives: prev.objectives.map((obj, i) => i === index ? value : obj)
+    }));
+  };
+
+  const addVocabulary = () => {
+    setLessonForm(prev => ({
+      ...prev,
+      vocabulary: [...prev.vocabulary, '']
+    }));
+  };
+
+  const removeVocabulary = (index) => {
+    setLessonForm(prev => ({
+      ...prev,
+      vocabulary: prev.vocabulary.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateVocabulary = (index, value) => {
+    setLessonForm(prev => ({
+      ...prev,
+      vocabulary: prev.vocabulary.map((word, i) => i === index ? value : word)
+    }));
+  };
+
+  const addQuestion = () => {
+    const newQuestion = {
+      id: Date.now(),
+      type: 'multiple_choice',
+      question: '',
+      options: ['', '', '', ''],
+      correctAnswer: 0,
+      explanation: '',
+      points: 1
+    };
+    setQuizForm(prev => ({
+      ...prev,
+      questions: [...prev.questions, newQuestion]
+    }));
+  };
+
+  const removeQuestion = (index) => {
+    setQuizForm(prev => ({
+      ...prev,
+      questions: prev.questions.filter((_, i) => i !== index)
+    }));
+  };
+
+  const updateQuestion = (index, field, value) => {
+    setQuizForm(prev => ({
+      ...prev,
+      questions: prev.questions.map((question, i) => 
+        i === index ? { ...question, [field]: value } : question
+      )
+    }));
+  };
+
+  const updateQuestionOption = (questionIndex, optionIndex, value) => {
+    setQuizForm(prev => ({
+      ...prev,
+      questions: prev.questions.map((question, i) => 
+        i === questionIndex 
+          ? { 
+              ...question, 
+              options: question.options.map((option, j) => j === optionIndex ? value : option)
+            }
+          : question
+      )
+    }));
+  };
+
+  const getLevelBadge = (level) => {
+    const badges = {
+      beginner: 'success',
+      intermediate: 'warning',
+      advanced: 'danger',
+      expert: 'dark'
+    };
+    return badges[level] || 'secondary';
+  };
+
+  const getStatusBadge = (status) => {
+    const badges = {
+      draft: 'secondary',
+      published: 'success',
+      archived: 'dark'
+    };
+    return badges[status] || 'secondary';
+  };
 
   return (
-    <Container fluid className="lesson-manager-container">
-      {/* Header */}
-      <Row className="mb-4">
-        <Col>
-          <Card className="manager-header">
+    <div className="lesson-manager">
+      {success && <Alert variant="success">{success}</Alert>}
+      {error && <Alert variant="danger">{error}</Alert>}
+
+      <div className="manager-header mb-4">
+        <Row className="align-items-center">
+          <Col md={6}>
+            <h3><i className="fas fa-book me-2"></i>Lesson & Quiz Manager</h3>
+            <p className="text-muted mb-0">Create and manage your teaching content</p>
+          </Col>
+          <Col md={6} className="text-end">
+            <Button 
+              variant="primary" 
+              onClick={() => setShowLessonModal(true)}
+              className="me-2"
+            >
+              <i className="fas fa-plus me-2"></i>New Lesson
+            </Button>
+            <Button 
+              variant="success" 
+              onClick={() => setShowQuizModal(true)}
+            >
+              <i className="fas fa-plus me-2"></i>New Quiz
+            </Button>
+          </Col>
+        </Row>
+      </div>
+
+      <Tabs activeKey={activeTab} onSelect={setActiveTab} className="manager-tabs">
+        <Tab eventKey="lessons" title={<><i className="fas fa-book me-2"></i>Lessons ({lessons.length})</>}>
+          <Card className="lessons-card">
             <Card.Body>
-              <Row className="align-items-center">
-                <Col md={8}>
-                  <h1 className="manager-title">
-                    <FaBook className="me-3" />
-                    Lesson Manager
-                  </h1>
-                  <p className="manager-subtitle">
-                    Create, organize, and manage your English lessons
-                  </p>
-                </Col>
-                <Col md={4} className="text-end">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="create-btn"
-                    onClick={() => openModal('create')}
-                  >
-                    <FaPlus className="me-2" />
-                    Create New Lesson
-                  </Button>
-                </Col>
-              </Row>
+              <div className="lessons-grid">
+                {lessons.map((lesson) => (
+                  <Card key={lesson.id} className="lesson-card">
+                    <Card.Body>
+                      <div className="lesson-header">
+                        <h5 className="lesson-title">{lesson.title}</h5>
+                        <div className="lesson-badges">
+                          <Badge bg={getLevelBadge(lesson.level)}>{lesson.level}</Badge>
+                          <Badge bg={getStatusBadge(lesson.status)} className="ms-1">
+                            {lesson.status}
+                          </Badge>
+                        </div>
+                      </div>
+                      
+                      <p className="lesson-description">{lesson.description}</p>
+                      
+                      <div className="lesson-stats mb-3">
+                        <Row>
+                          <Col xs={6}>
+                            <div className="stat-item">
+                              <i className="fas fa-users text-primary"></i>
+                              <span>{lesson.students_enrolled} students</span>
+                            </div>
+                          </Col>
+                          <Col xs={6}>
+                            <div className="stat-item">
+                              <i className="fas fa-clock text-info"></i>
+                              <span>{lesson.duration} mins</span>
+                            </div>
+                          </Col>
+                        </Row>
+                        
+                        {lesson.completion_rate > 0 && (
+                          <div className="completion-rate mt-2">
+                            <small className="text-muted">Completion Rate</small>
+                            <ProgressBar 
+                              now={lesson.completion_rate} 
+                              label={`${lesson.completion_rate}%`}
+                              variant="success"
+                              style={{ height: '8px' }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="lesson-actions">
+                        <Button 
+                          variant="outline-primary" 
+                          size="sm" 
+                          onClick={() => editLesson(lesson)}
+                          className="me-2"
+                        >
+                          <i className="fas fa-edit"></i>
+                        </Button>
+                        {lesson.status === 'draft' && (
+                          <Button 
+                            variant="outline-success" 
+                            size="sm" 
+                            onClick={() => publishLesson(lesson.id)}
+                            className="me-2"
+                          >
+                            <i className="fas fa-upload"></i>
+                          </Button>
+                        )}
+                        <Button 
+                          variant="outline-danger" 
+                          size="sm" 
+                          onClick={() => deleteLesson(lesson.id)}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </Button>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                ))}
+              </div>
             </Card.Body>
           </Card>
-        </Col>
-      </Row>
+        </Tab>
 
-      {/* Alerts */}
-      {error && (
-        <Alert variant="danger" dismissible onClose={() => setError('')}>
-          {error}
-        </Alert>
-      )}
-      {success && (
-        <Alert variant="success" dismissible onClose={() => setSuccess('')}>
-          {success}
-        </Alert>
-      )}
-
-      {/* Statistics Cards */}
-      <Row className="mb-4">
-        <Col md={3}>
-          <Card className="stats-card stats-total">
-            <Card.Body className="text-center">
-              <FaBook className="stats-icon" />
-              <h3 className="stats-number">{lessons.length}</h3>
-              <p className="stats-label">Total Lessons</p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}>
-          <Card className="stats-card stats-published">
-            <Card.Body className="text-center">
-              <FaChartLine className="stats-icon" />
-              <h3 className="stats-number">{lessons.filter(l => l.status === 'published').length}</h3>
-              <p className="stats-label">Published</p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}>
-          <Card className="stats-card stats-students">
-            <Card.Body className="text-center">
-              <FaUsers className="stats-icon" />
-              <h3 className="stats-number">{lessons.reduce((sum, l) => sum + l.students_enrolled, 0)}</h3>
-              <p className="stats-label">Total Enrollments</p>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}>
-          <Card className="stats-card stats-completion">
-            <Card.Body className="text-center">
-              <FaStar className="stats-icon" />
-              <h3 className="stats-number">
-                {lessons.length > 0 ? Math.round(lessons.reduce((sum, l) => sum + l.completion_rate, 0) / lessons.length) : 0}%
-              </h3>
-              <p className="stats-label">Avg. Completion</p>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Filters */}
-      <Row className="mb-4">
-        <Col>
-          <Card className="filters-card">
+        <Tab eventKey="quizzes" title={<><i className="fas fa-question-circle me-2"></i>Quizzes ({quizzes.length})</>}>
+          <Card className="quizzes-card">
             <Card.Body>
-              <Row className="align-items-end">
-                <Col md={4}>
-                  <Form.Group>
-                    <Form.Label>Search Lessons</Form.Label>
-                    <InputGroup>
-                      <InputGroup.Text>
-                        <FaSearch />
-                      </InputGroup.Text>
-                      <Form.Control
-                        type="text"
-                        placeholder="Search by title or description..."
-                        value={searchTerm}
-                        onChange={(e) => setSearchTerm(e.target.value)}
-                        className="search-input"
-                      />
-                    </InputGroup>
-                  </Form.Group>
-                </Col>
-                <Col md={2}>
-                  <Form.Group>
-                    <Form.Label>Level</Form.Label>
-                    <Form.Select
-                      value={filterLevel}
-                      onChange={(e) => setFilterLevel(e.target.value)}
-                    >
-                      <option value="">All Levels</option>
-                      <option value="beginner">Beginner</option>
-                      <option value="intermediate">Intermediate</option>
-                      <option value="advanced">Advanced</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col md={2}>
-                  <Form.Group>
-                    <Form.Label>Type</Form.Label>
-                    <Form.Select
-                      value={filterType}
-                      onChange={(e) => setFilterType(e.target.value)}
-                    >
-                      <option value="">All Types</option>
-                      <option value="reading">Reading</option>
-                      <option value="listening">Listening</option>
-                      <option value="speaking">Speaking</option>
-                      <option value="writing">Writing</option>
-                      <option value="grammar">Grammar</option>
-                      <option value="vocabulary">Vocabulary</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col md={2}>
-                  <Form.Group>
-                    <Form.Label>Status</Form.Label>
-                    <Form.Select
-                      value={filterStatus}
-                      onChange={(e) => setFilterStatus(e.target.value)}
-                    >
-                      <option value="">All Status</option>
-                      <option value="published">Published</option>
-                      <option value="draft">Draft</option>
-                      <option value="archived">Archived</option>
-                    </Form.Select>
-                  </Form.Group>
-                </Col>
-                <Col md={2}>
-                  <Button variant="outline-secondary" className="w-100">
-                    <FaDownload className="me-2" />
-                    Export
-                  </Button>
-                </Col>
-              </Row>
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
-
-      {/* Lessons Table */}
-      <Row>
-        <Col>
-          <Card className="lessons-table-card">
-            <Card.Body>
-              <Table responsive className="lessons-table">
+              <Table responsive hover>
                 <thead>
                   <tr>
+                    <th>Quiz Title</th>
                     <th>Lesson</th>
-                    <th>Level</th>
-                    <th>Type</th>
-                    <th>Duration</th>
-                    <th>Students</th>
-                    <th>Completion</th>
-                    <th>Avg. Score</th>
+                    <th>Questions</th>
+                    <th>Time Limit</th>
+                    <th>Attempts</th>
+                    <th>Avg Score</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredLessons.map((lesson) => (
-                    <tr key={lesson.id} className="lesson-row">
+                  {quizzes.map((quiz) => (
+                    <tr key={quiz.id}>
                       <td>
-                        <div className="lesson-info">
-                          <div className="lesson-icon">
-                            {getTypeIcon(lesson.type)}
-                          </div>
-                          <div className="lesson-details">
-                            <div className="lesson-title">{lesson.title}</div>
-                            <div className="lesson-description">{lesson.description}</div>
-                            <div className="lesson-meta">
-                              <small className="text-muted">
-                                Created: {lesson.created_at} | Updated: {lesson.updated_at}
-                              </small>
-                            </div>
-                          </div>
-                        </div>
+                        <strong>{quiz.title}</strong>
+                      </td>
+                      <td>{quiz.lesson_title}</td>
+                      <td>
+                        <Badge bg="info">{quiz.questions_count}</Badge>
+                      </td>
+                      <td>{quiz.time_limit} mins</td>
+                      <td>{quiz.attempts}</td>
+                      <td>
+                        {quiz.average_score > 0 && (
+                          <Badge bg="success">{quiz.average_score}%</Badge>
+                        )}
                       </td>
                       <td>
-                        <Badge bg={getLevelBadgeVariant(lesson.level)} className="level-badge">
-                          {lesson.level}
+                        <Badge bg={getStatusBadge(quiz.status)}>
+                          {quiz.status}
                         </Badge>
                       </td>
                       <td>
-                        <span className="type-text">{lesson.type}</span>
-                      </td>
-                      <td>
-                        <div className="duration-cell">
-                          <FaClock className="me-1" />
-                          {lesson.duration} min
-                        </div>
-                      </td>
-                      <td>
-                        <div className="students-cell">
-                          <FaUsers className="me-1" />
-                          {lesson.students_enrolled}
-                        </div>
-                      </td>
-                      <td>
-                        <div className="completion-cell">
-                          <ProgressBar
-                            now={lesson.completion_rate}
-                            variant={lesson.completion_rate >= 80 ? 'success' : lesson.completion_rate >= 60 ? 'warning' : 'danger'}
-                            className="completion-bar"
-                          />
-                          <small className="completion-text">{lesson.completion_rate}%</small>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="score-cell">
-                          <span className="score-value">{lesson.average_score}%</span>
-                        </div>
-                      </td>
-                      <td>
-                        <Badge bg={getStatusBadgeVariant(lesson.status)} className="status-badge">
-                          {lesson.status}
-                        </Badge>
-                      </td>
-                      <td>
-                        <div className="action-buttons">
-                          <Button
-                            variant="outline-info"
-                            size="sm"
-                            onClick={() => openModal('view', lesson)}
-                            title="View Details"
-                          >
-                            <FaEye />
-                          </Button>
-                          <Button
-                            variant="outline-warning"
-                            size="sm"
-                            onClick={() => openModal('edit', lesson)}
-                            title="Edit Lesson"
-                          >
-                            <FaEdit />
-                          </Button>
-                          <Button
-                            variant="outline-danger"
-                            size="sm"
-                            onClick={() => handleDelete(lesson.id)}
-                            title="Delete Lesson"
-                          >
-                            <FaTrash />
-                          </Button>
-                        </div>
+                        <Button 
+                          variant="outline-primary" 
+                          size="sm" 
+                          onClick={() => editQuiz(quiz)}
+                          className="me-2"
+                        >
+                          <i className="fas fa-edit"></i>
+                        </Button>
+                        <Button 
+                          variant="outline-danger" 
+                          size="sm" 
+                          onClick={() => deleteQuiz(quiz.id)}
+                        >
+                          <i className="fas fa-trash"></i>
+                        </Button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </Table>
-              
-              {filteredLessons.length === 0 && (
-                <div className="text-center py-5">
-                  <FaBook size={48} className="text-muted mb-3" />
-                  <h5 className="text-muted">No lessons found</h5>
-                  <p className="text-muted">Try adjusting your search criteria or create a new lesson.</p>
-                </div>
-              )}
             </Card.Body>
           </Card>
-        </Col>
-      </Row>
+        </Tab>
+      </Tabs>
 
       {/* Lesson Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="xl" className="lesson-modal">
+      <Modal show={showLessonModal} onHide={() => setShowLessonModal(false)} size="lg">
         <Modal.Header closeButton>
           <Modal.Title>
-            {modalType === 'create' && 'Create New Lesson'}
-            {modalType === 'edit' && 'Edit Lesson'}
-            {modalType === 'view' && 'Lesson Details'}
+            <i className="fas fa-book me-2"></i>
+            {editingLesson ? 'Edit Lesson' : 'Create New Lesson'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          {modalType === 'view' && selectedLesson ? (
-            <div className="lesson-details-view">
-              <Row>
-                <Col md={8}>
-                  <h4>{selectedLesson.title}</h4>
-                  <p className="text-muted">{selectedLesson.description}</p>
-                  
-                  <div className="lesson-meta-info">
-                    <Row>
-                      <Col md={6}>
-                        <strong>Level:</strong> <Badge bg={getLevelBadgeVariant(selectedLesson.level)}>{selectedLesson.level}</Badge>
-                      </Col>
-                      <Col md={6}>
-                        <strong>Type:</strong> {getTypeIcon(selectedLesson.type)} {selectedLesson.type}
-                      </Col>
-                    </Row>
-                    <Row className="mt-2">
-                      <Col md={6}>
-                        <strong>Duration:</strong> <FaClock className="me-1" /> {selectedLesson.duration} minutes
-                      </Col>
-                      <Col md={6}>
-                        <strong>Difficulty:</strong> {Array.from({ length: selectedLesson.difficulty_rating }, (_, i) => (
-                          <FaStar key={i} className="text-warning" />
-                        ))}
-                      </Col>
-                    </Row>
-                  </div>
-                  
-                  <div className="mt-4">
-                    <h6>Learning Objectives:</h6>
-                    <ul>
-                      {selectedLesson.objectives?.map((objective, index) => (
-                        <li key={index}>{objective}</li>
-                      ))}
-                    </ul>
-                  </div>
-                  
-                  <div className="mt-3">
-                    <h6>Tags:</h6>
-                    {selectedLesson.tags?.map((tag, index) => (
-                      <Badge key={index} bg="secondary" className="me-1">{tag}</Badge>
+        <Form onSubmit={handleLessonSubmit}>
+          <Modal.Body>
+            <Row>
+              <Col md={8}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Lesson Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={lessonForm.title}
+                    onChange={(e) => setLessonForm(prev => ({...prev, title: e.target.value}))}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Category</Form.Label>
+                  <Form.Select
+                    value={lessonForm.category}
+                    onChange={(e) => setLessonForm(prev => ({...prev, category: e.target.value}))}
+                    required
+                  >
+                    <option value="">Select Category</option>
+                    <option value="Grammar">Grammar</option>
+                    <option value="Vocabulary">Vocabulary</option>
+                    <option value="Speaking">Speaking</option>
+                    <option value="Listening">Listening</option>
+                    <option value="Reading">Reading</option>
+                    <option value="Writing">Writing</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Description</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={3}
+                value={lessonForm.description}
+                onChange={(e) => setLessonForm(prev => ({...prev, description: e.target.value}))}
+                required
+              />
+            </Form.Group>
+
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Level</Form.Label>
+                  <Form.Select
+                    value={lessonForm.level}
+                    onChange={(e) => setLessonForm(prev => ({...prev, level: e.target.value}))}
+                  >
+                    <option value="beginner">Beginner</option>
+                    <option value="intermediate">Intermediate</option>
+                    <option value="advanced">Advanced</option>
+                    <option value="expert">Expert</option>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Duration (minutes)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={lessonForm.duration}
+                    onChange={(e) => setLessonForm(prev => ({...prev, duration: parseInt(e.target.value)}))}
+                    min="1"
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Form.Group className="mb-3">
+              <Form.Label>Lesson Content</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={6}
+                value={lessonForm.content}
+                onChange={(e) => setLessonForm(prev => ({...prev, content: e.target.value}))}
+                placeholder="Enter the main content of your lesson..."
+              />
+            </Form.Group>
+
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                <Accordion.Header>Learning Objectives</Accordion.Header>
+                <Accordion.Body>
+                  {lessonForm.objectives.map((objective, index) => (
+                    <InputGroup key={index} className="mb-2">
+                      <Form.Control
+                        type="text"
+                        value={objective}
+                        onChange={(e) => updateObjective(index, e.target.value)}
+                        placeholder={`Objective ${index + 1}`}
+                      />
+                      {lessonForm.objectives.length > 1 && (
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => removeObjective(index)}
+                        >
+                          <i className="fas fa-minus"></i>
+                        </Button>
+                      )}
+                    </InputGroup>
+                  ))}
+                  <Button variant="outline-primary" onClick={addObjective}>
+                    <i className="fas fa-plus me-2"></i>Add Objective
+                  </Button>
+                </Accordion.Body>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="1">
+                <Accordion.Header>Key Vocabulary</Accordion.Header>
+                <Accordion.Body>
+                  {lessonForm.vocabulary.map((word, index) => (
+                    <InputGroup key={index} className="mb-2">
+                      <Form.Control
+                        type="text"
+                        value={word}
+                        onChange={(e) => updateVocabulary(index, e.target.value)}
+                        placeholder={`Vocabulary word ${index + 1}`}
+                      />
+                      {lessonForm.vocabulary.length > 1 && (
+                        <Button
+                          variant="outline-danger"
+                          onClick={() => removeVocabulary(index)}
+                        >
+                          <i className="fas fa-minus"></i>
+                        </Button>
+                      )}
+                    </InputGroup>
+                  ))}
+                  <Button variant="outline-primary" onClick={addVocabulary}>
+                    <i className="fas fa-plus me-2"></i>Add Word
+                  </Button>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+
+            <Form.Group className="mt-3">
+              <Form.Label>Status</Form.Label>
+              <Form.Select
+                value={lessonForm.status}
+                onChange={(e) => setLessonForm(prev => ({...prev, status: e.target.value}))}
+              >
+                <option value="draft">Draft</option>
+                <option value="published">Published</option>
+              </Form.Select>
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowLessonModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="primary" type="submit">
+              <i className="fas fa-save me-2"></i>
+              {editingLesson ? 'Update Lesson' : 'Create Lesson'}
+            </Button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      {/* Quiz Modal */}
+      <Modal show={showQuizModal} onHide={() => setShowQuizModal(false)} size="xl">
+        <Modal.Header closeButton>
+          <Modal.Title>
+            <i className="fas fa-question-circle me-2"></i>
+            {editingQuiz ? 'Edit Quiz' : 'Create New Quiz'}
+          </Modal.Title>
+        </Modal.Header>
+        <Form onSubmit={handleQuizSubmit}>
+          <Modal.Body>
+            <Row>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Quiz Title</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={quizForm.title}
+                    onChange={(e) => setQuizForm(prev => ({...prev, title: e.target.value}))}
+                    required
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={6}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Associated Lesson</Form.Label>
+                  <Form.Select
+                    value={quizForm.lesson_id}
+                    onChange={(e) => setQuizForm(prev => ({...prev, lesson_id: e.target.value}))}
+                    required
+                  >
+                    <option value="">Select Lesson</option>
+                    {lessons.map((lesson) => (
+                      <option key={lesson.id} value={lesson.id}>{lesson.title}</option>
                     ))}
-                  </div>
-                </Col>
-                <Col md={4}>
-                  <Card className="stats-summary">
-                    <Card.Header>
-                      <h6 className="mb-0">Performance Stats</h6>
-                    </Card.Header>
-                    <Card.Body>
-                      <div className="stat-item">
-                        <span>Students Enrolled:</span>
-                        <strong>{selectedLesson.students_enrolled}</strong>
-                      </div>
-                      <div className="stat-item">
-                        <span>Completion Rate:</span>
-                        <strong>{selectedLesson.completion_rate}%</strong>
-                      </div>
-                      <div className="stat-item">
-                        <span>Average Score:</span>
-                        <strong>{selectedLesson.average_score}%</strong>
-                      </div>
-                      <div className="stat-item">
-                        <span>Status:</span>
-                        <Badge bg={getStatusBadgeVariant(selectedLesson.status)}>
-                          {selectedLesson.status}
-                        </Badge>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-            </div>
-          ) : (
-            <Form onSubmit={handleSubmit}>
-              <Tabs activeKey={activeTab} onSelect={(k) => setActiveTab(k)} className="mb-3">
-                <Tab eventKey="overview" title="Overview">
-                  <Row>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Lesson Title *</Form.Label>
-                        <Form.Control
-                          type="text"
-                          value={formData.title}
-                          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                          required
-                          placeholder="Enter lesson title"
-                        />
-                      </Form.Group>
+                  </Form.Select>
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col md={8}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Description</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    rows={2}
+                    value={quizForm.description}
+                    onChange={(e) => setQuizForm(prev => ({...prev, description: e.target.value}))}
+                  />
+                </Form.Group>
+              </Col>
+              <Col md={4}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Time Limit (minutes)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    value={quizForm.time_limit}
+                    onChange={(e) => setQuizForm(prev => ({...prev, time_limit: parseInt(e.target.value)}))}
+                    min="1"
+                    required
+                  />
+                </Form.Group>
+              </Col>
+            </Row>
+
+            <h5 className="mb-3">Questions</h5>
+            {quizForm.questions.map((question, questionIndex) => (
+              <Card key={question.id} className="question-card mb-3">
+                <Card.Header>
+                  <Row className="align-items-center">
+                    <Col>
+                      <h6 className="mb-0">Question {questionIndex + 1}</h6>
                     </Col>
-                    <Col md={6}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Duration (minutes) *</Form.Label>
-                        <Form.Control
-                          type="number"
-                          value={formData.duration}
-                          onChange={(e) => setFormData({ ...formData, duration: parseInt(e.target.value) })}
-                          required
-                          min="1"
-                          max="180"
-                        />
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  
-                  <Form.Group className="mb-3">
-                    <Form.Label>Description *</Form.Label>
-                    <Form.Control
-                      as="textarea"
-                      rows={3}
-                      value={formData.description}
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      required
-                      placeholder="Describe what students will learn in this lesson"
-                    />
-                  </Form.Group>
-                  
-                  <Row>
-                    <Col md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Level *</Form.Label>
-                        <Form.Select
-                          value={formData.level}
-                          onChange={(e) => setFormData({ ...formData, level: e.target.value })}
-                          required
-                        >
-                          <option value="beginner">Beginner</option>
-                          <option value="intermediate">Intermediate</option>
-                          <option value="advanced">Advanced</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Type *</Form.Label>
-                        <Form.Select
-                          value={formData.type}
-                          onChange={(e) => setFormData({ ...formData, type: e.target.value })}
-                          required
-                        >
-                          <option value="reading">Reading</option>
-                          <option value="listening">Listening</option>
-                          <option value="speaking">Speaking</option>
-                          <option value="writing">Writing</option>
-                          <option value="grammar">Grammar</option>
-                          <option value="vocabulary">Vocabulary</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                    <Col md={4}>
-                      <Form.Group className="mb-3">
-                        <Form.Label>Difficulty Rating</Form.Label>
-                        <Form.Select
-                          value={formData.difficulty_rating}
-                          onChange={(e) => setFormData({ ...formData, difficulty_rating: parseInt(e.target.value) })}
-                        >
-                          <option value={1}>⭐ Very Easy</option>
-                          <option value={2}>⭐⭐ Easy</option>
-                          <option value={3}>⭐⭐⭐ Medium</option>
-                          <option value={4}>⭐⭐⭐⭐ Hard</option>
-                          <option value={5}>⭐⭐⭐⭐⭐ Very Hard</option>
-                        </Form.Select>
-                      </Form.Group>
-                    </Col>
-                  </Row>
-                  
-                  <Form.Group className="mb-3">
-                    <Form.Label>Learning Objectives</Form.Label>
-                    {formData.objectives.map((objective, index) => (
-                      <div key={index} className="d-flex mb-2">
-                        <Form.Control
-                          type="text"
-                          value={objective}
-                          onChange={(e) => updateArrayItem('objectives', index, e.target.value)}
-                          placeholder={`Objective ${index + 1}`}
-                        />
+                    <Col xs="auto">
+                      {quizForm.questions.length > 1 && (
                         <Button
                           variant="outline-danger"
                           size="sm"
-                          className="ms-2"
-                          onClick={() => removeArrayItem('objectives', index)}
-                          disabled={formData.objectives.length === 1}
+                          onClick={() => removeQuestion(questionIndex)}
                         >
-                          <FaTrash />
+                          <i className="fas fa-trash"></i>
                         </Button>
-                      </div>
-                    ))}
-                    <Button
-                      variant="outline-primary"
-                      size="sm"
-                      onClick={() => addArrayItem('objectives', '')}
-                    >
-                      <FaPlus className="me-1" /> Add Objective
-                    </Button>
-                  </Form.Group>
-                  
-                  <Form.Check
-                    type="checkbox"
-                    label="Publish immediately"
-                    checked={formData.is_published}
-                    onChange={(e) => setFormData({ ...formData, is_published: e.target.checked })}
-                    className="mb-3"
-                  />
-                </Tab>
-                
-                <Tab eventKey="content" title="Content">
-                  <Form.Group className="mb-3">
-                    <Form.Label>Lesson Content</Form.Label>
+                      )}
+                    </Col>
+                  </Row>
+                </Card.Header>
+                <Card.Body>
+                  <Row>
+                    <Col md={8}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Question Text</Form.Label>
+                        <Form.Control
+                          type="text"
+                          value={question.question}
+                          onChange={(e) => updateQuestion(questionIndex, 'question', e.target.value)}
+                          required
+                        />
+                      </Form.Group>
+                    </Col>
+                    <Col md={2}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Type</Form.Label>
+                        <Form.Select
+                          value={question.type}
+                          onChange={(e) => updateQuestion(questionIndex, 'type', e.target.value)}
+                        >
+                          <option value="multiple_choice">Multiple Choice</option>
+                          <option value="true_false">True/False</option>
+                          <option value="fill_blank">Fill in Blank</option>
+                        </Form.Select>
+                      </Form.Group>
+                    </Col>
+                    <Col md={2}>
+                      <Form.Group className="mb-3">
+                        <Form.Label>Points</Form.Label>
+                        <Form.Control
+                          type="number"
+                          value={question.points}
+                          onChange={(e) => updateQuestion(questionIndex, 'points', parseInt(e.target.value))}
+                          min="1"
+                        />
+                      </Form.Group>
+                    </Col>
+                  </Row>
+
+                  {question.type === 'multiple_choice' && (
+                    <div className="mb-3">
+                      <Form.Label>Answer Options</Form.Label>
+                      {question.options.map((option, optionIndex) => (
+                        <InputGroup key={optionIndex} className="mb-2">
+                          <InputGroup.Text>
+                            <Form.Check
+                              type="radio"
+                              name={`correct-${questionIndex}`}
+                              checked={question.correctAnswer === optionIndex}
+                              onChange={() => updateQuestion(questionIndex, 'correctAnswer', optionIndex)}
+                            />
+                          </InputGroup.Text>
+                          <Form.Control
+                            type="text"
+                            value={option}
+                            onChange={(e) => updateQuestionOption(questionIndex, optionIndex, e.target.value)}
+                            placeholder={`Option ${optionIndex + 1}`}
+                          />
+                        </InputGroup>
+                      ))}
+                    </div>
+                  )}
+
+                  {question.type === 'true_false' && (
+                    <Form.Group className="mb-3">
+                      <Form.Label>Correct Answer</Form.Label>
+                      <Form.Select
+                        value={question.correctAnswer}
+                        onChange={(e) => updateQuestion(questionIndex, 'correctAnswer', e.target.value === 'true')}
+                      >
+                        <option value={true}>True</option>
+                        <option value={false}>False</option>
+                      </Form.Select>
+                    </Form.Group>
+                  )}
+
+                  {question.type === 'fill_blank' && (
+                    <Form.Group className="mb-3">
+                      <Form.Label>Correct Answer</Form.Label>
+                      <Form.Control
+                        type="text"
+                        value={question.correctAnswer}
+                        onChange={(e) => updateQuestion(questionIndex, 'correctAnswer', e.target.value)}
+                        placeholder="Enter the correct answer"
+                      />
+                    </Form.Group>
+                  )}
+
+                  <Form.Group>
+                    <Form.Label>Explanation (Optional)</Form.Label>
                     <Form.Control
                       as="textarea"
-                      rows={10}
-                      value={formData.content}
-                      onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-                      placeholder="Enter the main lesson content here..."
+                      rows={2}
+                      value={question.explanation}
+                      onChange={(e) => updateQuestion(questionIndex, 'explanation', e.target.value)}
+                      placeholder="Provide an explanation for the correct answer"
                     />
                   </Form.Group>
-                </Tab>
-                
-                <Tab eventKey="vocabulary" title="Vocabulary">
-                  <h6>Vocabulary Words</h6>
-                  {formData.vocabulary.map((vocab, index) => (
-                    <Card key={index} className="mb-3">
-                      <Card.Body>
-                        <Row>
-                          <Col md={3}>
-                            <Form.Group>
-                              <Form.Label>Word</Form.Label>
-                              <Form.Control
-                                type="text"
-                                value={vocab.word}
-                                onChange={(e) => {
-                                  const updatedVocab = [...formData.vocabulary];
-                                  updatedVocab[index] = { ...vocab, word: e.target.value };
-                                  setFormData({ ...formData, vocabulary: updatedVocab });
-                                }}
-                                placeholder="Enter word"
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col md={4}>
-                            <Form.Group>
-                              <Form.Label>Definition</Form.Label>
-                              <Form.Control
-                                type="text"
-                                value={vocab.definition}
-                                onChange={(e) => {
-                                  const updatedVocab = [...formData.vocabulary];
-                                  updatedVocab[index] = { ...vocab, definition: e.target.value };
-                                  setFormData({ ...formData, vocabulary: updatedVocab });
-                                }}
-                                placeholder="Enter definition"
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col md={4}>
-                            <Form.Group>
-                              <Form.Label>Example</Form.Label>
-                              <Form.Control
-                                type="text"
-                                value={vocab.example}
-                                onChange={(e) => {
-                                  const updatedVocab = [...formData.vocabulary];
-                                  updatedVocab[index] = { ...vocab, example: e.target.value };
-                                  setFormData({ ...formData, vocabulary: updatedVocab });
-                                }}
-                                placeholder="Example sentence"
-                              />
-                            </Form.Group>
-                          </Col>
-                          <Col md={1} className="d-flex align-items-end">
-                            <Button
-                              variant="outline-danger"
-                              size="sm"
-                              onClick={() => removeArrayItem('vocabulary', index)}
-                              disabled={formData.vocabulary.length === 1}
-                            >
-                              <FaTrash />
-                            </Button>
-                          </Col>
-                        </Row>
-                      </Card.Body>
-                    </Card>
-                  ))}
-                  <Button
-                    variant="outline-primary"
-                    onClick={() => addArrayItem('vocabulary', { word: '', definition: '', example: '' })}
-                  >
-                    <FaPlus className="me-1" /> Add Vocabulary Word
-                  </Button>
-                </Tab>
-              </Tabs>
-            </Form>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowModal(false)}>
-            {modalType === 'view' ? 'Close' : 'Cancel'}
-          </Button>
-          {modalType !== 'view' && (
-            <Button variant="primary" onClick={handleSubmit} disabled={loading}>
-              {loading ? (
-                <>
-                  <Spinner animation="border" size="sm" className="me-2" />
-                  Saving...
-                </>
-              ) : (
-                modalType === 'create' ? 'Create Lesson' : 'Update Lesson'
-              )}
+                </Card.Body>
+              </Card>
+            ))}
+
+            <Button variant="outline-primary" onClick={addQuestion}>
+              <i className="fas fa-plus me-2"></i>Add Question
             </Button>
-          )}
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={() => setShowQuizModal(false)}>
+              Cancel
+            </Button>
+            <Button variant="success" type="submit">
+              <i className="fas fa-save me-2"></i>
+              {editingQuiz ? 'Update Quiz' : 'Create Quiz'}
+            </Button>
+          </Modal.Footer>
+        </Form>
       </Modal>
-    </Container>
+    </div>
   );
 };
 

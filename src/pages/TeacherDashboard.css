@@ -1,0 +1,406 @@
+/* Teacher Dashboard Styles */
+.teacher-dashboard {
+  min-height: 100vh;
+  background: #f8f9fa;
+}
+
+.teacher-header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 1rem 0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-title {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1.8rem;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.teacher-name {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.teacher-navigation {
+  background: white;
+  border-bottom: 1px solid #e9ecef;
+  padding: 0.5rem 0;
+}
+
+.teacher-nav {
+  gap: 0.5rem;
+}
+
+.teacher-nav-link {
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  color: #6c757d;
+}
+
+.teacher-nav-link:hover {
+  background: #f8f9fa;
+  color: #667eea;
+  transform: translateY(-2px);
+}
+
+.teacher-nav-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.teacher-content {
+  padding: 2rem 0;
+}
+
+/* Overview Section Styles */
+.teacher-overview {
+  animation: fadeInUp 0.6s ease;
+}
+
+.welcome-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.welcome-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.welcome-subtitle {
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+/* Stat Cards */
+.stat-card {
+  border: none;
+  border-radius: 15px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.stat-students {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+}
+
+.stat-card.stat-classes {
+  background: linear-gradient(135deg, #f093fb, #f5576c);
+  color: white;
+}
+
+.stat-card.stat-lessons {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: white;
+}
+
+.stat-card.stat-grade {
+  background: linear-gradient(135deg, #43e97b, #38f9d7);
+  color: white;
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.stat-icon i {
+  font-size: 1.8rem;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  margin-bottom: 0;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Upcoming Classes Card */
+.upcoming-classes-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.upcoming-classes-card .card-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  border-radius: 15px 15px 0 0;
+  padding: 1.25rem;
+}
+
+.class-item {
+  padding: 1rem;
+  border-radius: 10px;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.class-item:hover {
+  background: #e9ecef;
+  transform: translateX(5px);
+}
+
+.class-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.class-info {
+  color: #6c757d;
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+/* Activities Card */
+.activities-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.activities-card .card-header {
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  border-radius: 15px 15px 0 0;
+  padding: 1.25rem;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.activity-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activity-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.activity-content {
+  flex: 1;
+}
+
+.activity-message {
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+  color: #2c3e50;
+}
+
+.activity-time {
+  font-size: 0.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .teacher-header {
+    padding: 0.75rem 0;
+  }
+  
+  .dashboard-title {
+    font-size: 1.5rem;
+  }
+  
+  .header-actions {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: end;
+  }
+  
+  .teacher-name {
+    font-size: 0.9rem;
+  }
+  
+  .teacher-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+  }
+  
+  .teacher-nav-link {
+    white-space: nowrap;
+    padding: 8px 16px;
+  }
+  
+  .teacher-content {
+    padding: 1rem 0;
+  }
+  
+  .stat-card {
+    margin-bottom: 1rem;
+  }
+  
+  .stat-number {
+    font-size: 2rem;
+  }
+  
+  .welcome-card .btn {
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .teacher-nav-link {
+    padding: 6px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .stat-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .stat-icon i {
+    font-size: 1.5rem;
+  }
+  
+  .stat-number {
+    font-size: 1.8rem;
+  }
+  
+  .class-item {
+    padding: 0.75rem;
+  }
+  
+  .activity-icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.stat-card {
+  animation: fadeInUp 0.6s ease;
+}
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Loading states */
+.loading-shimmer {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Focus states for accessibility */
+.teacher-nav-link:focus,
+.stat-card:focus {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .teacher-nav-link.active {
+    background: #000;
+    color: #fff;
+  }
+  
+  .stat-card {
+    border: 2px solid #000;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .teacher-dashboard {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  
+  .teacher-navigation {
+    background: #2d2d2d;
+    border-bottom-color: #444;
+  }
+  
+  .upcoming-classes-card,
+  .activities-card {
+    background: #2d2d2d;
+    color: #fff;
+  }
+  
+  .upcoming-classes-card .card-header,
+  .activities-card .card-header {
+    background: #333;
+    border-bottom-color: #444;
+  }
+  
+  .class-item {
+    background: #333;
+  }
+  
+  .class-item:hover {
+    background: #404040;
+  }
+}

@@ -1,0 +1,762 @@
+/* Multimedia Learning Styles */
+.multimedia-learning {
+  animation: fadeInUp 0.6s ease;
+}
+
+/* Navigation */
+.navigation-card {
+  border: none;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+  border-radius: 15px;
+}
+
+.skill-navigation {
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.skill-nav-link {
+  border-radius: 25px;
+  padding: 12px 20px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  color: #6c757d;
+  min-width: 120px;
+  text-align: center;
+}
+
+.skill-nav-link:hover {
+  background: #f8f9fa;
+  color: #667eea;
+  transform: translateY(-2px);
+  border-color: #667eea;
+}
+
+.skill-nav-link.active {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Overview Section */
+.progress-overview-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+}
+
+.overall-progress-bar {
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.overall-progress-bar .progress-bar {
+  background: linear-gradient(90deg, #ffffff, #f8f9fa);
+  border-radius: 10px;
+}
+
+.achievement-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+}
+
+.achievement-inner {
+  text-align: center;
+}
+
+.achievement-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 0;
+  color: white;
+}
+
+/* Skills Grid */
+.skills-grid {
+  gap: 1.5rem;
+}
+
+.skill-card {
+  border: none;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+.skill-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+}
+
+.skill-card.skill-speaking {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  color: white;
+}
+
+.skill-card.skill-listening {
+  background: linear-gradient(135deg, #4ecdc4, #44a08d);
+  color: white;
+}
+
+.skill-card.skill-reading {
+  background: linear-gradient(135deg, #45b7d1, #96c93d);
+  color: white;
+}
+
+.skill-card.skill-writing {
+  background: linear-gradient(135deg, #f9ca24, #f0932b);
+  color: white;
+}
+
+.skill-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.skill-icon i {
+  font-size: 2rem;
+}
+
+.skill-title {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.skill-progress {
+  margin-bottom: 1rem;
+}
+
+.skill-progress .progress {
+  height: 8px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.skill-progress .progress-bar {
+  border-radius: 10px;
+}
+
+.skill-stats {
+  opacity: 0.9;
+}
+
+/* Achievements */
+.achievements-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.achievement-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 10px;
+  background: #f8f9fa;
+  transition: all 0.3s ease;
+}
+
+.achievement-item:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+}
+
+.achievement-badge {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: white;
+  flex-shrink: 0;
+}
+
+.achievement-badge.achievement-gold {
+  background: linear-gradient(135deg, #ffd700, #ffed4e);
+  color: #333;
+}
+
+.achievement-badge.achievement-silver {
+  background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+  color: #333;
+}
+
+.achievement-badge.achievement-bronze {
+  background: linear-gradient(135deg, #cd7f32, #d4a574);
+  color: white;
+}
+
+.achievement-title {
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 0.25rem;
+}
+
+/* Study Plan */
+.study-plan-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.study-recommendation {
+  padding: 1rem;
+  border-radius: 10px;
+  background: #f8f9fa;
+  border-left: 4px solid;
+  transition: all 0.3s ease;
+}
+
+.study-recommendation:hover {
+  background: #e9ecef;
+  transform: translateY(-2px);
+}
+
+.study-recommendation h6 {
+  margin-bottom: 0.5rem;
+}
+
+.study-recommendation:nth-child(1) {
+  border-left-color: #007bff;
+}
+
+.study-recommendation:nth-child(2) {
+  border-left-color: #17a2b8;
+}
+
+.study-recommendation:nth-child(3) {
+  border-left-color: #ffc107;
+}
+
+.study-recommendation:nth-child(4) {
+  border-left-color: #28a745;
+}
+
+/* Speaking Practice Styles */
+.recording-indicator {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  margin: 0 auto;
+}
+
+.pulse-ring {
+  position: absolute;
+  border: 3px solid #dc3545;
+  border-radius: 50%;
+  height: 100px;
+  width: 100px;
+  animation: pulsate 1.5s ease-out infinite;
+}
+
+.pulse-dot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 30px;
+  height: 30px;
+  background: #dc3545;
+  border-radius: 50%;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0.0;
+  }
+  50% {
+    opacity: 1.0;
+  }
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: 0.0;
+  }
+}
+
+.recording-ready i {
+  color: #6c757d;
+}
+
+.record-btn, .stop-btn {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  border: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.record-btn:hover, .stop-btn:hover {
+  transform: scale(1.1);
+}
+
+.score-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  position: relative;
+  border: 5px solid;
+}
+
+.score-circle.score-excellent {
+  border-color: #28a745;
+  background: linear-gradient(135deg, #28a745, #20c997);
+  color: white;
+}
+
+.score-circle.score-good {
+  border-color: #ffc107;
+  background: linear-gradient(135deg, #ffc107, #fd7e14);
+  color: white;
+}
+
+.score-circle.score-needs-work {
+  border-color: #dc3545;
+  background: linear-gradient(135deg, #dc3545, #e83e8c);
+  color: white;
+}
+
+.score-number {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.score-percent {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Listening Comprehension Styles */
+.media-controls {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.playback-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.time-display {
+  font-family: 'Courier New', monospace;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Writing Practice Styles */
+.writing-textarea {
+  font-family: 'Georgia', serif;
+  border: 2px solid #e9ecef;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.writing-textarea:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.writing-stats {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.stat-item {
+  margin-bottom: 0.5rem;
+}
+
+.feedback-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.overall-score {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 15px;
+  padding: 2rem;
+  margin: -1rem -1rem 2rem -1rem;
+}
+
+.detailed-scores .score-item {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.analysis-item {
+  text-align: center;
+  padding: 1rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+}
+
+/* Flashcards Styles */
+.flashcard-main {
+  min-height: 400px;
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.flashcard-main:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.card-text {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #2c3e50;
+  line-height: 1.3;
+}
+
+.card-example {
+  background: #e3f2fd;
+  border-radius: 10px;
+  padding: 1rem;
+}
+
+.set-card {
+  border: 2px solid #e9ecef;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.set-card:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.set-title {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.set-badges {
+  margin-bottom: 0.5rem;
+}
+
+/* Quiz Styles */
+.quiz-card {
+  border: 2px solid #e9ecef;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.quiz-card:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+}
+
+.quiz-title {
+  color: #2c3e50;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.quiz-badges {
+  margin-bottom: 1rem;
+}
+
+.quiz-description {
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.question-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.question-text {
+  color: #2c3e50;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.option-check {
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.option-check:hover {
+  background: #e9ecef;
+}
+
+.option-check input[type="radio"]:checked ~ label,
+.option-check input[type="checkbox"]:checked ~ label {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.true-false-options .btn {
+  height: 80px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+}
+
+.results-card {
+  border: none;
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+}
+
+.timer {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* Exercise Lists */
+.exercise-item {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.exercise-item:hover {
+  background: #e9ecef;
+  border-color: #667eea;
+  transform: translateY(-1px);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .skill-nav-link {
+    min-width: 80px;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .achievement-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .achievement-number {
+    font-size: 1.8rem;
+  }
+  
+  .skill-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .skill-icon i {
+    font-size: 1.5rem;
+  }
+  
+  .card-text {
+    font-size: 1.5rem;
+  }
+  
+  .score-circle {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .score-number {
+    font-size: 1.5rem;
+  }
+  
+  .record-btn, .stop-btn {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .flashcard-main {
+    min-height: 300px;
+  }
+  
+  .true-false-options .btn {
+    height: 60px;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .skills-grid {
+    gap: 1rem;
+  }
+  
+  .skill-navigation {
+    gap: 0.25rem;
+  }
+  
+  .skill-nav-link {
+    min-width: 60px;
+    padding: 6px 8px;
+    font-size: 0.8rem;
+  }
+  
+  .achievement-item {
+    padding: 0.75rem;
+  }
+  
+  .achievement-badge {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
+  }
+  
+  .study-recommendation {
+    padding: 0.75rem;
+  }
+  
+  .card-text {
+    font-size: 1.2rem;
+  }
+  
+  .recording-indicator {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .pulse-ring {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .pulse-dot {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.skill-card {
+  animation: fadeInUp 0.6s ease;
+}
+
+.skill-card:nth-child(1) { animation-delay: 0.1s; }
+.skill-card:nth-child(2) { animation-delay: 0.2s; }
+.skill-card:nth-child(3) { animation-delay: 0.3s; }
+.skill-card:nth-child(4) { animation-delay: 0.4s; }
+
+/* Focus States for Accessibility */
+.skill-card:focus,
+.flashcard-main:focus,
+.option-check:focus-within {
+  outline: 2px solid #667eea;
+  outline-offset: 2px;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .skill-card,
+  .flashcard-main,
+  .quiz-card {
+    border: 2px solid #000;
+  }
+  
+  .skill-nav-link.active {
+    background: #000;
+    color: #fff;
+  }
+  
+  .score-circle {
+    border-color: #000;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .multimedia-learning {
+    background: #1a1a1a;
+    color: #fff;
+  }
+  
+  .navigation-card,
+  .flashcard-main,
+  .quiz-card,
+  .question-card {
+    background: #2d2d2d;
+    color: #fff;
+  }
+  
+  .skill-nav-link {
+    color: #ccc;
+  }
+  
+  .skill-nav-link:hover {
+    background: #404040;
+    color: #667eea;
+  }
+  
+  .card-text {
+    color: #fff;
+  }
+  
+  .option-check {
+    background: #404040;
+  }
+  
+  .option-check:hover {
+    background: #555;
+  }
+  
+  .writing-textarea {
+    background: #2d2d2d;
+    border-color: #555;
+    color: #fff;
+  }
+  
+  .media-controls,
+  .writing-stats {
+    background: #404040;
+  }
+}

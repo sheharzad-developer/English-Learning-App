@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Container, Row, Col, Card, Button, Nav, Badge, Alert } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
+import { Container, Row, Col, Card, Button, Nav, Badge, Alert, Spinner } from 'react-bootstrap';
 import QuizComponent from './QuizComponent';
 import MatchingExercise from './MatchingExercise';
+import ImprovedMatchingExercise from './ImprovedMatchingExercise';
 import FillInBlankExercise from './FillInBlankExercise';
 import './InteractiveExerciseDemo.css';
 
@@ -9,6 +10,8 @@ const InteractiveExerciseDemo = () => {
   const [activeTab, setActiveTab] = useState('quiz');
   const [completedExercises, setCompletedExercises] = useState({});
   const [exerciseResults, setExerciseResults] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Sample data for demonstrations
   const quizData = {
@@ -169,15 +172,30 @@ const InteractiveExerciseDemo = () => {
   };
 
   const handleExerciseComplete = (exerciseType, results) => {
-    setCompletedExercises(prev => ({
-      ...prev,
-      [exerciseType]: true
-    }));
-    
-    setExerciseResults(prev => ({
-      ...prev,
-      [exerciseType]: results
-    }));
+    try {
+      setLoading(true);
+      setError(null);
+      
+      setCompletedExercises(prev => ({
+        ...prev,
+        [exerciseType]: true
+      }));
+      
+      setExerciseResults(prev => ({
+        ...prev,
+        [exerciseType]: results
+      }));
+      
+      // Simulate API call to save results
+      setTimeout(() => {
+        setLoading(false);
+        console.log(`${exerciseType} completed with score: ${results.score}%`);
+      }, 1000);
+      
+    } catch (err) {
+      setError(`Failed to save ${exerciseType} results. Your progress has been saved locally.`);
+      setLoading(false);
+    }
   };
 
   const getScoreColor = (score) => {
@@ -385,7 +403,7 @@ const InteractiveExerciseDemo = () => {
         );
       case 'matching':
         return (
-          <MatchingExercise
+          <ImprovedMatchingExercise
             {...matchingData}
             onComplete={(results) => handleExerciseComplete('matching', results)}
           />
@@ -413,6 +431,20 @@ const InteractiveExerciseDemo = () => {
           <p className="demo-description">
             Explore our comprehensive suite of interactive learning exercises
           </p>
+          
+          {error && (
+            <Alert variant="warning" className="mt-3">
+              <i className="bi bi-exclamation-triangle me-2"></i>
+              {error}
+            </Alert>
+          )}
+          
+          {loading && (
+            <Alert variant="info" className="mt-3">
+              <Spinner animation="border" size="sm" className="me-2" />
+              Saving your progress...
+            </Alert>
+          )}
         </div>
         
         {/* Navigation Tabs */}

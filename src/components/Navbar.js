@@ -49,7 +49,17 @@ const AppNavbar = () => {
             
             {!isAuthenticated ? (
               <>
-                <Button as={Link} to="/login" variant="outline-primary" className="mx-2">Login</Button>
+                <NavDropdown title="Login" id="login-dropdown" className="me-2">
+                  <NavDropdown.Item as={Link} to="/login">
+                    <i className="fas fa-user-graduate me-2"></i>Student Login
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/teacher/login">
+                    <i className="fas fa-chalkboard-teacher me-2"></i>Teacher Login
+                  </NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/admin/login">
+                    <i className="fas fa-user-shield me-2"></i>Admin Login
+                  </NavDropdown.Item>
+                </NavDropdown>
                 <Button as={Link} to="/register" variant="primary" className="mx-2">Register</Button>
               </>
             ) : (
