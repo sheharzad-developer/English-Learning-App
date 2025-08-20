@@ -412,7 +412,7 @@ const SpeakingPractice = ({ onProgressUpdate }) => {
                 <div className="pronunciation-text">
                   <Card className="text-to-read">
                     <Card.Body>
-                      <h4 className="text-center text-primary">{exercise.text}</h4>
+                      <h4 className="text-center">{exercise.text}</h4>
                       <div className="text-center mt-3">
                         <Button
                           variant="outline-primary"

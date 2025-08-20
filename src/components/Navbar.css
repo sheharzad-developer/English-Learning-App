@@ -136,7 +136,7 @@
 
 .dark-theme .main-navbar .dropdown-item:hover {
   background-color: rgba(139, 92, 246, 0.2);
-  color: var(--primary-solid) !important;
+  
 }
 
 .dark-theme .main-navbar .dropdown-toggle {
@@ -182,7 +182,7 @@
 
 .dark-theme .main-navbar .btn-primary {
   background: var(--primary-color);
-  color: var(--text-inverse);
+
 }
 
 .dark-theme .main-navbar .btn-outline-primary {

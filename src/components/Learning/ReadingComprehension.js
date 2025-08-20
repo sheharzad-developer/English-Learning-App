@@ -750,7 +750,7 @@ Cooking is also a wonderful way to connect with family and friends. Sharing meal
               {readingExercises.map((ex, index) => (
                 <div
                   key={ex.id}
-                  className={`exercise-item p-2 rounded mb-2 ${index === currentExercise ? 'bg-primary text-white' : 'bg-light'}`}
+                  className={`exercise-item p-2 rounded mb-2 ${index === currentExercise ? 'bg-primary text-white' : ''}`}
                   style={{ cursor: 'pointer' }}
                   onClick={() => {
                     setCurrentExercise(index);
