@@ -3,12 +3,14 @@ import { Navbar, Nav, Container, Button, NavDropdown } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTheme } from '../contexts/ThemeContext';
+import ThemeSwitcher from './ThemeSwitcher';
+import logo from '../assets/logo.svg';
 import './Navbar.css';
 
 const AppNavbar = () => {
   const navigate = useNavigate();
   const { isAuthenticated, user, logout } = useAuth();
-  const { isDarkMode, toggleTheme } = useTheme();
+  const { isDarkMode } = useTheme();
 
   const handleLogout = () => {
     logout();
@@ -18,8 +20,14 @@ const AppNavbar = () => {
   return (
     <Navbar expand="lg" sticky="top" className="shadow-sm py-2 main-navbar">
       <Container fluid>
-        <Navbar.Brand as={Link} to="/" className="fw-bold text-primary fs-3">
-          <i className="bi bi-book-half me-2"></i> English Learning
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-primary fs-3 d-flex align-items-center">
+          <img 
+            src={logo} 
+            alt="English Learning App Logo" 
+            style={{ height: '40px', width: '40px', marginRight: '8px' }}
+            className="navbar-logo"
+          />
+          English Learning
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="main-navbar-nav" />
         <Navbar.Collapse id="main-navbar-nav">
@@ -32,20 +40,8 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to="/learning" className="mx-2">Learning</Nav.Link>
             )}
             
-            {/* Theme Toggle Button */}
-            <Button
-              variant="outline-secondary"
-              size="sm"
-              className="theme-toggle-btn mx-2"
-              onClick={toggleTheme}
-              title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              {isDarkMode ? (
-                <i className="bi bi-sun-fill"></i>
-              ) : (
-                <i className="bi bi-moon-fill"></i>
-              )}
-            </Button>
+            {/* Theme Switcher */}
+            <ThemeSwitcher />
             
             {!isAuthenticated ? (
               <>

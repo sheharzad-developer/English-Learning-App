@@ -1,7 +1,157 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@300;400;500;600;700;800&display=swap');
 
+/* CSS Reset for browser compatibility */
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Ensure consistent text rendering across browsers */
+html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Force text colors for all browsers */
+body, html {
+  color: #0f172a !important;
+  background-color: #f8fafc !important;
+}
+
+/* Brave browser specific detection and fixes */
+@supports (-webkit-appearance: none) and (not (-webkit-backdrop-filter: blur(1px))) {
+  /* This targets Brave specifically */
+  body, html, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    text-shadow: none !important;
+  }
+  
+  .text-muted {
+    color: #333333 !important;
+    -webkit-text-fill-color: #333333 !important;
+  }
+  
+  .lead {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+  
+  /* Force all text to be black in Brave */
+  * {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+}
+
+/* Additional Brave-specific overrides using user agent detection */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  /* Force black text for all elements in Brave */
+  body, html, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, .card, .card-body, .card-title, .card-text, .hero-section, .hero-section h1, .hero-section p {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    text-shadow: none !important;
+  }
+  
+  /* Ensure cards have white background and black text */
+  .card, .card-body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+  
+  /* Override any gradient text */
+  .hero-section h1 {
+    background: none !important;
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+}
+
+/* Brave browser class - applied via JavaScript */
+.brave-browser {
+  color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+.brave-browser * {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  text-shadow: none !important;
+}
+
+.brave-browser .text-muted {
+  color: #333333 !important;
+  -webkit-text-fill-color: #333333 !important;
+}
+
+.brave-browser .card,
+.brave-browser .card-body,
+.brave-browser .card-title,
+.brave-browser .card-text {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background-color: #ffffff !important;
+}
+
+.brave-browser .hero-section h1 {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+  background: none !important;
+}
+
+.brave-browser .hero-section p {
+  color: #000000 !important;
+  -webkit-text-fill-color: #000000 !important;
+}
+
+/* Cross-browser compatibility fixes */
+/* Ensure consistent rendering across all browsers */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Force proper text rendering in all browsers */
+body, html {
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Universal text color fallbacks - Theme Aware */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  font-weight: 600 !important;
+}
+
+p, span, div {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  font-weight: 500 !important;
+}
+
+/* Ensure cards have proper contrast */
+.card, .card-body, .card-title, .card-text {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  background-color: var(--bg-card) !important;
+  font-weight: 500 !important;
+}
+
+/* Override any problematic gradient text */
+.hero-section h1,
+.navbar-brand {
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  background: none !important;
+  background-image: none !important;
+  -webkit-background-clip: initial !important;
+  background-clip: initial !important;
 }
 
 body {
@@ -13,6 +163,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   scroll-behavior: smooth;
+  background-color: #f8fafc;
+  color: #0f172a;
 }
 
 code {
@@ -58,6 +210,106 @@ button:focus {
 :focus-visible {
   outline: 2px solid rgba(102, 126, 234, 0.8);
   outline-offset: 2px;
+}
+
+/* Global text contrast improvements */
+h1, h2, h3, h4, h5, h6 {
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.text-muted {
+  color: #475569 !important;
+  font-weight: 500;
+}
+
+.lead {
+  color: #334155 !important;
+  font-weight: 500;
+}
+
+/* Ensure proper contrast for all text */
+* {
+  color: inherit;
+}
+
+/* Better text rendering - Browser compatible */
+* {
+  text-rendering: optimizeLegibility;
+  -webkit-font-feature-settings: "kern" 1;
+  -moz-font-feature-settings: "kern" 1;
+  font-feature-settings: "kern" 1;
+}
+
+/* Force text color inheritance for all browsers */
+body, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
+  color: inherit !important;
+}
+
+/* Ensure text is always visible - fallback for all browsers */
+.text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
+  color: #0f172a !important;
+  text-shadow: none !important;
+  -webkit-text-fill-color: initial !important;
+  -moz-text-fill-color: initial !important;
+}
+
+/* Brave/Chromium specific fixes */
+@supports (-webkit-appearance: none) {
+  .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+  }
+}
+
+/* Brave-specific overrides - more aggressive */
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+  body, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, .card, .card-body, .card-title, .card-text {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    text-shadow: none !important;
+    background-color: transparent !important;
+  }
+  
+  /* Force black text on all elements */
+  * {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+  
+  /* Specific overrides for common text classes */
+  .text-muted {
+    color: #333333 !important;
+    -webkit-text-fill-color: #333333 !important;
+  }
+  
+  .lead {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+  }
+  
+  /* Ensure cards have visible text */
+  .card, .card-body, .card-title, .card-text {
+    color: #000000 !important;
+    -webkit-text-fill-color: #000000 !important;
+    background-color: #ffffff !important;
+  }
+}
+
+/* Firefox specific fixes */
+@supports (-moz-appearance: none) {
+  .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important;
+    -moz-text-fill-color: #0f172a !important;
+  }
+}
+
+/* Safari specific fixes */
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+  }
 }
 
 /* Custom scrollbar */

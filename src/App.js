@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { ThemeProvider } from './contexts/ThemeContext';
 import Layout from './Layout/Layout';
@@ -22,9 +22,15 @@ import UserManagement from './components/admin/UserManagement';
 import ContentManager from './components/admin/ContentManager';
 import About from './pages/About';
 import Learning from './pages/Learning';
+import { applyBraveFixes } from './utils/browserDetection';
 import './styles/theme.css';
 
 function App() {
+  useEffect(() => {
+    // Apply Brave browser fixes on component mount
+    applyBraveFixes();
+  }, []);
+
   return (
     <ThemeProvider>
       <Layout>

@@ -12,6 +12,7 @@
   font-weight: 800;
   font-size: 1.5rem;
   letter-spacing: -0.02em;
+  color: #0f172a !important;
   background: var(--primary-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -21,8 +22,32 @@
   transition: all 0.3s ease;
 }
 
+/* Fallback for browsers without background-clip support */
+@supports not (-webkit-background-clip: text) {
+  .main-navbar .navbar-brand {
+    color: #0f172a !important;
+    -webkit-text-fill-color: #0f172a !important;
+    -moz-text-fill-color: #0f172a !important;
+    background: none !important;
+  }
+}
+
 .main-navbar .navbar-brand:hover {
   transform: var(--hover-scale);
+}
+
+.navbar-logo {
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+}
+
+.navbar-logo:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* Dark theme logo adjustments */
+.dark-theme .navbar-logo {
+  filter: drop-shadow(0 2px 4px rgba(255,255,255,0.1)) brightness(1.2);
 }
 
 .main-navbar .nav-link {
