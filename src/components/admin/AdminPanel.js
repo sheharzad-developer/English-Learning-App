@@ -49,9 +49,11 @@ import {
 } from 'react-icons/fa';
 import axios from 'axios';
 import progressService from '../../services/progressService';
+import { useTheme } from '../../contexts/ThemeContext';
 import './AdminPanel.css';
 
 const AdminPanel = () => {
+  const { isDarkMode } = useTheme();
   const [activeSection, setActiveSection] = useState('overview');
   const [users, setUsers] = useState([]);
   const [lessons, setLessons] = useState([]);
@@ -989,7 +991,7 @@ const AdminPanel = () => {
         show={showModal} 
         onHide={() => setShowModal(false)} 
         size="lg" 
-        className="user-modal"
+        className={`user-modal ${isDarkMode ? 'dark-theme' : 'light-theme'}`}
         backdrop="static"
         keyboard={true}
         autoFocus={true}
