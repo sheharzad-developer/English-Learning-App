@@ -985,15 +985,27 @@ const AdminPanel = () => {
       )}
 
       {/* User Modal */}
-      <Modal show={showModal} onHide={() => setShowModal(false)} size="lg" className="user-modal">
+      <Modal 
+        show={showModal} 
+        onHide={() => setShowModal(false)} 
+        size="lg" 
+        className="user-modal"
+        backdrop="static"
+        keyboard={true}
+        autoFocus={true}
+        enforceFocus={true}
+        restoreFocus={true}
+        aria-labelledby="user-modal-title"
+        aria-describedby="user-modal-description"
+      >
         <Modal.Header closeButton>
-          <Modal.Title>
+          <Modal.Title id="user-modal-title">
             {modalType === 'create' && 'Create New User'}
             {modalType === 'edit' && 'Edit User'}
             {modalType === 'view' && 'User Details'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body id="user-modal-description">
           {modalType === 'view' && selectedUser ? (
             <div className="user-details-view">
               <Row>

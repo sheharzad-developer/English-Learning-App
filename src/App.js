@@ -23,6 +23,7 @@ import UserManagement from './components/admin/UserManagement';
 import ContentManager from './components/admin/ContentManager';
 import About from './pages/About';
 import Learning from './pages/Learning';
+import Progress from './pages/Progress';
 import { applyBraveFixes } from './utils/browserDetection';
 import './styles/theme.css';
 
@@ -133,6 +134,14 @@ function App() {
           <Route path="/learning" element={<Learning />} />
           <Route path="/learning/:lessonId" element={<LessonDetail />} />
           <Route path="/about" element={<About />} />
+          <Route
+            path="/progress"
+            element={
+              <PrivateRoute>
+                <Progress />
+              </PrivateRoute>
+            }
+          />
         </Routes>
       </Layout>
     </ThemeProvider>

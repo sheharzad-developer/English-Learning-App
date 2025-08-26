@@ -4,8 +4,8 @@ import {
   Download, 
   Calendar, 
   Clock, 
-  Target, 
-  TrendingUp, 
+  Bullseye, 
+  GraphUpArrow, 
   Award,
   BarChart,
   PieChart,
@@ -33,63 +33,88 @@ const Progress = () => {
       setLoading(true);
       setError(null);
 
-      // Mock data for demonstration
-      const mockProgressData = {
-        totalLessons: 25,
-        streakDays: 7,
-        avgAccuracy: 85,
-        timeSpent: 120 // minutes
-      };
+      // Simulate API call delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
 
-      const mockRecentActivity = [
-        {
-          id: 1,
-          date: '2024-01-25',
-          lesson: 'Basic Grammar',
-          score: 90,
-          status: 'completed',
-          timeSpent: 15
-        },
-        {
-          id: 2,
-          date: '2024-01-24',
-          lesson: 'Vocabulary Builder',
-          score: 85,
-          status: 'completed',
-          timeSpent: 20
-        },
-        {
-          id: 3,
-          date: '2024-01-23',
-          lesson: 'Listening Practice',
-          score: 78,
-          status: 'completed',
-          timeSpent: 25
-        },
-        {
-          id: 4,
-          date: '2024-01-22',
-          lesson: 'Speaking Exercise',
-          score: 92,
-          status: 'completed',
-          timeSpent: 18
-        },
-        {
-          id: 5,
-          date: '2024-01-21',
-          lesson: 'Reading Comprehension',
-          score: 88,
-          status: 'completed',
-          timeSpent: 22
-        }
-      ];
+      // Try to fetch real data first, fallback to mock data
+      let progressData, recentActivity;
+      
+      try {
+        // Attempt to fetch from API (replace with actual API calls)
+        // const progressResponse = await fetch('/api/progress');
+        // const activityResponse = await fetch('/api/recent-activity');
+        // progressData = await progressResponse.json();
+        // recentActivity = await activityResponse.json();
+        
+        // For now, use mock data
+        throw new Error('API not implemented yet');
+      } catch (apiError) {
+        console.log('Using mock data:', apiError.message);
+        
+        // Mock data for demonstration
+        progressData = {
+          totalLessons: 25,
+          streakDays: 7,
+          avgAccuracy: 85,
+          timeSpent: 120 // minutes
+        };
 
-      setProgressData(mockProgressData);
-      setRecentActivity(mockRecentActivity);
+        recentActivity = [
+          {
+            id: 1,
+            date: '2024-01-25',
+            lesson: 'Basic Grammar',
+            score: 90,
+            status: 'completed',
+            timeSpent: 15
+          },
+          {
+            id: 2,
+            date: '2024-01-24',
+            lesson: 'Vocabulary Builder',
+            score: 85,
+            status: 'completed',
+            timeSpent: 20
+          },
+          {
+            id: 3,
+            date: '2024-01-23',
+            lesson: 'Listening Practice',
+            score: 78,
+            status: 'completed',
+            timeSpent: 25
+          },
+          {
+            id: 4,
+            date: '2024-01-22',
+            lesson: 'Speaking Exercise',
+            score: 92,
+            status: 'completed',
+            timeSpent: 18
+          },
+          {
+            id: 5,
+            date: '2024-01-21',
+            lesson: 'Reading Comprehension',
+            score: 88,
+            status: 'completed',
+            timeSpent: 22
+          }
+        ];
+      }
+
+      // Check if data is empty and provide appropriate handling
+      if (!progressData || Object.keys(progressData).length === 0) {
+        setError('No progress data available. Start learning to see your progress!');
+        return;
+      }
+
+      setProgressData(progressData);
+      setRecentActivity(recentActivity || []);
 
     } catch (err) {
       console.error('Error fetching progress data:', err);
-      setError('Failed to load progress data. Please try again.');
+      setError('Failed to load progress data. Please check your connection and try again.');
     } finally {
       setLoading(false);
     }
@@ -284,20 +309,47 @@ const Progress = () => {
     return (
       <Container fluid className="py-5">
         <Alert variant="danger">
-          <Alert.Heading>Error</Alert.Heading>
+          <Alert.Heading>Unable to Load Progress Data</Alert.Heading>
           <p>{error}</p>
+          <div className="mt-3">
+            <Button variant="outline-danger" onClick={fetchData} className="me-2">
+              <GraphUpArrow className="me-2" />
+              Retry
+            </Button>
+            <Button variant="outline-secondary" onClick={() => window.location.reload()}>
+              Refresh Page
+            </Button>
+          </div>
         </Alert>
       </Container>
     );
   }
 
+  // Empty state handling
+  if (!loading && (!progressData || Object.keys(progressData).length === 0)) {
+    return (
+      <Container fluid className="py-5 text-center">
+        <div className="empty-state">
+          <GraphUpArrow size={64} className="text-muted mb-3" />
+          <h3 className="text-muted">No Progress Data Yet</h3>
+          <p className="text-muted mb-4">
+            Start learning to see your progress and achievements here!
+          </p>
+          <Button variant="primary" onClick={() => window.location.href = '/lessons'}>
+            Start Learning
+          </Button>
+        </div>
+      </Container>
+    );
+  }
+
   return (
-    <div className="progress-page-wrapper">
-      <Container fluid className="progress-page py-4">
+    <div className={`progress-page-wrapper ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+      <Container fluid className={`progress-page py-4 ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
         {/* Header Section */}
         <div className="progress-header mb-4">
           <div className="progress-title">
-            <h1><TrendingUp /> Progress Dashboard</h1>
+            <h1><GraphUpArrow /> Progress Dashboard</h1>
             <p className="progress-subtitle">Track your learning journey and achievements</p>
           </div>
           <Dropdown as="div" className="export-dropdown">
@@ -349,7 +401,7 @@ const Progress = () => {
             <Card className={`kpi-card ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
               <Card.Body>
                 <div className="kpi-icon">
-                  <Target />
+                  <Bullseye />
                 </div>
                 <div className="kpi-content">
                   <div className="kpi-number">{progressData?.avgAccuracy || 0}%</div>
@@ -435,7 +487,7 @@ const Progress = () => {
                 ) : (
                   <div className="empty-state">
                     <div className="empty-icon">
-                      <TrendingUp size={48} />
+                      <GraphUpArrow size={48} />
                     </div>
                     <h3>No activity yet</h3>
                     <p>Start learning to see your progress here.</p>

@@ -4,7 +4,15 @@
   min-height: 100vh;
 }
 
+.progress-page-wrapper.dark-theme {
+  background: var(--bg-primary);
+}
+
 .progress-page {
+  background: var(--bg-primary);
+}
+
+.progress-page.dark-theme {
   background: var(--bg-primary);
 }
 
@@ -31,6 +39,14 @@
   color: var(--text-muted);
   font-size: 1.1rem;
   margin-bottom: 0;
+}
+
+.dark-theme .progress-title h1 {
+  color: var(--text-primary);
+}
+
+.dark-theme .progress-subtitle {
+  color: var(--text-muted);
 }
 
 .export-dropdown {
