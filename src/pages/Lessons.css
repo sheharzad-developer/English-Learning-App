@@ -1,0 +1,462 @@
+/* Lessons Page Styles */
+.lesson-card {
+  transition: all 0.3s ease;
+  border: 1px solid var(--bs-border-color);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.lesson-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  border-color: var(--bs-primary);
+}
+
+.lesson-card:focus-within {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.lesson-card.dark-theme {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-color: var(--bs-gray-700);
+}
+
+.lesson-card.dark-theme:hover {
+  box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
+  border-color: var(--bs-primary);
+}
+
+.lesson-card .card-title {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+}
+
+.lesson-card .card-text {
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.lesson-card .badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.lesson-card .progress {
+  height: 6px;
+  border-radius: 3px;
+}
+
+.lesson-card .btn {
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.lesson-card .btn:hover {
+  transform: translateY(-1px);
+}
+
+/* Filter Section */
+.filter-section {
+  background: var(--bs-light);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.dark-theme .filter-section {
+  background: var(--bs-dark);
+  border: 1px solid var(--bs-gray-700);
+}
+
+.filter-section .form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--bs-gray-700);
+}
+
+.dark-theme .filter-section .form-label {
+  color: var(--bs-gray-300);
+}
+
+.filter-section .form-select,
+.filter-section .form-control {
+  border-radius: 6px;
+  border: 1px solid var(--bs-gray-300);
+  transition: all 0.2s ease;
+}
+
+.dark-theme .filter-section .form-select,
+.dark-theme .filter-section .form-control {
+  background-color: var(--bs-gray-800);
+  border-color: var(--bs-gray-600);
+  color: var(--bs-light);
+}
+
+.filter-section .form-select:focus,
+.filter-section .form-control:focus {
+  border-color: var(--bs-primary);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-primary-rgb), 0.25);
+}
+
+/* Sort Controls */
+.sort-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--bs-gray-200);
+}
+
+.dark-theme .sort-controls {
+  border-bottom-color: var(--bs-gray-700);
+}
+
+.sort-controls .dropdown-toggle {
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--bs-gray-600);
+}
+
+.dark-theme .empty-state {
+  color: var(--bs-gray-400);
+}
+
+.empty-state .icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* Modal Styles */
+.modal.dark-theme .modal-content {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border: 1px solid var(--bs-gray-700);
+}
+
+.modal.dark-theme .modal-header {
+  border-bottom-color: var(--bs-gray-700);
+}
+
+.modal.dark-theme .modal-footer {
+  border-top-color: var(--bs-gray-700);
+}
+
+.modal.dark-theme .modal-title {
+  color: var(--bs-light);
+}
+
+/* Progress Bar Customization */
+.progress {
+  background-color: var(--bs-gray-200);
+}
+
+.dark-theme .progress {
+  background-color: var(--bs-gray-700);
+}
+
+.progress-bar {
+  border-radius: 3px;
+}
+
+/* Badge Customization */
+.badge.bg-light {
+  background-color: var(--bs-gray-100) !important;
+  color: var(--bs-gray-800) !important;
+}
+
+.dark-theme .badge.bg-light {
+  background-color: var(--bs-gray-700) !important;
+  color: var(--bs-light) !important;
+}
+
+/* Skeleton Loading */
+.skeleton-card {
+  height: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.skeleton-card .card-body {
+  padding: 1.5rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .lesson-card {
+    margin-bottom: 1rem;
+  }
+  
+  .filter-section {
+    padding: 1rem;
+  }
+  
+  .filter-section .row {
+    margin: 0;
+  }
+  
+  .filter-section .col-md-3 {
+    margin-bottom: 1rem;
+  }
+  
+  .sort-controls {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .modal-dialog {
+    margin: 0.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .lesson-card .card-body {
+    padding: 1rem;
+  }
+  
+  .lesson-card .card-title {
+    font-size: 1.1rem;
+  }
+  
+  .lesson-card .card-text {
+    font-size: 0.875rem;
+  }
+  
+  .filter-section {
+    padding: 0.75rem;
+  }
+}
+
+/* Accessibility Enhancements */
+.lesson-card:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+.form-control:focus-visible,
+.form-select:focus-visible {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .lesson-card {
+    border-width: 2px;
+  }
+  
+  .lesson-card:hover {
+    border-width: 3px;
+  }
+  
+  .btn {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .lesson-card,
+  .lesson-card:hover,
+  .lesson-card .btn,
+  .lesson-card .btn:hover {
+    transition: none;
+    transform: none;
+  }
+}
+
+/* Print styles */
+@media print {
+  .lesson-card {
+    break-inside: avoid;
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+  
+  .filter-section,
+  .sort-controls,
+  .btn {
+    display: none;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+.lesson-card::-webkit-scrollbar {
+  width: 6px;
+}
+
+.lesson-card::-webkit-scrollbar-track {
+  background: var(--bs-gray-200);
+}
+
+.dark-theme .lesson-card::-webkit-scrollbar-track {
+  background: var(--bs-gray-700);
+}
+
+.lesson-card::-webkit-scrollbar-thumb {
+  background: var(--bs-gray-400);
+  border-radius: 3px;
+}
+
+.dark-theme .lesson-card::-webkit-scrollbar-thumb {
+  background: var(--bs-gray-600);
+}
+
+.lesson-card::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-gray-500);
+}
+
+.dark-theme .lesson-card::-webkit-scrollbar-thumb:hover {
+  background: var(--bs-gray-500);
+}
+
+/* Animation for loading states */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, 
+    var(--bs-gray-200) 25%, 
+    var(--bs-gray-300) 50%, 
+    var(--bs-gray-200) 75%
+  );
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.dark-theme .skeleton {
+  background: linear-gradient(90deg, 
+    var(--bs-gray-700) 25%, 
+    var(--bs-gray-600) 50%, 
+    var(--bs-gray-700) 75%
+  );
+  background-size: 200px 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Focus indicators for keyboard navigation */
+.lesson-card:focus-within .card-body {
+  background-color: rgba(var(--bs-primary-rgb), 0.05);
+}
+
+.dark-theme .lesson-card:focus-within .card-body {
+  background-color: rgba(var(--bs-primary-rgb), 0.1);
+}
+
+/* Hover effects for interactive elements */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dark-theme .btn:hover {
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+/* Status badge animations */
+.badge {
+  transition: all 0.2s ease;
+}
+
+.badge:hover {
+  transform: scale(1.05);
+}
+
+/* Progress bar animations */
+.progress-bar {
+  transition: width 0.6s ease;
+}
+
+/* Modal backdrop */
+.modal-backdrop {
+  backdrop-filter: blur(4px);
+}
+
+/* Custom tooltip styles */
+.tooltip {
+  font-size: 0.875rem;
+}
+
+.tooltip-inner {
+  background-color: var(--bs-dark);
+  color: var(--bs-light);
+  border-radius: 6px;
+  padding: 0.5rem 0.75rem;
+}
+
+/* Form validation styles */
+.form-control.is-invalid {
+  border-color: var(--bs-danger);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-danger-rgb), 0.25);
+}
+
+.form-control.is-valid {
+  border-color: var(--bs-success);
+  box-shadow: 0 0 0 0.2rem rgba(var(--bs-success-rgb), 0.25);
+}
+
+/* Loading spinner customization */
+.spinner-border {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.spinner-border-sm {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Alert customization */
+.alert {
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .alert {
+  box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Dropdown customization */
+.dropdown-menu {
+  border-radius: 8px;
+  border: 1px solid var(--bs-gray-300);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.dark-theme .dropdown-menu {
+  background-color: var(--bs-dark);
+  border-color: var(--bs-gray-700);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-item:hover {
+  background-color: var(--bs-gray-100);
+}
+
+.dark-theme .dropdown-item:hover {
+  background-color: var(--bs-gray-700);
+}

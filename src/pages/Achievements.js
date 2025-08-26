@@ -1,6 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Card, Badge, Alert, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Card, Badge, Alert, Spinner, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { 
+  Trophy, 
+  Award, 
+  Star, 
+  Lock, 
+  CheckCircle, 
+  Share, 
+  Book, 
+  Puzzle, 
+  FileText, 
+  Fire, 
+  Mortarboard,
+  Bullseye,
+  Copy,
+  Lightbulb
+} from 'react-bootstrap-icons';
 import { useAuth } from '../contexts/AuthContext';
+import { useTheme } from '../contexts/ThemeContext';
 import axios from 'axios';
 import './Achievements.css';
 
@@ -9,7 +26,10 @@ const Achievements = () => {
   const [userBadges, setUserBadges] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [showShareModal, setShowShareModal] = useState(false);
   const { user } = useAuth();
+  const { isDarkMode } = useTheme();
 
   useEffect(() => {
     const fetchAchievements = async () => {
@@ -142,13 +162,13 @@ const Achievements = () => {
 
   const getCategoryIcon = (category) => {
     const icons = {
-      learning: '📚',
-      quiz: '🧩',
-      vocabulary: '📝',
-      grammar: '📖',
-      streak: '🔥',
-      level: '🎓',
-      default: '🏆'
+      learning: <Book />,
+      quiz: <Puzzle />,
+      vocabulary: <FileText />,
+      grammar: <FileText />,
+      streak: <Fire />,
+      level: <Mortarboard />,
+      default: <Trophy />
     };
     return icons[category] || icons.default;
   };
@@ -165,6 +185,35 @@ const Achievements = () => {
     return colors[category] || 'primary';
   };
 
+  const shareAchievements = () => {
+    const earnedAchievements = achievements.filter(a => a.earned);
+    const shareText = `I've earned ${earnedAchievements.length} achievements on the English Learning App! 🏆`;
+    const shareUrl = window.location.href;
+    
+    if (navigator.share) {
+      navigator.share({
+        title: 'My Achievements',
+        text: shareText,
+        url: shareUrl
+      });
+    } else {
+      // Fallback: copy to clipboard
+      navigator.clipboard.writeText(`${shareText}\n${shareUrl}`);
+      setShowShareModal(true);
+      setTimeout(() => setShowShareModal(false), 2000);
+    }
+  };
+
+  const getNextBadgeHint = () => {
+    const lockedAchievements = achievements.filter(a => !a.earned);
+    if (lockedAchievements.length === 0) return null;
+    
+    // Return the achievement with the lowest points requirement
+    return lockedAchievements.reduce((lowest, current) => 
+      (current.points_required || 0) < (lowest.points_required || 0) ? current : lowest
+    );
+  };
+
   if (loading) {
     return (
       <Container className="py-5">
@@ -178,11 +227,19 @@ const Achievements = () => {
 
   const earnedCount = achievements.filter(a => a.earned).length;
   const totalCount = achievements.length;
+  const progressPercentage = totalCount > 0 ? Math.round((earnedCount / totalCount) * 100) : 0;
+  const nextBadgeHint = getNextBadgeHint();
+
+  const filteredAchievements = selectedCategory === 'all' 
+    ? achievements 
+    : achievements.filter(a => a.category === selectedCategory);
 
   return (
     <Container className="py-5">
       <div className="text-center mb-5">
-        <h1 className="display-4 fw-bold mb-3">🏆 Achievements</h1>
+        <h1 className="display-4 fw-bold mb-3">
+          <Trophy /> Achievements
+        </h1>
         <p className="lead text-muted">Track your learning milestones and celebrate your progress!</p>
         
         {error && (
@@ -194,66 +251,147 @@ const Achievements = () => {
         
         <div className="achievement-summary mt-4">
           <Row className="justify-content-center">
-            <Col md={4}>
-              <Card className="border-0 shadow-sm">
+            <Col md={3}>
+              <Card className={`border-0 shadow-sm ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
                 <Card.Body className="text-center">
+                  <div className="achievement-stat-icon">
+                    <Award />
+                  </div>
                   <h3 className="text-primary">{earnedCount}</h3>
                   <p className="text-muted mb-0">Earned</p>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="border-0 shadow-sm">
+            <Col md={3}>
+              <Card className={`border-0 shadow-sm ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
                 <Card.Body className="text-center">
+                                  <div className="achievement-stat-icon">
+                  <Bullseye />
+                </div>
                   <h3 className="text-success">{totalCount}</h3>
                   <p className="text-muted mb-0">Total</p>
                 </Card.Body>
               </Card>
             </Col>
-            <Col md={4}>
-              <Card className="border-0 shadow-sm">
+            <Col md={3}>
+              <Card className={`border-0 shadow-sm ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
                 <Card.Body className="text-center">
-                  <h3 className="text-warning">{totalCount > 0 ? Math.round((earnedCount / totalCount) * 100) : 0}%</h3>
+                  <div className="achievement-stat-icon">
+                    <Star />
+                  </div>
+                  <h3 className="text-warning">{progressPercentage}%</h3>
                   <p className="text-muted mb-0">Progress</p>
+                </Card.Body>
+              </Card>
+            </Col>
+            <Col md={3}>
+              <Card className={`border-0 shadow-sm ${isDarkMode ? 'dark-theme' : 'light-theme'}`}>
+                <Card.Body className="text-center">
+                  <div className="achievement-stat-icon">
+                    <Share />
+                  </div>
+                  <Button 
+                    variant="outline-primary" 
+                    size="sm" 
+                    onClick={shareAchievements}
+                    className="mt-2"
+                  >
+                    Share
+                  </Button>
                 </Card.Body>
               </Card>
             </Col>
           </Row>
         </div>
+
+        {/* Category Filter */}
+        <div className="category-filter mb-4">
+          <div className="d-flex justify-content-center flex-wrap gap-2">
+            <Button
+              variant={selectedCategory === 'all' ? 'primary' : 'outline-primary'}
+              size="sm"
+              onClick={() => setSelectedCategory('all')}
+            >
+              All
+            </Button>
+            {Array.from(new Set(achievements.map(a => a.category))).map(category => (
+              <Button
+                key={category}
+                variant={selectedCategory === category ? 'primary' : 'outline-primary'}
+                size="sm"
+                onClick={() => setSelectedCategory(category)}
+              >
+                {getCategoryIcon(category)} {category}
+              </Button>
+            ))}
+          </div>
+        </div>
+
+        {/* Next Badge Hint */}
+        {nextBadgeHint && (
+          <Alert variant="info" className="mb-4">
+            <div className="d-flex align-items-center">
+              <Lightbulb className="me-2" />
+              <div>
+                <strong>Next Badge Hint:</strong> {nextBadgeHint.name} - {nextBadgeHint.description}
+                {nextBadgeHint.points_required && (
+                  <span className="ms-2">
+                    <Star className="text-warning" /> {nextBadgeHint.points_required} points needed
+                  </span>
+                )}
+              </div>
+            </div>
+          </Alert>
+        )}
       </div>
 
       <Row className="g-4">
-        {achievements.map((achievement) => (
+        {filteredAchievements.map((achievement) => (
           <Col md={6} lg={4} key={achievement.id}>
             <Card className={`h-100 border-0 shadow-sm achievement-card ${achievement.earned ? 'earned' : 'locked'}`}>
               <Card.Body className="text-center p-4">
                 <div className="achievement-icon mb-3">
-                  <div 
-                    className={`icon-circle ${achievement.earned ? 'earned' : 'locked'}`}
-                    style={{ 
-                      width: '80px', 
-                      height: '80px', 
-                      margin: '0 auto',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '2.5rem',
-                      backgroundColor: achievement.earned ? 'var(--bs-warning)' : 'var(--bs-light)',
-                      color: achievement.earned ? 'white' : 'var(--bs-secondary)',
-                      borderRadius: '50%',
-                      border: achievement.earned ? '3px solid gold' : '3px solid var(--bs-border-color)'
-                    }}
+                  <OverlayTrigger
+                    placement="top"
+                    overlay={
+                      <Tooltip>
+                        {achievement.earned ? 'Earned!' : 'Locked - Keep learning to unlock!'}
+                      </Tooltip>
+                    }
                   >
-                    {achievement.badge_image ? (
-                      <img 
-                        src={achievement.badge_image} 
-                        alt={achievement.name}
-                        style={{ width: '60px', height: '60px' }}
-                      />
-                    ) : (
-                      getCategoryIcon(achievement.category)
-                    )}
-                  </div>
+                    <div 
+                      className={`icon-circle ${achievement.earned ? 'earned' : 'locked'} ${isDarkMode ? 'dark-theme' : 'light-theme'}`}
+                      style={{ 
+                        width: '80px', 
+                        height: '80px', 
+                        margin: '0 auto',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '2rem',
+                        backgroundColor: achievement.earned 
+                          ? (isDarkMode ? '#FFD700' : '#FFC107') 
+                          : (isDarkMode ? '#495057' : '#f8f9fa'),
+                        color: achievement.earned 
+                          ? (isDarkMode ? '#000' : '#fff') 
+                          : (isDarkMode ? '#adb5bd' : '#6c757d'),
+                        borderRadius: '50%',
+                        border: achievement.earned 
+                          ? '3px solid #FFD700' 
+                          : `3px solid ${isDarkMode ? '#6c757d' : '#dee2e6'}`
+                      }}
+                    >
+                      {achievement.badge_image ? (
+                        <img 
+                          src={achievement.badge_image} 
+                          alt={achievement.name}
+                          style={{ width: '60px', height: '60px' }}
+                        />
+                      ) : (
+                        getCategoryIcon(achievement.category)
+                      )}
+                    </div>
+                  </OverlayTrigger>
                 </div>
                 
                 <div className="achievement-info">
@@ -281,7 +419,7 @@ const Achievements = () => {
                   {achievement.earned && (
                     <div className="earned-status mt-3">
                       <Badge bg="success" className="px-3 py-2">
-                        <i className="bi bi-check-circle-fill me-1"></i>
+                        <CheckCircle className="me-1" />
                         Earned!
                       </Badge>
                     </div>
@@ -290,7 +428,7 @@ const Achievements = () => {
                   {!achievement.earned && (
                     <div className="locked-status mt-3">
                       <Badge bg="secondary" className="px-3 py-2">
-                        <i className="bi bi-lock-fill me-1"></i>
+                        <Lock className="me-1" />
                         Locked
                       </Badge>
                     </div>
@@ -302,43 +440,29 @@ const Achievements = () => {
         ))}
       </Row>
 
-      {achievements.length === 0 && !loading && (
+      {filteredAchievements.length === 0 && !loading && (
         <div className="text-center py-5">
-          <i className="bi bi-trophy text-muted" style={{ fontSize: '4rem' }}></i>
-          <h4 className="mt-3 text-muted">No Achievements Yet</h4>
-          <p className="text-muted">Start learning to unlock your first achievement!</p>
+          <Trophy className="text-muted" style={{ fontSize: '4rem' }} />
+          <h4 className="mt-3 text-muted">No Achievements Found</h4>
+          <p className="text-muted">
+            {selectedCategory === 'all' 
+              ? 'Start learning to unlock your first achievement!' 
+              : `No achievements found in the "${selectedCategory}" category.`}
+          </p>
         </div>
       )}
 
-      <style jsx>{`
-        .achievement-card {
-          transition: all 0.3s ease;
-          cursor: pointer;
-        }
-        
-        .achievement-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
-        }
-        
-        .achievement-card.earned {
-          background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 255, 255, 1) 100%);
-        }
-        
-        .achievement-card.locked {
-          opacity: 0.7;
-        }
-        
-        .icon-circle.earned {
-          animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-          0% { transform: scale(1); }
-          50% { transform: scale(1.05); }
-          100% { transform: scale(1); }
-        }
-      `}</style>
+      {/* Share Success Modal */}
+      {showShareModal && (
+        <div className="position-fixed top-50 start-50 translate-middle">
+          <Alert variant="success" className="mb-0">
+            <Copy className="me-2" />
+            Achievement link copied to clipboard!
+          </Alert>
+        </div>
+      )}
+
+
     </Container>
   );
 };

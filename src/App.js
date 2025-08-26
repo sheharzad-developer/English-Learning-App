@@ -5,6 +5,7 @@ import Layout from './Layout/Layout';
 import LessonDetail from './pages/LessonDetail';
 import Leaderboard from './pages/Leaderboard';
 import Achievements from './pages/Achievements';
+import Lessons from './pages/Lessons';
 import Challenges from './pages/Challenges';
 import Profile from './pages/Profile';
 import Home from './pages/Home';
@@ -46,6 +47,14 @@ function App() {
             element={
               <PrivateRoute>
                 <StudentDashboard />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/lessons"
+            element={
+              <PrivateRoute>
+                <Lessons />
               </PrivateRoute>
             }
           />
