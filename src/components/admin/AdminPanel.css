@@ -385,27 +385,43 @@
 }
 
 /* Modal Styles */
+.user-modal {
+  z-index: 1050 !important;
+}
+
+.user-modal .modal-dialog {
+  z-index: 1055 !important;
+}
+
 .user-modal .modal-content {
   border: none;
   border-radius: 15px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  background: var(--bg-card);
-  color: var(--text-primary);
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  z-index: 1060 !important;
+  position: relative;
 }
 
 .user-modal .modal-backdrop {
   background-color: rgba(0, 0, 0, 0.5) !important;
-  backdrop-filter: none !important;
+  backdrop-filter: blur(2px) !important;
+  z-index: 1040 !important;
+  opacity: 1 !important;
 }
 
 .user-modal .modal-body {
-  background: var(--bg-card);
-  color: var(--text-primary);
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  position: relative;
+  z-index: 1061 !important;
 }
 
 .user-modal .modal-footer {
-  background: var(--bg-card);
-  border-top: 1px solid var(--border-color);
+  background: var(--bg-card) !important;
+  border-top: 1px solid var(--border-color) !important;
+  position: relative;
+  z-index: 1061 !important;
 }
 
 .user-modal .modal-header {
@@ -421,6 +437,35 @@
 
 .user-modal .btn-close {
   filter: invert(1);
+}
+
+/* Form controls in modal */
+.user-modal .form-control,
+.user-modal .form-select {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+  opacity: 1 !important;
+}
+
+.user-modal .form-control:focus,
+.user-modal .form-select:focus {
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--primary) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25) !important;
+}
+
+.user-modal .form-label {
+  color: var(--text-primary) !important;
+  font-weight: 600;
+}
+
+/* Modal buttons */
+.user-modal .btn {
+  opacity: 1 !important;
+  position: relative;
+  z-index: 1062 !important;
 }
 
 /* Dark Theme Modal Styles */

@@ -273,25 +273,48 @@ td {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 1050 !important;
+}
+
+.modal-dialog {
+  z-index: 1055 !important;
+  position: relative;
 }
 
 .modal-content {
-  background: var(--bg-card);
+  background: var(--bg-card) !important;
   border-radius: var(--radius-xl);
   box-shadow: var(--shadow-xl);
   max-width: 90vw;
   max-height: 90vh;
   overflow: auto;
+  z-index: 1060 !important;
+  position: relative;
+  border: none;
+}
+
+.modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(2px) !important;
+  z-index: 1040 !important;
+  opacity: 1 !important;
 }
 
 .modal-header {
   padding: var(--space-lg) var(--space-xl);
   border-bottom: 1px solid var(--border-color);
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  position: relative;
+  z-index: 1061 !important;
 }
 
 .modal-body {
   padding: var(--space-xl);
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  position: relative;
+  z-index: 1061 !important;
 }
 
 .modal-footer {
@@ -300,6 +323,10 @@ td {
   display: flex;
   justify-content: flex-end;
   gap: var(--space-md);
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
+  position: relative;
+  z-index: 1061 !important;
 }
 
 /* Alerts */

@@ -15,6 +15,9 @@
 /* 5. Utility Classes - Spacing, Colors, Typography Helpers */
 @import './utilities.css';
 
+/* 6. Modal Fixes - Ensure proper z-index and backdrop */
+@import './modal-fixes.css';
+
 /* App-specific overrides and customizations can go below */
 
 /* Navbar Specific Styles */
