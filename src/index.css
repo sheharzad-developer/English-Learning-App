@@ -14,97 +14,97 @@ html {
   text-size-adjust: 100%;
 }
 
-/* Force text colors for all browsers */
+/* Force text colors for all browsers - Theme Aware */
 body, html {
-  color: #0f172a !important;
-  background-color: #f8fafc !important;
+  color: var(--text-primary) !important;
+  background-color: var(--bg-primary) !important;
 }
 
-/* Brave browser specific detection and fixes */
+/* Brave browser specific detection and fixes - Theme Aware */
 @supports (-webkit-appearance: none) and (not (-webkit-backdrop-filter: blur(1px))) {
   /* This targets Brave specifically */
   body, html, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
     text-shadow: none !important;
   }
   
   .text-muted {
-    color: #333333 !important;
-    -webkit-text-fill-color: #333333 !important;
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
   }
   
   .lead {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
   
-  /* Force all text to be black in Brave */
+  /* Force all text to use theme colors in Brave */
   * {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
 }
 
-/* Additional Brave-specific overrides using user agent detection */
+/* Additional Brave-specific overrides using user agent detection - Theme Aware */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
-  /* Force black text for all elements in Brave */
+  /* Force theme-aware text for all elements in Brave */
   body, html, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, .card, .card-body, .card-title, .card-text, .hero-section, .hero-section h1, .hero-section p {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
     text-shadow: none !important;
   }
   
-  /* Ensure cards have white background and black text */
+  /* Ensure cards have proper theme colors */
   .card, .card-body {
-    background-color: #ffffff !important;
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    background-color: var(--bg-card) !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
   
   /* Override any gradient text */
   .hero-section h1 {
     background: none !important;
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
 }
 
-/* Brave browser class - applied via JavaScript */
+/* Brave browser class - applied via JavaScript - Theme Aware */
 .brave-browser {
-  color: #000000 !important;
-  background-color: #ffffff !important;
+  color: var(--text-primary) !important;
+  background-color: var(--bg-primary) !important;
 }
 
 .brave-browser * {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
   text-shadow: none !important;
 }
 
 .brave-browser .text-muted {
-  color: #333333 !important;
-  -webkit-text-fill-color: #333333 !important;
+  color: var(--text-muted) !important;
+  -webkit-text-fill-color: var(--text-muted) !important;
 }
 
 .brave-browser .card,
 .brave-browser .card-body,
 .brave-browser .card-title,
 .brave-browser .card-text {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
-  background-color: #ffffff !important;
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  background-color: var(--bg-card) !important;
 }
 
 .brave-browser .hero-section h1 {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
   background: none !important;
 }
 
 .brave-browser .hero-section p {
-  color: #000000 !important;
-  -webkit-text-fill-color: #000000 !important;
+  color: var(--text-primary) !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
 }
 
 /* Cross-browser compatibility fixes */
@@ -163,13 +163,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   line-height: 1.6;
   scroll-behavior: smooth;
-  background-color: #f8fafc;
-  color: #0f172a;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 code {
-  font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: 'JetBrains Mono', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   background: rgba(102, 126, 234, 0.1);
   padding: 0.2rem 0.4rem;
   border-radius: 0.25rem;
@@ -212,19 +211,19 @@ button:focus {
   outline-offset: 2px;
 }
 
-/* Global text contrast improvements */
+/* Global text contrast improvements - Theme Aware */
 h1, h2, h3, h4, h5, h6 {
-  color: #0f172a;
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .text-muted {
-  color: #475569 !important;
+  color: var(--text-muted) !important;
   font-weight: 500;
 }
 
 .lead {
-  color: #334155 !important;
+  color: var(--text-secondary) !important;
   font-weight: 500;
 }
 
@@ -246,69 +245,69 @@ body, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select {
   color: inherit !important;
 }
 
-/* Ensure text is always visible - fallback for all browsers */
+/* Ensure text is always visible - fallback for all browsers - Theme Aware */
 .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
-  color: #0f172a !important;
+  color: var(--text-primary) !important;
   text-shadow: none !important;
-  -webkit-text-fill-color: initial !important;
-  -moz-text-fill-color: initial !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  -moz-text-fill-color: var(--text-primary) !important;
 }
 
-/* Brave/Chromium specific fixes */
+/* Brave/Chromium specific fixes - Theme Aware */
 @supports (-webkit-appearance: none) {
   .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
-    color: #0f172a !important;
-    -webkit-text-fill-color: #0f172a !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
 }
 
-/* Brave-specific overrides - more aggressive */
+/* Brave-specific overrides - more aggressive - Theme Aware */
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   body, div, p, span, h1, h2, h3, h4, h5, h6, a, button, input, textarea, select, .card, .card-body, .card-title, .card-text {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
     text-shadow: none !important;
     background-color: transparent !important;
   }
   
-  /* Force black text on all elements */
+  /* Force theme-aware text on all elements */
   * {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
   
   /* Specific overrides for common text classes */
   .text-muted {
-    color: #333333 !important;
-    -webkit-text-fill-color: #333333 !important;
+    color: var(--text-muted) !important;
+    -webkit-text-fill-color: var(--text-muted) !important;
   }
   
   .lead {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
+    color: var(--text-secondary) !important;
+    -webkit-text-fill-color: var(--text-secondary) !important;
   }
   
   /* Ensure cards have visible text */
   .card, .card-body, .card-title, .card-text {
-    color: #000000 !important;
-    -webkit-text-fill-color: #000000 !important;
-    background-color: #ffffff !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    background-color: var(--bg-card) !important;
   }
 }
 
-/* Firefox specific fixes */
+/* Firefox specific fixes - Theme Aware */
 @supports (-moz-appearance: none) {
   .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
-    color: #0f172a !important;
-    -moz-text-fill-color: #0f172a !important;
+    color: var(--text-primary) !important;
+    -moz-text-fill-color: var(--text-primary) !important;
   }
 }
 
-/* Safari specific fixes */
+/* Safari specific fixes - Theme Aware */
 @supports (-webkit-backdrop-filter: blur(1px)) {
   .text-primary, .text-secondary, .text-muted, .lead, p, h1, h2, h3, h4, h5, h6 {
-    color: #0f172a !important;
-    -webkit-text-fill-color: #0f172a !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
   }
 }
 

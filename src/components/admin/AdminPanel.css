@@ -425,48 +425,48 @@
 
 /* Dark Theme Modal Styles */
 .user-modal.dark-theme .modal-content {
-  background: var(--bs-dark) !important;
-  color: var(--bs-light) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
 }
 
 .user-modal.dark-theme .modal-body {
-  background: var(--bs-dark) !important;
-  color: var(--bs-light) !important;
+  background: var(--bg-card) !important;
+  color: var(--text-primary) !important;
 }
 
 .user-modal.dark-theme .modal-footer {
-  background: var(--bs-dark) !important;
-  border-top: 1px solid var(--bs-gray-700) !important;
+  background: var(--bg-card) !important;
+  border-top: 1px solid var(--border-color) !important;
 }
 
 .user-modal.dark-theme .form-control,
 .user-modal.dark-theme .form-select {
-  background-color: var(--bs-gray-800) !important;
-  border-color: var(--bs-gray-600) !important;
-  color: var(--bs-light) !important;
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
 }
 
 .user-modal.dark-theme .form-control:focus,
 .user-modal.dark-theme .form-select:focus {
-  background-color: var(--bs-gray-800) !important;
-  border-color: #667eea !important;
-  color: var(--bs-light) !important;
+  background-color: var(--bg-secondary) !important;
+  border-color: var(--primary) !important;
+  color: var(--text-primary) !important;
 }
 
 .user-modal.dark-theme .form-label {
-  color: var(--bs-light) !important;
+  color: var(--text-primary) !important;
 }
 
 .user-modal.dark-theme .profile-info h4 {
-  color: var(--bs-light) !important;
+  color: var(--text-primary) !important;
 }
 
 .user-modal.dark-theme .profile-header {
-  border-bottom: 2px solid var(--bs-gray-700) !important;
+  border-bottom: 2px solid var(--border-color) !important;
 }
 
 .user-modal.dark-theme .activity-summary {
-  background: var(--bs-gray-800) !important;
+  background: var(--bg-secondary) !important;
 }
 
 .user-modal.dark-theme .stat-item {

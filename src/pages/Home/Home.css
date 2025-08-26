@@ -265,10 +265,10 @@ p {
 
 /* Force text visibility for all elements */
 .card-title, .card-text, .card-body p, .card-body h5 {
-  color: #0f172a !important;
+  color: var(--text-primary) !important;
   font-weight: 600 !important;
-  -webkit-text-fill-color: #0f172a !important;
-  -moz-text-fill-color: #0f172a !important;
+  -webkit-text-fill-color: var(--text-primary) !important;
+  -moz-text-fill-color: var(--text-primary) !important;
 }
 
 /* Ensure buttons and links are visible */

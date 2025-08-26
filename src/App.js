@@ -26,6 +26,7 @@ import Learning from './pages/Learning/Learning';
 import Progress from './pages/Progress/Progress';
 import { applyBraveFixes } from './utils/browserDetection';
 import './styles/theme.css';
+import ThemeTest from './components/ThemeTest';
 
 function App() {
   useEffect(() => {
@@ -43,6 +44,7 @@ function App() {
           <Route path="/teacher/login" element={<TeacherLogin />} />
           <Route path="/register" element={<Register />} />
           <Route path="/" element={<Home />} />
+          <Route path="/theme-test" element={<ThemeTest />} />
           <Route
             path="/dashboard"
             element={

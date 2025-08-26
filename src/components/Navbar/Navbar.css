@@ -12,7 +12,7 @@
   font-weight: 800;
   font-size: 1.5rem;
   letter-spacing: -0.02em;
-  color: #0f172a !important;
+  color: var(--text-primary) !important;
   background: var(--primary-color);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -25,9 +25,9 @@
 /* Fallback for browsers without background-clip support */
 @supports not (-webkit-background-clip: text) {
   .main-navbar .navbar-brand {
-    color: #0f172a !important;
-    -webkit-text-fill-color: #0f172a !important;
-    -moz-text-fill-color: #0f172a !important;
+    color: var(--text-primary) !important;
+    -webkit-text-fill-color: var(--text-primary) !important;
+    -moz-text-fill-color: var(--text-primary) !important;
     background: none !important;
   }
 }
