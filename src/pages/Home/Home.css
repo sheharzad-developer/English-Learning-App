@@ -129,6 +129,19 @@
   box-shadow: 0 2px 8px var(--shadow-color);
 }
 
+.icon-circle i {
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  -moz-text-fill-color: white !important;
+}
+
+/* Specific styling for bi-journal-text icon */
+.bi-journal-text.fs-2 {
+  color: white !important;
+  -webkit-text-fill-color: white !important;
+  -moz-text-fill-color: white !important;
+}
+
 .card {
   background: var(--bg-card) !important;
   border: 1px solid var(--border-color) !important;

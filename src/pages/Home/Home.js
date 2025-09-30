@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div className="home-landing">
       {/* Hero Section */}
-      <section className="hero-section py-5 text-center">
+      <section className="hero-section1 py-5 text-center">
         <Container fluid>
           <Row className="align-items-center">
             <Col md={6} className="text-md-start text-center mb-4 mb-md-0">
@@ -47,7 +47,7 @@ const Home = () => {
 
       {/* User Progress Section - Only show for authenticated users */}
       {isAuthenticated && user && (
-        <section className="user-progress-section py-5">
+        <section className="user-progress-section1 py-5">
           <Container fluid>
             <UserProgress userId={user.id} />
           </Container>
@@ -55,7 +55,7 @@ const Home = () => {
       )}
 
       {/* How It Works Section */}
-      <section className="how-it-works py-5 bg-light">
+      <section className="how-it-works1 py-5">
         <Container fluid>
           <h2 className="text-center mb-5 fw-bold" style={{ color: '#2B2D42' }}>How It Works</h2>
           <Row className="g-4">

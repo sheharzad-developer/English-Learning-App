@@ -166,6 +166,11 @@
   z-index: 3;
 }
 
+/* Hero Section 1 with specific margin */
+.hero-section1.py-5.text-center {
+  margin: 250px 0;
+}
+
 .hero-content {
   max-width: 800px;
   margin: 0 auto;
