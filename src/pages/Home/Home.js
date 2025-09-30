@@ -148,7 +148,7 @@ const Home = () => {
       </section>
 
       {/* Call to Action Section */}
-      <section className="cta-section py-5 bg-primary text-inverse text-center">
+      <section className="cta-section py-5 text-inverse text-center">
         <Container fluid>
           <h2 className="mb-3">Ready to Start Your English Learning Journey?</h2>
           <p className="lead mb-4">Join thousands of learners who have already improved their English skills with us.</p>
