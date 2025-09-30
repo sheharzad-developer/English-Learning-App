@@ -74,9 +74,9 @@
   border-color: #e9ecef;
 }
 
-.users-table-container .table tbody tr:hover {
+/* .users-table-container .table tbody tr:hover {
   background-color: #f8f9fa;
-}
+} */
 
 /* Badge styling */
 .badge {
