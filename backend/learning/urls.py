@@ -23,6 +23,7 @@ urlpatterns = [
     # Additional custom endpoints
     path('stats/', views.UserStatsView.as_view(), name='user-stats'),
     path('dashboard/', views.DashboardView.as_view(), name='dashboard'),
+    path('progress/', views.UserProgressViewSet.as_view({'get': 'list'}), name='user-progress-list'),
     
     # Lesson-specific endpoints
     path('lessons/<int:lesson_id>/start/', 

@@ -56,7 +56,7 @@
 }
 
 .nav-pill.active {
-  background: #fff !important;
+  /* background: #fff !important; */
   color: #667eea !important;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   transform: translateY(-2px);
@@ -468,4 +468,24 @@
     box-shadow: none;
     border: 1px solid #000;
   }
+}
+
+/* Remove white background from tables */
+.table > :not(caption) > * > * {
+  --bs-table-bg: transparent !important;
+  --bs-table-color: #2c3e50 !important;
+  background-color: transparent !important;
+}
+
+/* Alternative: Make table rows transparent */
+.table tbody tr {
+  background-color: transparent !important;
+}
+
+.table thead tr {
+  background-color: rgba(102, 126, 234, 0.1) !important;
+}
+
+.table tbody tr:hover {
+  background-color: rgba(102, 126, 234, 0.05) !important;
 }

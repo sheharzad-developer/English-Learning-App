@@ -79,16 +79,18 @@ export const AuthProvider = ({ children }) => {
     return { success: true };
   };
 
-  const register = async (username, email, password, full_name = '') => {
+  const register = async (username, email, password, full_name = '', confirmPassword = '') => {
     try {
       const response = await axios.post('http://localhost:8000/api/accounts/register/', {
-        username,
         email,
         password,
-        full_name
+        password_confirm: confirmPassword || password, // Use confirmPassword if provided, otherwise use password
+        full_name,
+        role: 'student' // Set default role
       });
-      const { token, user } = response.data;
-      localStorage.setItem('token', token);
+      const { access, user } = response.data;
+      localStorage.setItem('token', access);
+      localStorage.setItem('user', JSON.stringify(user));
       setUser(user);
       setIsAuthenticated(true);
       return { success: true };

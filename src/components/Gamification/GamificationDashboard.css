@@ -7,7 +7,7 @@
 
 /* Header Styles */
 .dashboard-header {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 15px;
   padding: 2rem;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -28,6 +28,8 @@
 .dashboard-subtitle {
   font-size: 1.1rem;
   margin-bottom: 0;
+  color: #2c3e50;
+  font-weight: 500;
 }
 
 .refresh-btn {
@@ -47,7 +49,7 @@
 
 /* Navigation Styles */
 .gamification-nav {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.98);
   border-radius: 50px;
   padding: 0.5rem;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
@@ -61,15 +63,25 @@
   margin: 0 0.25rem;
   font-weight: 600;
   transition: all 0.3s ease;
-  color: #6c757d;
+  color: #000000 !important;
   border: none;
   background: transparent;
 }
 
+.nav-pill span,
+.nav-pill i {
+  color: #000000 !important;
+}
+
 .nav-pill:hover {
   background: rgba(102, 126, 234, 0.1) !important;
-  color: #667eea !important;
+  color: #000000 !important;
   transform: translateY(-2px);
+}
+
+.nav-pill:hover span,
+.nav-pill:hover i {
+  color: #000000 !important;
 }
 
 .nav-pill.active {
@@ -77,6 +89,11 @@
   color: white !important;
   box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
   transform: translateY(-2px);
+}
+
+.nav-pill.active span,
+.nav-pill.active i {
+  color: white !important;
 }
 
 /* Tab Content */
@@ -101,8 +118,9 @@
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
+  color: #2c3e50;
 }
 
 .gamification-overview .card:hover {
@@ -115,10 +133,13 @@
   border-radius: 15px 15px 0 0 !important;
   font-weight: 600;
   padding: 1rem 1.5rem;
+  color: #2c3e50;
+  background: rgba(102, 126, 234, 0.05);
 }
 
 .gamification-overview .card-body {
   padding: 1.5rem;
+  color: #2c3e50;
 }
 
 /* Quick Stats */
@@ -127,7 +148,7 @@
 }
 
 .stats-card {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   border: none;
   border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -156,7 +177,7 @@
 
 .stat-label {
   font-size: 0.9rem;
-  color: #6c757d;
+  color: #2c3e50;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -174,8 +195,9 @@
   border: none;
   border-radius: 15px;
   box-shadow: 0 10px 30px rgba(220, 53, 69, 0.2);
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(10px);
+  color: #2c3e50;
 }
 
 /* Responsive Design */
@@ -284,6 +306,22 @@
 .refresh-btn:focus {
   outline: 2px solid #667eea;
   outline-offset: 2px;
+}
+
+/* Text Contrast Improvements */
+.card-text,
+.card p,
+.card li,
+.card span {
+  color: #2c3e50 !important;
+}
+
+.card h1, .card h2, .card h3, .card h4, .card h5, .card h6 {
+  color: #1a252f !important;
+}
+
+.text-muted {
+  color: #5a6c7d !important;
 }
 
 /* Print Styles */

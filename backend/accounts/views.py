@@ -140,7 +140,7 @@ class StudentDashboardView(APIView):
         # Get progress data
         progress_data = UserProgress.objects.filter(user=user).aggregate(
             total_lessons=Count('lesson', distinct=True),
-            completed_lessons=Count('lesson', filter=Q(is_completed=True), distinct=True)
+            completed_lessons=Count('lesson', filter=Q(completed=True), distinct=True)
         )
         
         # Get points and streak
@@ -168,8 +168,8 @@ class StudentDashboardView(APIView):
         week_ago = datetime.now() - timedelta(days=7)
         recent_submissions = Submission.objects.filter(
             user=user,
-            created_at__gte=week_ago
-        ).select_related('exercise', 'exercise__lesson').order_by('-created_at')[:10]
+            submitted_at__gte=week_ago
+        ).select_related('exercise', 'exercise__lesson').order_by('-submitted_at')[:10]
         
         # Calculate study time (estimate based on submissions)
         study_time = total_submissions * 3  # Assume 3 minutes per submission

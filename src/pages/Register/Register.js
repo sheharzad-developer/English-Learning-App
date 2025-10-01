@@ -79,7 +79,8 @@ function Register() {
         formData.username, 
         formData.email, 
         formData.password,
-        formData.full_name
+        formData.full_name,
+        formData.confirmPassword
       );
       navigate('/'); // Redirect to home (which will show dashboard for logged-in users)
     } catch (error) {
