@@ -139,8 +139,12 @@ p, span, div {
 .card, .card-body, .card-title, .card-text {
   color: var(--text-primary) !important;
   -webkit-text-fill-color: var(--text-primary) !important;
-  background-color: var(--bg-card) !important;
+  /* background-color: var(--bg-card) !important; */
   font-weight: 500 !important;
+}
+
+.modal-content {
+    width: 500px;
 }
 
 /* Override any problematic gradient text */

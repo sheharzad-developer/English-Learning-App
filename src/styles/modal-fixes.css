@@ -10,6 +10,10 @@
 }
 
 .modal-content {
+  width:500px
+}
+
+.modal-content {
   z-index: 1060 !important;
   background: var(--bg-card) !important;
   color: var(--text-primary) !important;

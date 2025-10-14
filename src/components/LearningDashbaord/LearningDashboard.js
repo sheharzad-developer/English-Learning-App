@@ -86,7 +86,7 @@ const LearningDashboard = () => {
             {userStats && (
                 <Row className="mb-4">
                     <Col>
-                        <Card className="stats-card">
+                        <Card className="stats-card" style={{display: 'none'}}>
                             <Card.Body>
                                 <Row>
                                     <Col md={3} className="text-center">

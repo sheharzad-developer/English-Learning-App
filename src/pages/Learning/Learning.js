@@ -133,7 +133,7 @@ const Learning = () => {
       
       <Container fluid className="learning-page py-4">
         {/* Hero Section */}
-        <div className="hero-section">
+        <div className="hero-section1">
           <div className="hero-content">
             <div className="hero-badge">
               <i className="fas fa-star"></i>
