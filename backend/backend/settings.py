@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import warnings
+
+# Suppress deprecation warnings from dj_rest_auth (third-party package)
+warnings.filterwarnings('ignore', category=UserWarning, module='dj_rest_auth')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent

@@ -49,21 +49,14 @@ class LoginView(APIView):
         
         if not username_or_email or not password:
             return Response({
-                'error': 'Email and password are required'
+                'error': 'Email/username and password are required'
             }, status=status.HTTP_400_BAD_REQUEST)
         
-        # Try to authenticate with email
-        user = None
-        try:
-            user_obj = CustomUser.objects.get(email=username_or_email)
-            user = authenticate(request, username=user_obj.username or user_obj.email, password=password)
-            if not user:
-                # Try authenticating directly with email as username
-                user = authenticate(request, username=username_or_email, password=password)
-        except CustomUser.DoesNotExist:
-            pass
+        # The custom authentication backend (EmailOrUsernameModelBackend) handles
+        # authentication with both email and username automatically
+        user = authenticate(request, username=username_or_email, password=password)
         
-        if user and user.is_active:
+        if user is not None and user.is_active:
             refresh = RefreshToken.for_user(user)
             return Response({
                 'user': UserSerializer(user).data,

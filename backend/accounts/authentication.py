@@ -19,9 +19,14 @@ class EmailOrUsernameModelBackend(ModelBackend):
         
         try:
             # Try to find user by email or username
-            user = User.objects.get(
-                Q(email__iexact=username) | Q(username__iexact=username)
-            )
+            # Build query: always check email, and check username only if it's not None and not empty
+            query = Q(email__iexact=username)
+            # Only check username if the provided username is not None/empty
+            # and the database username field is not None/empty
+            if username:
+                query |= (Q(username__iexact=username) & ~Q(username__isnull=True) & ~Q(username=''))
+            
+            user = User.objects.get(query)
         except User.DoesNotExist:
             # Run the default password hasher once to reduce the timing
             # difference between an existing and a nonexistent user
